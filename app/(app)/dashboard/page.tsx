@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { formatNumber, formatTime } from "@/lib/utils";
 import { generateLogs, generateWeekStats, type LogEntry } from "@/lib/mock";
+import { isMock, fetchLogs } from "@/lib/api";
 
 const INITIAL_LOGS = generateLogs(20);
 const WEEK_STATS = generateWeekStats();
@@ -24,10 +25,16 @@ export default function DashboardPage() {
   const [logs, setLogs] = useState<LogEntry[]>(INITIAL_LOGS);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const newLogs = generateLogs(20);
-      setLogs(newLogs);
-    }, 5000);
+    const refresh = () => {
+      if (isMock) {
+        setLogs(generateLogs(20));
+      } else {
+        fetchLogs({ limit: 20 })
+          .then((res) => setLogs(res.logs as LogEntry[]))
+          .catch(console.error);
+      }
+    };
+    const interval = setInterval(refresh, 5000);
     return () => clearInterval(interval);
   }, []);
 

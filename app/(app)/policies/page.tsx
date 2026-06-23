@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import useSWR from "swr";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -8,6 +9,7 @@ import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { Toggle } from "@/components/ui/Toggle";
 import { MOCK_POLICIES, type Policy, type BotType } from "@/lib/mock";
+import { isMock, fetchPolicies, createPolicy, updatePolicy, deletePolicy as apiDeletePolicy } from "@/lib/api";
 
 const BOT_TYPE_OPTIONS: { value: BotType; label: string }[] = [
   { value: "scraper", label: "Scraper" },
@@ -24,11 +26,21 @@ interface PolicyForm {
 }
 
 export default function PoliciesPage() {
+  const { data: apiData, mutate } = useSWR(
+    isMock ? null : "policies",
+    fetchPolicies
+  );
   const [policies, setPolicies] = useState<Policy[]>(MOCK_POLICIES);
   const [modalOpen, setModalOpen] = useState(false);
   const [editPolicy, setEditPolicy] = useState<Policy | null>(null);
   const [selectedBotTypes, setSelectedBotTypes] = useState<BotType[]>([]);
   const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!isMock && apiData?.policies) {
+      setPolicies(apiData.policies as Policy[]);
+    }
+  }, [apiData]);
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<PolicyForm>({
     defaultValues: { action: "block", priority: 100 },
@@ -54,9 +66,8 @@ export default function PoliciesPage() {
     setModalOpen(true);
   };
 
-  const onSave = (data: PolicyForm) => {
-    const policy: Policy = {
-      id: editPolicy?.id ?? Date.now(),
+  const onSave = async (data: PolicyForm) => {
+    const payload = {
       name: data.name,
       enabled: editPolicy?.enabled ?? true,
       conditions: {
@@ -67,20 +78,43 @@ export default function PoliciesPage() {
       action: data.action,
       priority: Number(data.priority),
     };
-    if (editPolicy) {
-      setPolicies((prev) => prev.map((p) => (p.id === editPolicy.id ? policy : p)));
+
+    if (isMock) {
+      const policy: Policy = { id: editPolicy?.id ?? Date.now(), ...payload };
+      if (editPolicy) {
+        setPolicies((prev) => prev.map((p) => (p.id === editPolicy.id ? policy : p)));
+      } else {
+        setPolicies((prev) => [policy, ...prev]);
+      }
     } else {
-      setPolicies((prev) => [policy, ...prev]);
+      if (editPolicy) {
+        await updatePolicy(editPolicy.id, payload);
+      } else {
+        await createPolicy(payload);
+      }
+      mutate();
     }
     setModalOpen(false);
   };
 
-  const toggleEnabled = (id: number) => {
-    setPolicies((prev) => prev.map((p) => (p.id === id ? { ...p, enabled: !p.enabled } : p)));
+  const toggleEnabled = async (id: number) => {
+    const target = policies.find((p) => p.id === id);
+    if (!target) return;
+    if (isMock) {
+      setPolicies((prev) => prev.map((p) => (p.id === id ? { ...p, enabled: !p.enabled } : p)));
+    } else {
+      await updatePolicy(id, { enabled: !target.enabled });
+      mutate();
+    }
   };
 
-  const deletePolicy = (id: number) => {
-    setPolicies((prev) => prev.filter((p) => p.id !== id));
+  const deletePolicy = async (id: number) => {
+    if (isMock) {
+      setPolicies((prev) => prev.filter((p) => p.id !== id));
+    } else {
+      await apiDeletePolicy(id);
+      mutate();
+    }
     setDeleteConfirm(null);
   };
 

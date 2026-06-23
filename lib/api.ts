@@ -3,12 +3,19 @@ const API_KEY = process.env.NEXT_PUBLIC_API_KEY ?? "";
 
 export const isMock = process.env.NEXT_PUBLIC_MOCK !== "false";
 
+function getToken() {
+  if (typeof window === "undefined") return "";
+  return sessionStorage.getItem("blockme_token") ?? "";
+}
+
 async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
+  const token = getToken();
   const res = await fetch(`${BASE}${path}`, {
     ...init,
     headers: {
       "Content-Type": "application/json",
       "X-API-Key": API_KEY,
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...init?.headers,
     },
   });
@@ -29,8 +36,12 @@ export async function fetchLogs(params?: {
 }
 
 export async function downloadCsv() {
+  const token = getToken();
   const res = await fetch(`${BASE}/v1/logs?format=csv&limit=1000`, {
-    headers: { "X-API-Key": API_KEY },
+    headers: {
+      "X-API-Key": API_KEY,
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
   });
   if (!res.ok) throw new Error(`API ${res.status}`);
   const blob = await res.blob();
@@ -40,4 +51,30 @@ export async function downloadCsv() {
   a.download = "blockme-logs.csv";
   a.click();
   URL.revokeObjectURL(url);
+}
+
+export async function fetchPolicies() {
+  return apiFetch<{ policies: unknown[] }>("/v1/policies");
+}
+
+export async function createPolicy(data: unknown) {
+  return apiFetch<unknown>("/v1/policies", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function updatePolicy(id: number, data: unknown) {
+  return apiFetch<unknown>(`/v1/policies/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deletePolicy(id: number) {
+  return apiFetch<unknown>(`/v1/policies/${id}`, { method: "DELETE" });
+}
+
+export async function fetchMe() {
+  return apiFetch<unknown>("/auth/me");
 }

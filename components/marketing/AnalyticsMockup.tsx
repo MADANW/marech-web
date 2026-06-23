@@ -1,24 +1,23 @@
 "use client";
-import { motion, useInView } from "motion/react";
-import { useRef } from "react";
+import { motion } from "motion/react";
 
 const BOTS = [
   { name: "GPTBot", count: "1,247", pct: 62 },
   { name: "ClaudeBot", count: "893", pct: 45 },
+  { name: "Amazonbot", count: "756", pct: 38 },
+  { name: "ByteSpider", count: "578", pct: 29 },
   { name: "CCBot", count: "412", pct: 21 },
+  { name: "PerplexityBot", count: "334", pct: 17 },
 ];
 
 const CHART_PATH =
   "M 0,82 C 20,80 35,74 55,60 S 90,18 120,24 S 158,50 188,54 S 220,30 250,14 S 285,44 308,66 S 342,54 378,68 L 400,72";
 
 export function AnalyticsMockup() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
 
   return (
     <div
-      ref={ref}
-      className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 flex flex-col h-full min-h-[380px]"
+      className="bg-[#1a1a1a] border border-white/10 rounded-2xl p-6 flex flex-col h-full min-h-[380px] shadow-[0_6px_28px_rgba(0,0,0,0.35)]"
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-5">
@@ -60,7 +59,7 @@ export function AnalyticsMockup() {
             d={`${CHART_PATH} L 400,100 L 0,100 Z`}
             fill="url(#areaGrad)"
             initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
           />
           {/* Line */}
@@ -72,7 +71,7 @@ export function AnalyticsMockup() {
             strokeLinecap="round"
             strokeLinejoin="round"
             initial={{ pathLength: 0 }}
-            animate={isInView ? { pathLength: 1 } : { pathLength: 0 }}
+            animate={{ pathLength: 1 }}
             transition={{ duration: 1.6, ease: "easeInOut" }}
           />
           {/* Endpoint dot */}
@@ -82,7 +81,7 @@ export function AnalyticsMockup() {
             r="4"
             fill="#f97316"
             initial={{ opacity: 0, scale: 0 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3, delay: 1.5 }}
           />
         </svg>
@@ -106,7 +105,7 @@ export function AnalyticsMockup() {
                 <motion.div
                   className="h-full bg-accent rounded-full"
                   initial={{ width: 0 }}
-                  animate={isInView ? { width: `${bot.pct}%` } : { width: 0 }}
+                  animate={{ width: `${bot.pct}%` }}
                   transition={{ duration: 0.9, delay: 0.6 + i * 0.15, ease: "easeOut" }}
                 />
               </div>

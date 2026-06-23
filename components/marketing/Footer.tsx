@@ -49,20 +49,8 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
-          <div className="flex flex-col sm:flex-row gap-1 sm:gap-4">
+          <div>
             <p>© 2026 BlockMe. All rights reserved.</p>
-            <p className="text-xs text-white/25">
-              Background photo by{" "}
-              <a
-                href="https://www.pexels.com/photo/stars-in-space-19176514/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white/50 underline underline-offset-2 transition-colors"
-              >
-                Olivier Brinkman
-              </a>
-              {" "}via Pexels
-            </p>
           </div>
           <div className="flex items-center gap-4">
             <a href="https://twitter.com" className="hover:text-white transition-colors" aria-label="Twitter">

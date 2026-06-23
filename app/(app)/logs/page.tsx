@@ -1,15 +1,23 @@
 "use client";
 import { useState, useMemo } from "react";
+import useSWR from "swr";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { formatDate } from "@/lib/utils";
-import { generateLogs } from "@/lib/mock";
+import { generateLogs, type LogEntry } from "@/lib/mock";
+import { isMock, fetchLogs, downloadCsv } from "@/lib/api";
 
-const ALL_LOGS = generateLogs(120);
+const MOCK_LOGS = generateLogs(120);
 const PAGE_SIZE = 50;
 
 export default function LogsPage() {
+  const { data: apiData } = useSWR(
+    isMock ? null : "logs",
+    () => fetchLogs({ limit: 120 })
+  );
+  const ALL_LOGS: LogEntry[] = isMock ? MOCK_LOGS : ((apiData?.logs ?? []) as LogEntry[]);
+
   const [search, setSearch] = useState("");
   const [botFilter, setBotFilter] = useState("all");
   const [actionFilter, setActionFilter] = useState("all");
@@ -31,6 +39,10 @@ export default function LogsPage() {
   const visible = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
   const handleExport = () => {
+    if (!isMock) {
+      downloadCsv().catch(console.error);
+      return;
+    }
     const headers = "Timestamp,User Agent,Bot Type,IP,Path,Action,Confidence\n";
     const rows = ALL_LOGS.map(
       (l) =>

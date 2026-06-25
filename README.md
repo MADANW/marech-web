@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BlockMe Web
 
-## Getting Started
+Marketing site **and** customer portal for [BlockMe](https://github.com/MADANW/block-me) —
+the AI-scraper protection SaaS. Built with Next.js (App Router) + Tailwind, deployed on **Vercel**.
+It talks to the BlockMe backend API (hosted on **AWS**) over HTTPS.
 
-First, run the development server:
+## What's here
+
+- **Marketing** (`app/(marketing)`) — landing, pricing, platform pages, login.
+- **Auth** (`app/(auth)`) — multi-step signup, plus **Google sign-in**.
+- **Customer portal** (`app/(app)`) — dashboard, traffic logs, policies, snippet, account, billing.
+
+Auth state lives in `lib/auth.tsx` (`AuthProvider`, hoisted in `app/layout.tsx`).
+API calls live in `lib/api.ts`. Route gating is in `proxy.ts` (this fork of Next uses
+`proxy.ts` as its middleware file).
+
+## Mock vs. live
+
+The UI runs against **mock data by default** so it's previewable with no backend.
+Set `NEXT_PUBLIC_MOCK=false` to connect to the real API.
+
+| Env var | Purpose |
+|---|---|
+| `NEXT_PUBLIC_MOCK` | `false` = use the real backend; anything else = mock data |
+| `NEXT_PUBLIC_API_URL` | Backend base URL, e.g. `https://api.blockme.com` |
+| `NEXT_PUBLIC_CDN_URL` | Optional snippet host; defaults to `NEXT_PUBLIC_API_URL` |
+| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | Google OAuth Web client id (same id the backend verifies) |
+
+See [`.env.example`](.env.example).
+
+## Local development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local      # edit values
+
+# Run against mock data:
+npm run dev                      # http://localhost:3000
+
+# Run against a local backend (API on :3000), web on :3001:
+#   set NEXT_PUBLIC_MOCK=false and NEXT_PUBLIC_API_URL=http://localhost:3000
+npm run dev:demo                 # http://localhost:3001
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deploy to Vercel
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Import this repo in Vercel (framework auto-detected as Next.js).
+2. Add Environment Variables (Production + Preview):
+   - `NEXT_PUBLIC_MOCK=false`
+   - `NEXT_PUBLIC_API_URL=https://api.blockme.com`
+   - `NEXT_PUBLIC_GOOGLE_CLIENT_ID=<your-google-web-client-id>`
+3. Deploy. Add your custom domain(s) (e.g. `blockme.com`, `app.blockme.com`).
+4. In the **backend**, add your Vercel domains to `CORS_ORIGINS` so the browser
+   can call the API. See the backend repo's `DEPLOY.md` and `INTEGRATION.md`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## How it connects to the backend
 
-## Learn More
+```
+Browser ──▶ Vercel (this app) ──▶ https://api.blockme.com (AWS backend) ──▶ Postgres
+```
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Login/signup/Google → `POST /auth/login | /auth/register | /auth/google` → returns a JWT.
+- The JWT is stored (localStorage + cookie) and sent as `Authorization: Bearer` on every
+  portal request (`/auth/me`, `/v1/logs`, `/v1/policies`, `/billing/*`).
+- The dashboard's data is scoped to the logged-in customer by the backend.

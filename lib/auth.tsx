@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { MOCK_ACCOUNT, type MockAccount } from "./mock";
-import { isMock, fetchMe } from "./api";
+import { isMock, fetchMe, loginWithGoogle, getToken, setToken, clearToken } from "./api";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://3.144.114.30:3000";
 
@@ -11,6 +11,7 @@ interface AuthContextValue {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   signUp: (email: string, password: string, websiteUrl: string, platform: string) => Promise<void>;
+  signInWithGoogle: (credential: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue>({
@@ -19,15 +20,8 @@ const AuthContext = createContext<AuthContextValue>({
   login: async () => {},
   logout: () => {},
   signUp: async () => {},
+  signInWithGoogle: async () => {},
 });
-
-function setAuthCookie(token: string) {
-  document.cookie = `blockme_token=${token}; path=/; SameSite=Lax`;
-}
-
-function clearAuthCookie() {
-  document.cookie = "blockme_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<MockAccount | null>(null);
@@ -41,17 +35,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    const token = sessionStorage.getItem("blockme_token");
+    const token = getToken();
     if (!token) {
       setIsLoading(false);
       return;
     }
     fetchMe()
       .then((u) => setUser(u as MockAccount))
-      .catch(() => {
-        sessionStorage.removeItem("blockme_token");
-        clearAuthCookie();
-      })
+      .catch(() => clearToken())
       .finally(() => setIsLoading(false));
   }, []);
 
@@ -61,7 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const account = { ...MOCK_ACCOUNT, email };
       setUser(account);
       sessionStorage.setItem("blockme_user", JSON.stringify(account));
-      setAuthCookie("mock");
+      setToken("mock");
       return;
     }
 
@@ -72,19 +63,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
     if (!res.ok) throw new Error("Invalid credentials");
     const { token, user: userData } = await res.json();
-    sessionStorage.setItem("blockme_token", token);
-    setAuthCookie(token);
+    setToken(token);
+    setUser(userData as MockAccount);
+  };
+
+  const signInWithGoogle = async (credential: string) => {
+    if (isMock) {
+      await new Promise((r) => setTimeout(r, 600));
+      const account = { ...MOCK_ACCOUNT, email: "you@gmail.com" };
+      setUser(account);
+      sessionStorage.setItem("blockme_user", JSON.stringify(account));
+      setToken("mock");
+      return;
+    }
+    const { token, user: userData } = await loginWithGoogle(credential);
+    setToken(token);
     setUser(userData as MockAccount);
   };
 
   const logout = () => {
     setUser(null);
-    if (isMock) {
-      sessionStorage.removeItem("blockme_user");
-    } else {
-      sessionStorage.removeItem("blockme_token");
-    }
-    clearAuthCookie();
+    if (isMock) sessionStorage.removeItem("blockme_user");
+    clearToken();
   };
 
   const signUp = async (email: string, password: string, websiteUrl: string, platform: string) => {
@@ -93,7 +93,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const account = { ...MOCK_ACCOUNT, email, websiteUrl, platform };
       setUser(account);
       sessionStorage.setItem("blockme_user", JSON.stringify(account));
-      setAuthCookie("mock");
+      setToken("mock");
       return;
     }
     const res = await fetch(`${BASE}/auth/register`, {
@@ -104,13 +104,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (res.status === 409) throw new Error("Email already registered");
     if (!res.ok) throw new Error("Registration failed");
     const { token, user: userData } = await res.json();
-    sessionStorage.setItem("blockme_token", token);
-    setAuthCookie(token);
+    setToken(token);
     setUser(userData as MockAccount);
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, logout, signUp }}>
+    <AuthContext.Provider value={{ user, isLoading, login, logout, signUp, signInWithGoogle }}>
       {children}
     </AuthContext.Provider>
   );

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { GoogleButton } from "@/components/auth/GoogleButton";
 import { useAuth } from "@/lib/auth";
 
 interface LoginForm {
@@ -54,6 +55,14 @@ export default function LoginPage() {
               {error}
             </div>
           )}
+          <div className="mb-5">
+            <GoogleButton onError={setError} />
+          </div>
+          <div className="flex items-center gap-3 mb-5">
+            <div className="h-px flex-1 bg-white/10" />
+            <span className="text-xs text-white/40">or</span>
+            <div className="h-px flex-1 bg-white/10" />
+          </div>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <Input
               label="Email"

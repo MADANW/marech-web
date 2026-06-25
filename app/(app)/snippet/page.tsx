@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { MOCK_ACCOUNT } from "@/lib/mock";
+import { useAuth } from "@/lib/auth";
+import { isMock, snippetUrl } from "@/lib/api";
 
 const PLATFORMS = ["WordPress", "Wix", "Squarespace", "Shopify", "Webflow", "Custom / Other"];
 
@@ -66,11 +68,15 @@ const INSTRUCTIONS: Record<string, { steps: string[]; nav: string }> = {
 };
 
 export default function SnippetPage() {
-  const [platform, setPlatform] = useState(MOCK_ACCOUNT.platform);
+  const { user } = useAuth();
+  const snippetId = user?.snippetId ?? MOCK_ACCOUNT.snippetId;
+  const [platform, setPlatform] = useState(user?.platform ?? MOCK_ACCOUNT.platform);
   const [copied, setCopied] = useState(false);
   const [detected, setDetected] = useState(false);
 
-  const snippetCode = `<script src="https://cdn.blockme.com/${MOCK_ACCOUNT.snippetId}.js"></script>`;
+  const snippetCode = isMock
+    ? `<script src="https://cdn.blockme.com/${snippetId}.js"></script>`
+    : `<script src="${snippetUrl(snippetId)}"></script>`;
   const instructions = INSTRUCTIONS[platform] ?? INSTRUCTIONS["Custom / Other"];
 
   const handleCopy = async () => {

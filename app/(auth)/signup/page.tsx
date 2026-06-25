@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { GoogleButton } from "@/components/auth/GoogleButton";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/auth";
 
@@ -89,6 +90,14 @@ export default function SignupPage() {
             <>
               <h1 className="text-xl font-bold text-white mb-1" style={{ fontFamily: "var(--font-syne)" }}>Create your account</h1>
               <p className="text-white/50 text-sm mb-6">14-day free trial — no credit card needed</p>
+              <div className="mb-5">
+                <GoogleButton onError={(m) => step1.setError("email", { message: m })} />
+              </div>
+              <div className="flex items-center gap-3 mb-5">
+                <div className="h-px flex-1 bg-white/10" />
+                <span className="text-xs text-white/40">or sign up with email</span>
+                <div className="h-px flex-1 bg-white/10" />
+              </div>
               <form onSubmit={step1.handleSubmit(onStep1)} className="space-y-4">
                 <Input
                   label="Email address"

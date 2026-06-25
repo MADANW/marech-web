@@ -10,6 +10,7 @@ interface AuthContextValue {
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  signUp: (email: string, password: string, websiteUrl: string, platform: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue>({
@@ -17,6 +18,7 @@ const AuthContext = createContext<AuthContextValue>({
   isLoading: true,
   login: async () => {},
   logout: () => {},
+  signUp: async () => {},
 });
 
 function setAuthCookie(token: string) {
@@ -85,8 +87,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     clearAuthCookie();
   };
 
+  const signUp = async (email: string, password: string, websiteUrl: string, platform: string) => {
+    if (isMock) {
+      await new Promise((r) => setTimeout(r, 800));
+      const account = { ...MOCK_ACCOUNT, email, websiteUrl, platform };
+      setUser(account);
+      sessionStorage.setItem("blockme_user", JSON.stringify(account));
+      setAuthCookie("mock");
+      return;
+    }
+    const res = await fetch(`${BASE}/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password, websiteUrl, platform }),
+    });
+    if (res.status === 409) throw new Error("Email already registered");
+    if (!res.ok) throw new Error("Registration failed");
+    const { token, user: userData } = await res.json();
+    sessionStorage.setItem("blockme_token", token);
+    setAuthCookie(token);
+    setUser(userData as MockAccount);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ user, isLoading, login, logout, signUp }}>
       {children}
     </AuthContext.Provider>
   );

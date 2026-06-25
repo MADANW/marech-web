@@ -20,7 +20,7 @@ const PLANS = [
   },
   {
     name: "Starter",
-    price: "$10",
+    price: "$25.99",
     period: "/month",
     limit: "100K requests/mo",
     sites: "3 websites",
@@ -31,7 +31,7 @@ const PLANS = [
   },
   {
     name: "Pro",
-    price: "$30",
+    price: "$49.99",
     period: "/month",
     limit: "1M requests/mo",
     sites: "10 websites",
@@ -42,7 +42,7 @@ const PLANS = [
   },
   {
     name: "Enterprise",
-    price: "$100",
+    price: "$125",
     period: "/month",
     limit: "Unlimited requests",
     sites: "Unlimited websites",

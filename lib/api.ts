@@ -19,6 +19,12 @@ async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
       ...init?.headers,
     },
   });
+  if (res.status === 401) {
+    sessionStorage.removeItem("blockme_token");
+    document.cookie = "blockme_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    if (typeof window !== "undefined") window.location.href = "/login";
+    throw new Error("Unauthorized");
+  }
   if (!res.ok) throw new Error(`API ${res.status}: ${res.statusText}`);
   return res.json() as Promise<T>;
 }
@@ -77,4 +83,12 @@ export async function deletePolicy(id: number) {
 
 export async function fetchMe() {
   return apiFetch<unknown>("/auth/me");
+}
+
+export async function updateMe(data: { name?: string; websiteUrl?: string; platform?: string }) {
+  return apiFetch<unknown>("/auth/me", { method: "PATCH", body: JSON.stringify(data) });
+}
+
+export async function updatePassword(data: { currentPassword: string; newPassword: string }) {
+  return apiFetch<unknown>("/auth/password", { method: "PATCH", body: JSON.stringify(data) });
 }

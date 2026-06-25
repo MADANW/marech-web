@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { useAuth } from "@/lib/auth";
+import { isMock, updateMe, updatePassword as apiUpdatePassword } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -36,8 +37,9 @@ export default function AccountPage() {
   });
   const passwordForm = useForm<PasswordForm>();
 
-  const onSaveProfile = async () => {
-    await new Promise((r) => setTimeout(r, 600));
+  const onSaveProfile = async (data: ProfileForm) => {
+    if (!isMock) await updateMe({ websiteUrl: data.websiteUrl, platform: data.platform });
+    else await new Promise((r) => setTimeout(r, 600));
     setProfileSaved(true);
     setTimeout(() => setProfileSaved(false), 2000);
   };
@@ -47,7 +49,8 @@ export default function AccountPage() {
       passwordForm.setError("confirm", { message: "Passwords don't match" });
       return;
     }
-    await new Promise((r) => setTimeout(r, 600));
+    if (!isMock) await apiUpdatePassword({ currentPassword: data.current, newPassword: data.next });
+    else await new Promise((r) => setTimeout(r, 600));
     passwordForm.reset();
     setPasswordSaved(true);
     setTimeout(() => setPasswordSaved(false), 2000);

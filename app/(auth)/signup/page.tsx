@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/lib/auth";
 
 const PLATFORMS = ["Wix", "Squarespace", "Shopify", "WordPress", "Webflow", "Custom / Other"];
 const INDUSTRIES = ["Blog", "E-commerce", "SaaS", "Portfolio", "Other"];
@@ -26,6 +27,7 @@ export default function SignupPage() {
   const [step, setStep] = useState(1);
   const [step1Data, setStep1Data] = useState<Step1 | null>(null);
   const router = useRouter();
+  const { signUp } = useAuth();
 
   const step1 = useForm<Step1>();
   const step2 = useForm<Step2>({ defaultValues: { platform: PLATFORMS[0], industry: INDUSTRIES[0] } });
@@ -39,10 +41,13 @@ export default function SignupPage() {
     setStep(2);
   };
 
-  const onStep2 = async (_data: Step2) => {
-    await new Promise((r) => setTimeout(r, 800));
-    setStep(3);
-    setTimeout(() => router.push("/dashboard"), 3000);
+  const onStep2 = async (data: Step2) => {
+    try {
+      await signUp(step1Data!.email, step1Data!.password, data.websiteUrl, data.platform);
+      router.push("/dashboard");
+    } catch (err) {
+      step2.setError("root", { message: (err as Error).message });
+    }
   };
 
   return (
@@ -150,6 +155,9 @@ export default function SignupPage() {
                     {INDUSTRIES.map((i) => <option key={i} className="bg-gray-900 text-white">{i}</option>)}
                   </select>
                 </div>
+                {step2.formState.errors.root && (
+                  <p className="text-sm text-red-400 text-center">{step2.formState.errors.root.message}</p>
+                )}
                 <Button type="submit" variant="accent" size="md" className="w-full mt-2"
                   disabled={step2.formState.isSubmitting}>
                   {step2.formState.isSubmitting ? "Creating account…" : "Create Account →"}

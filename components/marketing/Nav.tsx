@@ -16,7 +16,7 @@ export function Nav() {
           style={{ fontFamily: "var(--font-mono)" }}
         >
           <img src="/logos/blockme-icon-color.svg" className="w-5 h-5" alt="" />
-          BlockMe
+          block.me
         </Link>
 
         {/* Desktop nav — center */}

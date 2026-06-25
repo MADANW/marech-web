@@ -8,6 +8,7 @@ import { Modal } from "@/components/ui/Modal";
 import { useAuth } from "@/lib/auth";
 import { MOCK_BILLING_HISTORY } from "@/lib/mock";
 import { formatNumber } from "@/lib/utils";
+import { isMock, openBillingPortal } from "@/lib/api";
 
 const PLAN_NAMES: Record<string, string> = {
   free: "Free",
@@ -18,15 +19,28 @@ const PLAN_NAMES: Record<string, string> = {
 
 const PLAN_PRICES: Record<string, string> = {
   free: "$0",
-  starter: "$10",
-  pro: "$30",
-  enterprise: "$100",
+  starter: "$25",
+  pro: "$50",
+  enterprise: "$125",
 };
 
 export default function BillingPage() {
   const { user } = useAuth();
   const [cancelModal, setCancelModal] = useState(false);
   const [cancelled, setCancelled] = useState(false);
+  const [portalBusy, setPortalBusy] = useState(false);
+
+  // Open the Stripe billing portal (manage card, invoices, cancellation).
+  const goToPortal = async () => {
+    if (isMock) return;
+    setPortalBusy(true);
+    try {
+      const { url } = await openBillingPortal();
+      window.location.href = url;
+    } catch {
+      setPortalBusy(false);
+    }
+  };
 
   if (!user) return null;
 
@@ -80,7 +94,9 @@ export default function BillingPage() {
               <div className="text-sm text-gray-400">Expires 12/25</div>
             </div>
           </div>
-          <Button variant="secondary" size="sm">Update Card</Button>
+          <Button variant="secondary" size="sm" onClick={goToPortal} disabled={portalBusy}>
+            {portalBusy ? "Opening…" : "Update Card"}
+          </Button>
         </div>
       </Card>
 
@@ -145,7 +161,14 @@ export default function BillingPage() {
             variant="danger"
             size="md"
             className="flex-1"
-            onClick={() => { setCancelled(true); setCancelModal(false); }}
+            onClick={() => {
+              if (isMock) {
+                setCancelled(true);
+                setCancelModal(false);
+              } else {
+                goToPortal();
+              }
+            }}
           >
             Cancel Subscription
           </Button>

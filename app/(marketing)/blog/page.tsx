@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Blog — BlockMe",
-  description: "Tips, guides, and updates from BlockMe.",
+  title: "Blog — block.me",
+  description: "Tips, guides, and updates from block.me.",
 };
 
 const POSTS = [
@@ -16,7 +16,7 @@ const POSTS = [
   },
   {
     slug: "blockme-wix-guide",
-    title: "How to Add BlockMe to Your Wix Site in 30 Seconds",
+    title: "How to Add block.me to Your Wix Site in 30 Seconds",
     excerpt: "A step-by-step guide to protecting your Wix site from AI scrapers without any coding knowledge.",
     category: "Tutorial",
     date: "Jun 10, 2026",
@@ -55,7 +55,7 @@ export default function BlogPage() {
         <div className="text-center mb-14">
           <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase block mb-3" style={{ fontFamily: "var(--font-syne)" }}>Blog</span>
           <h1 className="text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-syne)" }}>Tips, guides & updates.</h1>
-          <p className="text-white/60 text-lg">From the BlockMe team.</p>
+          <p className="text-white/60 text-lg">From the block.me team.</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-4">

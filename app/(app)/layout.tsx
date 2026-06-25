@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { AuthProvider, useAuth } from "@/lib/auth";
+import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
@@ -59,7 +59,7 @@ function PortalShell({ children }: { children: React.ReactNode }) {
           <svg className="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2L3 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6l-9-4z" />
           </svg>
-          BlockMe
+          block.me
         </Link>
       </div>
       <div className="flex-1 px-2 py-4 space-y-0.5 overflow-y-auto">
@@ -152,11 +152,7 @@ function PortalShell({ children }: { children: React.ReactNode }) {
 }
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <AuthProvider>
-      <PortalShell>{children}</PortalShell>
-    </AuthProvider>
-  );
+  return <PortalShell>{children}</PortalShell>;
 }
 
 /* Icons */

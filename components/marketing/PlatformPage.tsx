@@ -64,7 +64,7 @@ export function PlatformPage({ name, headline, subheadline, steps }: PlatformPag
           <h2 className="text-2xl font-bold text-white mb-3" style={{ fontFamily: "var(--font-syne)" }}>
             Ready to protect your {name} site?
           </h2>
-          <p className="text-white/60 mb-6">Free 14-day trial. No credit card required.</p>
+          <p className="text-white/60 mb-6">Free 7-day trial. No credit card required.</p>
           <Link href="/signup">
             <Button variant="accent" size="lg">Get Started Free</Button>
           </Link>

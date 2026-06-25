@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
 export const metadata = {
-  title: "Pricing — BlockMe",
+  title: "Pricing — block.me",
   description: "Simple, transparent pricing. Start free, upgrade when you're ready.",
 };
 
@@ -20,7 +20,7 @@ const PLANS = [
   },
   {
     name: "Starter",
-    price: "$25.99",
+    price: "$25",
     period: "/month",
     limit: "100K requests/mo",
     sites: "3 websites",
@@ -31,7 +31,7 @@ const PLANS = [
   },
   {
     name: "Pro",
-    price: "$49.99",
+    price: "$50",
     period: "/month",
     limit: "1M requests/mo",
     sites: "10 websites",
@@ -47,7 +47,7 @@ const PLANS = [
     limit: "Unlimited requests",
     sites: "Unlimited websites",
     cta: "Contact Sales",
-    href: "mailto:hello@blockme.com",
+    href: "mailto:hello@block.me",
     highlight: false,
     features: ["Everything in Pro", "Custom integration", "SLA guarantee", "Priority support", "Dedicated account manager"],
   },
@@ -56,7 +56,7 @@ const PLANS = [
 const FAQS = [
   { q: "What happens if I exceed my monthly limit?", a: "We'll notify you when you're approaching your limit. Traffic continues uninterrupted — we'll never silently cut off your protection. You can upgrade anytime." },
   { q: "Can I cancel anytime?", a: "Yes. No contracts, no cancellation fees. Cancel from your dashboard in one click. Protection stays active until the end of your billing period." },
-  { q: "Do you offer refunds?", a: "We offer a 14-day free trial so you can test before paying. If you're not satisfied in the first 30 days after your first payment, contact us for a full refund." },
+  { q: "Do you offer refunds?", a: "We offer a 7-day free trial so you can test before paying. If you're not satisfied in the first 30 days after your first payment, contact us for a full refund." },
   { q: "What counts as a 'request'?", a: "Each HTTP request to your website counts as one request. This includes page loads, API calls, and asset requests. Typical small blogs use under 50K/month." },
   { q: "Can I upgrade or downgrade my plan?", a: "Yes, anytime. Upgrades take effect immediately. Downgrades take effect at the start of your next billing cycle." },
 ];

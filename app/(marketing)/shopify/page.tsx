@@ -1,18 +1,18 @@
 import { PlatformPage } from "@/components/marketing/PlatformPage";
 
 export const metadata = {
-  title: "BlockMe for Shopify — Protect Your Store from AI Scrapers",
+  title: "block.me for Shopify — Protect Your Store from AI Scrapers",
 };
 
 export default function ShopifyPage() {
   return (
     <PlatformPage
       name="Shopify"
-      headline="BlockMe for Shopify Stores"
+      headline="block.me for Shopify Stores"
       subheadline="Stop competitors from using AI to scrape your product descriptions and prices."
       steps={[
         {
-          title: "Copy your BlockMe snippet",
+          title: "Copy your block.me snippet",
           body: 'Sign up and grab your unique script tag from the dashboard under "Get Snippet Code".',
         },
         {
@@ -29,7 +29,7 @@ export default function ShopifyPage() {
         },
         {
           title: "Paste snippet inside <head>",
-          body: "Find the closing </head> tag and paste your BlockMe snippet just before it.",
+          body: "Find the closing </head> tag and paste your block.me snippet just before it.",
         },
         {
           title: "Save and publish",

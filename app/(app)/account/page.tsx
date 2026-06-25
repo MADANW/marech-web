@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { useAuth } from "@/lib/auth";
-import { isMock, updateMe, updatePassword as apiUpdatePassword } from "@/lib/api";
+import { isMock, updateMe, updatePassword as apiUpdatePassword, deleteAccount } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -56,8 +56,15 @@ export default function AccountPage() {
     setTimeout(() => setPasswordSaved(false), 2000);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (deleteInput !== "DELETE") return;
+    if (!isMock) {
+      try {
+        await deleteAccount();
+      } catch {
+        // Even if the call fails, fall through to local logout.
+      }
+    }
     logout();
     router.push("/");
   };

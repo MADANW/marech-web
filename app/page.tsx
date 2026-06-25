@@ -12,7 +12,7 @@ import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { ScrollVelocityContainer, ScrollVelocityRow } from "@/components/ui/scroll-based-velocity";
 
 export const metadata = {
-  title: "BlockMe — Stop AI from Stealing Your Content",
+  title: "block.me — Stop AI from Stealing Your Content",
   description: "Block ChatGPT, Claude, and other AI scrapers in 30 seconds. No code required.",
 };
 
@@ -106,7 +106,7 @@ export default function LandingPage() {
             </div>
           </section>
 
-          {/* ── Why BlockMe — orbit LEFT, features RIGHT ── */}
+          {/* ── Why block.me — orbit LEFT, features RIGHT ── */}
           <section className={`${PAD} py-20`}>
             <div className="grid md:grid-cols-[5fr_6fr] gap-16 items-start">
 
@@ -122,7 +122,7 @@ export default function LandingPage() {
                     className="text-[#f5f0eb] text-xs font-bold tracking-[0.2em] uppercase block mb-3"
                     style={{ fontFamily: "var(--font-mono)" }}
                   >
-                    Why BlockMe
+                    Why block.me
                   </span>
                   <h2
                     className="text-4xl sm:text-5xl font-bold text-white mb-10"
@@ -430,13 +430,13 @@ const TESTIMONIALS = [
     name: "Sarah Chen",
     title: "Food Blogger · sarahcooks.com",
     quote:
-      "I was livid when I found my recipes being fed to AI chatbots. BlockMe stopped it in seconds. Incredibly satisfying to watch every scraper get blocked.",
+      "I was livid when I found my recipes being fed to AI chatbots. block.me stopped it in seconds. Incredibly satisfying to watch every scraper get blocked.",
   },
   {
     name: "Mike Torres",
     title: "Shopify Store Owner · gearup.io",
     quote:
-      "Competitors were using AI to scrape my product descriptions and undercut my prices. BlockMe caught 2,000+ scrapes in week one. Game changer.",
+      "Competitors were using AI to scrape my product descriptions and undercut my prices. block.me caught 2,000+ scrapes in week one. Game changer.",
   },
   {
     name: "Lisa Park",

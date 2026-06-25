@@ -75,7 +75,7 @@ export default function SnippetPage() {
   const [detected, setDetected] = useState(false);
 
   const snippetCode = isMock
-    ? `<script src="https://cdn.blockme.com/${snippetId}.js"></script>`
+    ? `<script src="https://cdn.block.me/${snippetId}.js"></script>`
     : `<script src="${snippetUrl(snippetId)}"></script>`;
   const instructions = INSTRUCTIONS[platform] ?? INSTRUCTIONS["Custom / Other"];
 

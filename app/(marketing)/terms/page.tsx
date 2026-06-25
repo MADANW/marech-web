@@ -1,11 +1,11 @@
 export const metadata = {
-  title: "Terms of Service — BlockMe",
-  description: "BlockMe Terms of Service",
+  title: "Terms of Service — block.me",
+  description: "block.me Terms of Service",
 };
 
 const LAST_UPDATED = "June 21, 2026";
 const EFFECTIVE_DATE = "June 21, 2026";
-const COMPANY = "BlockMe";
+const COMPANY = "block.me";
 const CONTACT_EMAIL = "legal@blockme.io";
 
 export default function TermsPage() {

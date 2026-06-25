@@ -42,8 +42,8 @@ Walk me through: (1) which file to edit, (2) where exactly to paste the snippet,
 
 const STEPS = [
   {
-    title: "Copy your BlockMe snippet",
-    body: 'After signing up, open your BlockMe dashboard and click "Get Snippet Code". Copy the one-line script tag.',
+    title: "Copy your block.me snippet",
+    body: 'After signing up, open your block.me dashboard and click "Get Snippet Code". Copy the one-line script tag.',
   },
   {
     title: "Open your HTML files",
@@ -51,7 +51,7 @@ const STEPS = [
   },
   {
     title: "Paste inside the <head> tag",
-    body: "Paste the BlockMe snippet anywhere inside the <head> element, before the closing </head> tag.",
+    body: "Paste the block.me snippet anywhere inside the <head> element, before the closing </head> tag.",
   },
   {
     title: "Repeat for every page (or use a shared layout)",
@@ -59,7 +59,7 @@ const STEPS = [
   },
   {
     title: "Upload and deploy",
-    body: "Save your files and redeploy your site. BlockMe starts blocking AI scrapers immediately.",
+    body: "Save your files and redeploy your site. block.me starts blocking AI scrapers immediately.",
   },
 ];
 
@@ -74,10 +74,10 @@ export default function HtmlPage() {
             HTML Guide
           </span>
           <h1 className="text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-syne)" }}>
-            BlockMe for Any HTML Site
+            block.me for Any HTML Site
           </h1>
           <p className="text-white/60 text-lg">
-            Running a custom-built or static HTML site? BlockMe works anywhere you can add a script tag.
+            Running a custom-built or static HTML site? block.me works anywhere you can add a script tag.
           </p>
         </div>
 
@@ -114,7 +114,7 @@ export default function HtmlPage() {
               Let AI add it for you
             </h2>
             <p className="text-white/50 text-sm mt-2">
-              Copy a prompt below and paste it into ChatGPT, Claude, or any AI assistant. It will walk you through adding BlockMe to your exact setup.
+              Copy a prompt below and paste it into ChatGPT, Claude, or any AI assistant. It will walk you through adding block.me to your exact setup.
             </p>
           </div>
           <div className="space-y-4">
@@ -142,15 +142,15 @@ export default function HtmlPage() {
               },
               {
                 title: "Prompt injection via scraped content",
-                body: "Attackers embed hidden instructions in page text (e.g. \"Ignore previous instructions…\") that get lifted by AI scrapers and injected into AI pipelines downstream. BlockMe stops the scraper before it reads anything.",
+                body: "Attackers embed hidden instructions in page text (e.g. \"Ignore previous instructions…\") that get lifted by AI scrapers and injected into AI pipelines downstream. block.me stops the scraper before it reads anything.",
               },
               {
                 title: "Content duplication by AI agents",
-                body: "Autonomous AI agents crawl HTML sites to summarize, rewrite, and republish your content — stripping traffic and SEO value. BlockMe fingerprints and blocks known agent user-agents in real time.",
+                body: "Autonomous AI agents crawl HTML sites to summarize, rewrite, and republish your content — stripping traffic and SEO value. block.me fingerprints and blocks known agent user-agents in real time.",
               },
               {
                 title: "Competitor intelligence bots",
-                body: "Businesses deploy AI crawlers to harvest pricing, copy, and product data from competitor HTML sites. BlockMe detects non-human request patterns and returns a 403 before any data is read.",
+                body: "Businesses deploy AI crawlers to harvest pricing, copy, and product data from competitor HTML sites. block.me detects non-human request patterns and returns a 403 before any data is read.",
               },
             ].map((card) => (
               <div key={card.title} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-5">

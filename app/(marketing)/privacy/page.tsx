@@ -1,11 +1,11 @@
 export const metadata = {
-  title: "Privacy Policy — BlockMe",
-  description: "BlockMe Privacy Policy",
+  title: "Privacy Policy — block.me",
+  description: "block.me Privacy Policy",
 };
 
 const LAST_UPDATED = "June 21, 2026";
 const EFFECTIVE_DATE = "June 21, 2026";
-const COMPANY = "BlockMe";
+const COMPANY = "block.me";
 const CONTACT_EMAIL = "privacy@blockme.io";
 
 export default function PrivacyPage() {
@@ -206,7 +206,7 @@ export default function PrivacyPage() {
             </a>
           </p>
           <p className="text-white/40 text-sm mt-2">
-            BlockMe · Privacy Team · Delaware, USA
+            block.me · Privacy Team · Delaware, USA
           </p>
         </Section>
 

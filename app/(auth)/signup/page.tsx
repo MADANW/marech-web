@@ -58,7 +58,7 @@ export default function SignupPage() {
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2">
             <img src="/logos/blockme-icon-color.svg" className="w-7 h-7" alt="" />
-            <span className="font-bold text-white text-xl" style={{ fontFamily: "var(--font-syne)" }}>BlockMe</span>
+            <span className="font-bold text-white text-xl" style={{ fontFamily: "var(--font-syne)" }}>block.me</span>
           </Link>
         </div>
 

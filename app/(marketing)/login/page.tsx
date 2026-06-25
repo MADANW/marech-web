@@ -43,7 +43,7 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center justify-center gap-2 mb-4">
             <img src="/logos/blockme-icon-color.svg" className="w-7 h-7" alt="" />
-            <span className="font-bold text-white text-xl" style={{ fontFamily: "var(--font-syne)" }}>BlockMe</span>
+            <span className="font-bold text-white text-xl" style={{ fontFamily: "var(--font-syne)" }}>block.me</span>
           </Link>
           <h1 className="text-2xl font-bold text-white" style={{ fontFamily: "var(--font-syne)" }}>Welcome back</h1>
           <p className="text-white/50 text-sm mt-1">Log in to your dashboard</p>

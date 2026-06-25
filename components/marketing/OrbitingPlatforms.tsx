@@ -50,7 +50,7 @@ export function OrbitingPlatforms() {
         {/* Center logo */}
         <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
           <div className="w-24 h-24 rounded-full bg-black/60 border border-white/10 flex items-center justify-center shadow-[0_0_40px_rgba(249,115,22,0.3),0_0_80px_rgba(249,115,22,0.1)]">
-            <img src="/logos/blockme-icon-color.svg" className="w-14 h-14" alt="BlockMe" />
+            <img src="/logos/blockme-icon-color.svg" className="w-14 h-14" alt="block.me" />
           </div>
         </div>
 

@@ -11,7 +11,7 @@ export function Footer() {
               style={{ fontFamily: "var(--font-syne)" }}
             >
               <img src="/logos/blockme-icon-color.svg" className="w-5 h-5" alt="" />
-              BlockMe
+              block.me
             </div>
             <p className="text-sm leading-relaxed">
               Stop AI scrapers from stealing your content. 30-second setup, zero maintenance.
@@ -50,7 +50,7 @@ export function Footer() {
 
         <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
           <div>
-            <p>© 2026 BlockMe. All rights reserved.</p>
+            <p>© 2026 block.me. All rights reserved.</p>
           </div>
           <div className="flex items-center gap-4">
             <a href="https://twitter.com" className="hover:text-white transition-colors" aria-label="Twitter">

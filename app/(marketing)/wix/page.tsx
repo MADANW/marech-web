@@ -1,18 +1,18 @@
 import { PlatformPage } from "@/components/marketing/PlatformPage";
 
 export const metadata = {
-  title: "BlockMe for Wix — Protect Your Wix Site from AI Scrapers",
+  title: "block.me for Wix — Protect Your Wix Site from AI Scrapers",
 };
 
 export default function WixPage() {
   return (
     <PlatformPage
       name="Wix"
-      headline="BlockMe for Wix Users"
+      headline="block.me for Wix Users"
       subheadline="Protect your Wix site from AI scrapers in 30 seconds — no developer needed."
       steps={[
         {
-          title: "Copy your BlockMe snippet",
+          title: "Copy your block.me snippet",
           body: 'After signing up, go to your dashboard and click "Get Snippet Code". Copy the one-line script tag.',
         },
         {
@@ -32,8 +32,8 @@ export default function WixPage() {
           body: "Set the code location to Head and apply it to All Pages so every page is protected.",
         },
         {
-          title: "Paste your BlockMe snippet and Save",
-          body: "Paste the code you copied in step 1, give it a name like 'BlockMe', and click Apply.",
+          title: "Paste your block.me snippet and Save",
+          body: "Paste the code you copied in step 1, give it a name like 'block.me', and click Apply.",
         },
       ]}
     />

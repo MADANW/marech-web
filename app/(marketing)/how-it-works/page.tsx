@@ -2,8 +2,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
 export const metadata = {
-  title: "How It Works — BlockMe",
-  description: "See exactly how BlockMe detects and blocks AI scrapers from your website.",
+  title: "How It Works — block.me",
+  description: "See exactly how block.me detects and blocks AI scrapers from your website.",
 };
 
 export default function HowItWorksPage() {
@@ -13,9 +13,9 @@ export default function HowItWorksPage() {
 
         <div className="text-center mb-16">
           <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase block mb-3" style={{ fontFamily: "var(--font-syne)" }}>Under the hood</span>
-          <h1 className="text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-syne)" }}>How BlockMe Works</h1>
+          <h1 className="text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-syne)" }}>How block.me Works</h1>
           <p className="text-white/60 text-lg max-w-2xl mx-auto">
-            Every request to your website goes through BlockMe's detection engine. Here's what happens in milliseconds.
+            Every request to your website goes through block.me's detection engine. Here's what happens in milliseconds.
           </p>
         </div>
 
@@ -87,8 +87,8 @@ export default function HowItWorksPage() {
 }
 
 const FLOW = [
-  { label: "Visitor arrives at your website", body: "Your BlockMe snippet loads invisibly on page load.", color: "bg-white/10 text-white" },
-  { label: "Is it an AI bot?", body: "BlockMe checks user agent, headers, IP reputation, and behavior patterns in real time.", color: "bg-accent/20 text-accent" },
+  { label: "Visitor arrives at your website", body: "Your block.me snippet loads invisibly on page load.", color: "bg-white/10 text-white" },
+  { label: "Is it an AI bot?", body: "block.me checks user agent, headers, IP reputation, and behavior patterns in real time.", color: "bg-accent/20 text-accent" },
   { label: "Decision: Block or Allow", body: "Based on your policies, the bot is blocked (403) or allowed through.", color: "bg-warning/20 text-warning" },
   { label: "Logged in your dashboard", body: "Every decision is recorded — bot type, IP, path, confidence score, and action taken.", color: "bg-success/20 text-success" },
 ];

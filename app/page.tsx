@@ -64,7 +64,7 @@ export default function LandingPage() {
                   </Link>
                 </div>
                 <div className="flex flex-wrap gap-4 text-sm text-white/35 font-medium">
-                  <span>14-Day Free Trial</span>
+                  <span>7-Day Free Trial</span>
                   <span className="text-white/15">·</span>
                   <span>No Credit Card</span>
                   <span className="text-white/15">·</span>
@@ -304,7 +304,7 @@ export default function LandingPage() {
                     className="text-7xl sm:text-8xl font-bold text-white mb-4 leading-none"
                     style={{ fontFamily: "var(--font-mono)" }}
                   >
-                    $10<span className="text-3xl text-white/40 font-medium">/mo</span>
+                    $25<span className="text-3xl text-white/40 font-medium">/mo</span>
                   </div>
                   <p className="text-white/50 text-lg mb-10 max-w-sm leading-relaxed">
                     Plans start small. Scale when you need it. No lock-in.
@@ -318,9 +318,9 @@ export default function LandingPage() {
                 <div className="bg-[#f5f0eb] border border-black/8 rounded-3xl p-8 shadow-[0_6px_24px_rgba(0,0,0,0.18)]">
                   <div className="space-y-3">
                     {[
-                      { name: "Starter", price: "$10/mo", highlight: false },
-                      { name: "Pro", price: "$29/mo", highlight: true },
-                      { name: "Team", price: "$79/mo", highlight: false },
+                      { name: "Starter", price: "$25/mo", highlight: false },
+                      { name: "Pro", price: "$50/mo", highlight: true },
+                      { name: "Enterprise", price: "$125/mo", highlight: false },
                     ].map((plan) => (
                       <div
                         key={plan.name}

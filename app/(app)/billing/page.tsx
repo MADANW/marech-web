@@ -19,9 +19,9 @@ const PLAN_NAMES: Record<string, string> = {
 
 const PLAN_PRICES: Record<string, string> = {
   free: "$0",
-  starter: "$10",
-  pro: "$30",
-  enterprise: "$100",
+  starter: "$25",
+  pro: "$50",
+  enterprise: "$125",
 };
 
 export default function BillingPage() {

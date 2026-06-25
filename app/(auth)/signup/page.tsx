@@ -89,7 +89,7 @@ export default function SignupPage() {
           {step === 1 && (
             <>
               <h1 className="text-xl font-bold text-white mb-1" style={{ fontFamily: "var(--font-syne)" }}>Create your account</h1>
-              <p className="text-white/50 text-sm mb-6">14-day free trial — no credit card needed</p>
+              <p className="text-white/50 text-sm mb-6">7-day free trial — no credit card needed</p>
               <div className="mb-5">
                 <GoogleButton onError={(m) => step1.setError("email", { message: m })} />
               </div>

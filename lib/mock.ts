@@ -126,7 +126,7 @@ export const MOCK_ACCOUNT: MockAccount = {
   platform: "WordPress",
   plan: "starter",
   status: "trial",
-  trialDaysLeft: 12,
+  trialDaysLeft: 5,
   usageThisMonth: 45234,
   planLimit: 100000,
   snippetId: "live_abc123xyz",
@@ -160,7 +160,7 @@ export const MOCK_POLICIES: Policy[] = [
 ];
 
 export const MOCK_BILLING_HISTORY = [
-  { date: "Jun 1, 2026", description: "Starter Plan", amount: "$10.00", status: "Paid" },
-  { date: "May 1, 2026", description: "Starter Plan", amount: "$10.00", status: "Paid" },
-  { date: "Apr 1, 2026", description: "Starter Plan", amount: "$10.00", status: "Paid" },
+  { date: "Jun 1, 2026", description: "Starter Plan", amount: "$25.00", status: "Paid" },
+  { date: "May 1, 2026", description: "Starter Plan", amount: "$25.00", status: "Paid" },
+  { date: "Apr 1, 2026", description: "Starter Plan", amount: "$25.00", status: "Paid" },
 ];

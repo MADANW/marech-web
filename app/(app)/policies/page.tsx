@@ -127,46 +127,46 @@ export default function PoliciesPage() {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto space-y-6">
+    <div className="p-7 max-w-4xl mx-auto space-y-5">
       <PageHeader
         title="Policies"
         subtitle="Rules that decide what gets blocked, allowed, or logged"
         action={
-          <Button variant="accent" size="sm" onClick={openCreate}>
-            <PlusIcon className="h-4 w-4" /> Create Policy
+          <Button variant="accent" size="sm" className="!rounded-lg" onClick={openCreate}>
+            <PlusIcon className="h-4 w-4" /> Create policy
           </Button>
         }
       />
 
       {policies.length === 0 && (
         <Card padding="lg" className="text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-accent/25 bg-accent/10 text-accent">
-            <ShieldPlusIcon className="h-7 w-7" />
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-accent/12 text-accent">
+            <ShieldPlusIcon className="h-6 w-6" />
           </div>
-          <h2 className="font-semibold text-white mb-1">No policies yet</h2>
-          <p className="text-white/50 text-sm mb-4">Create your first policy to customize what gets blocked.</p>
-          <Button variant="accent" size="sm" onClick={openCreate}>
-            <PlusIcon className="h-4 w-4" /> Create Policy
+          <h2 className="font-semibold text-app-text mb-1">No policies yet</h2>
+          <p className="text-app-muted text-sm mb-4">Create your first policy to customize what gets blocked.</p>
+          <Button variant="accent" size="sm" className="!rounded-lg" onClick={openCreate}>
+            <PlusIcon className="h-4 w-4" /> Create policy
           </Button>
         </Card>
       )}
 
-      <div className="space-y-4">
+      <div className="space-y-3">
         {policies.map((policy) => (
-          <Card key={policy.id} padding="md" className="transition-colors hover:border-white/20">
+          <Card key={policy.id} padding="md" className="transition-colors hover:border-white/15">
             <div className="flex items-start gap-4">
-              <span className={`mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${policy.enabled ? "border-accent/25 bg-accent/10 text-accent" : "border-white/10 bg-white/5 text-white/40"}`}>
-                <ShieldPlusIcon className="h-5 w-5" />
+              <span className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${policy.enabled ? "bg-accent/12 text-accent" : "bg-white/[0.06] text-app-faint"}`}>
+                <ShieldPlusIcon className="h-[18px] w-[18px]" />
               </span>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="font-semibold text-white">{policy.name}</span>
+                  <span className="font-semibold text-app-text">{policy.name}</span>
                   <Badge variant={policy.enabled ? "success" : "neutral"}>
                     {policy.enabled ? "Enabled" : "Disabled"}
                   </Badge>
-                  <span className="text-xs text-white/40">Priority {policy.priority}</span>
+                  <span className="text-xs text-app-faint">Priority {policy.priority}</span>
                 </div>
-                <div className="text-sm text-white/50 space-y-1">
+                <div className="text-[13px] text-app-muted space-y-1">
                   {policy.conditions.botTypes && (
                     <div>Bot types: {policy.conditions.botTypes.join(", ")}</div>
                   )}
@@ -177,7 +177,7 @@ export default function PoliciesPage() {
                     <div>IP ranges: {policy.conditions.ipRanges.join(", ")}</div>
                   )}
                 </div>
-                <div className="mt-2">
+                <div className="mt-2.5">
                   <Badge variant={policy.action === "block" ? "danger" : policy.action === "allow" ? "success" : "warning"}>
                     Action: {policy.action}
                   </Badge>
@@ -198,7 +198,7 @@ export default function PoliciesPage() {
       <Modal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        title={editPolicy ? "Edit Policy" : "Create Policy"}
+        title={editPolicy ? "Edit policy" : "Create policy"}
       >
         <form onSubmit={handleSubmit(onSave)} className="space-y-4">
           <Input
@@ -209,17 +209,17 @@ export default function PoliciesPage() {
           />
 
           <div>
-            <label className="text-sm font-medium text-white/70 block mb-2">Bot types</label>
+            <label className="text-sm font-medium text-app-muted block mb-2">Bot types</label>
             <div className="flex flex-wrap gap-2">
               {BOT_TYPE_OPTIONS.map((bt) => (
                 <button
                   key={bt.value}
                   type="button"
                   onClick={() => toggleBotType(bt.value)}
-                  className={`px-3 py-1.5 rounded-lg border text-sm font-medium transition-all ${
+                  className={`px-3 py-1.5 rounded-lg border text-sm font-medium transition-colors ${
                     selectedBotTypes.includes(bt.value)
                       ? "bg-accent text-white border-accent"
-                      : "bg-white/5 text-white/70 border-white/15 hover:border-accent/60"
+                      : "bg-app-inset text-app-muted border-app-border hover:border-accent/50"
                   }`}
                 >
                   {bt.label}
@@ -240,12 +240,12 @@ export default function PoliciesPage() {
           />
 
           <div>
-            <label className="text-sm font-medium text-white/70 block mb-2">Action</label>
+            <label className="text-sm font-medium text-app-muted block mb-2">Action</label>
             <div className="flex gap-3">
               {(["block", "allow", "log"] as const).map((a) => (
                 <label key={a} className="flex items-center gap-2 cursor-pointer">
                   <input type="radio" value={a} {...register("action")} className="accent-[#f97316]" />
-                  <span className="text-sm capitalize text-white/70">{a}</span>
+                  <span className="text-sm capitalize text-app-muted">{a}</span>
                 </label>
               ))}
             </div>
@@ -259,10 +259,10 @@ export default function PoliciesPage() {
           />
 
           <div className="flex gap-3 pt-2">
-            <Button type="submit" variant="accent" size="md" className="flex-1">
-              {editPolicy ? "Save Changes" : "Create Policy"}
+            <Button type="submit" variant="accent" size="md" className="flex-1 !rounded-lg">
+              {editPolicy ? "Save changes" : "Create policy"}
             </Button>
-            <Button type="button" variant="secondary" size="md" onClick={() => setModalOpen(false)}>
+            <Button type="button" variant="secondary" size="md" className="!rounded-lg" onClick={() => setModalOpen(false)}>
               Cancel
             </Button>
           </div>
@@ -270,15 +270,15 @@ export default function PoliciesPage() {
       </Modal>
 
       {/* Delete confirm modal */}
-      <Modal open={deleteConfirm !== null} onClose={() => setDeleteConfirm(null)} title="Delete Policy">
-        <p className="text-white/60 text-sm mb-6">
+      <Modal open={deleteConfirm !== null} onClose={() => setDeleteConfirm(null)} title="Delete policy">
+        <p className="text-app-muted text-sm mb-6">
           Are you sure? This policy will be deleted and bots it was blocking may get through.
         </p>
         <div className="flex gap-3">
-          <Button variant="danger" size="md" className="flex-1" onClick={() => deletePolicy(deleteConfirm!)}>
+          <Button variant="danger" size="md" className="flex-1 !rounded-lg" onClick={() => deletePolicy(deleteConfirm!)}>
             Delete
           </Button>
-          <Button variant="secondary" size="md" onClick={() => setDeleteConfirm(null)}>Cancel</Button>
+          <Button variant="secondary" size="md" className="!rounded-lg" onClick={() => setDeleteConfirm(null)}>Cancel</Button>
         </div>
       </Modal>
     </div>

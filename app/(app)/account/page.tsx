@@ -72,18 +72,18 @@ export default function AccountPage() {
   };
 
   return (
-    <div className="p-6 max-w-2xl mx-auto space-y-6">
-      <PageHeader title="Account Settings" subtitle="Manage your profile, security, and account" />
+    <div className="p-7 max-w-2xl mx-auto space-y-5">
+      <PageHeader title="Account settings" subtitle="Manage your profile, security, and account" />
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-white/5 p-1 rounded-xl w-fit">
+      <div className="flex gap-1 bg-app-inset p-1 rounded-lg w-fit border border-app-border">
         {TABS.map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
             className={cn(
-              "px-4 py-1.5 rounded-lg text-sm font-medium transition-all",
-              tab === t ? "bg-accent text-white shadow-sm" : "text-white/50 hover:text-white"
+              "px-4 py-1.5 rounded-md text-sm font-medium transition-colors",
+              tab === t ? "bg-app-card text-app-text" : "text-app-muted hover:text-app-text"
             )}
           >
             {t}
@@ -95,8 +95,8 @@ export default function AccountPage() {
       {tab === "Profile" && (
         <Card padding="md">
           <div className="mb-4">
-            <div className="text-sm font-medium text-white/70 mb-1">Email</div>
-            <div className="text-white/60 text-sm bg-white/5 rounded-lg px-3 py-2">{user?.email}</div>
+            <div className="text-sm font-medium text-app-muted mb-1.5">Email</div>
+            <div className="text-app-muted text-sm bg-app-inset border border-app-border rounded-lg px-3 py-2">{user?.email}</div>
           </div>
           <form onSubmit={profileForm.handleSubmit(onSaveProfile)} className="space-y-4">
             <Input
@@ -105,19 +105,19 @@ export default function AccountPage() {
               {...profileForm.register("websiteUrl")}
             />
             <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium text-white/70">Platform</label>
-              <select className="w-full px-3 py-2 rounded-lg border border-white/15 bg-white/5 text-white text-sm outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20 [&>option]:bg-gray-900" {...profileForm.register("platform")}>
+              <label className="text-sm font-medium text-app-muted">Platform</label>
+              <select className="w-full px-3 py-2 rounded-lg border border-app-border bg-app-inset text-app-text text-sm outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/15 [&>option]:bg-[#141416]" {...profileForm.register("platform")}>
                 {PLATFORMS.map((p) => <option key={p}>{p}</option>)}
               </select>
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium text-white/70">Industry</label>
-              <select className="w-full px-3 py-2 rounded-lg border border-white/15 bg-white/5 text-white text-sm outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20 [&>option]:bg-gray-900" {...profileForm.register("industry")}>
+              <label className="text-sm font-medium text-app-muted">Industry</label>
+              <select className="w-full px-3 py-2 rounded-lg border border-app-border bg-app-inset text-app-text text-sm outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/15 [&>option]:bg-[#141416]" {...profileForm.register("industry")}>
                 {INDUSTRIES.map((i) => <option key={i}>{i}</option>)}
               </select>
             </div>
-            <Button type="submit" variant="accent" size="md" disabled={profileForm.formState.isSubmitting}>
-              {profileSaved ? (<><CheckIcon className="h-4 w-4" /> Saved!</>) : profileForm.formState.isSubmitting ? "Saving…" : "Save Changes"}
+            <Button type="submit" variant="accent" size="md" className="!rounded-lg" disabled={profileForm.formState.isSubmitting}>
+              {profileSaved ? (<><CheckIcon className="h-4 w-4" /> Saved</>) : profileForm.formState.isSubmitting ? "Saving…" : "Save changes"}
             </Button>
           </form>
         </Card>
@@ -126,7 +126,7 @@ export default function AccountPage() {
       {/* Security */}
       {tab === "Security" && (
         <Card padding="md">
-          <h2 className="font-semibold text-white mb-4">Change Password</h2>
+          <h2 className="font-semibold text-app-text mb-4">Change password</h2>
           <form onSubmit={passwordForm.handleSubmit(onSavePassword)} className="space-y-4">
             <Input
               label="Current password"
@@ -152,8 +152,8 @@ export default function AccountPage() {
               error={passwordForm.formState.errors.confirm?.message}
               {...passwordForm.register("confirm", { required: "Required" })}
             />
-            <Button type="submit" variant="accent" size="md" disabled={passwordForm.formState.isSubmitting}>
-              {passwordSaved ? (<><CheckIcon className="h-4 w-4" /> Password Updated!</>) : passwordForm.formState.isSubmitting ? "Updating…" : "Update Password"}
+            <Button type="submit" variant="accent" size="md" className="!rounded-lg" disabled={passwordForm.formState.isSubmitting}>
+              {passwordSaved ? (<><CheckIcon className="h-4 w-4" /> Password updated</>) : passwordForm.formState.isSubmitting ? "Updating…" : "Update password"}
             </Button>
           </form>
         </Card>
@@ -162,40 +162,40 @@ export default function AccountPage() {
       {/* Danger Zone */}
       {tab === "Danger Zone" && (
         <Card padding="md" className="border-danger/30">
-          <h2 className="font-semibold text-red-400 mb-2">Delete Account</h2>
-          <p className="text-white/50 text-sm mb-4">
+          <h2 className="font-semibold text-red-400 mb-2">Delete account</h2>
+          <p className="text-app-muted text-sm mb-4">
             Permanently deletes your account, snippet, and all data. This cannot be undone.
             Your website will no longer be protected.
           </p>
-          <Button variant="danger" size="sm" onClick={() => setDeleteModal(true)}>
-            Delete My Account
+          <Button variant="danger" size="sm" className="!rounded-lg" onClick={() => setDeleteModal(true)}>
+            Delete my account
           </Button>
         </Card>
       )}
 
       {/* Delete modal */}
-      <Modal open={deleteModal} onClose={() => { setDeleteModal(false); setDeleteInput(""); }} title="Delete Account">
-        <p className="text-white/60 text-sm mb-4">
-          This will permanently delete your account and stop all protection. Type <strong className="text-white">DELETE</strong> to confirm.
+      <Modal open={deleteModal} onClose={() => { setDeleteModal(false); setDeleteInput(""); }} title="Delete account">
+        <p className="text-app-muted text-sm mb-4">
+          This will permanently delete your account and stop all protection. Type <strong className="text-app-text">DELETE</strong> to confirm.
         </p>
         <input
           type="text"
           value={deleteInput}
           onChange={(e) => setDeleteInput(e.target.value)}
           placeholder="Type DELETE"
-          className="w-full px-3 py-2 rounded-lg border border-white/15 bg-white/5 text-white placeholder-white/30 text-sm outline-none focus:border-danger focus:ring-2 focus:ring-danger/20 mb-4"
+          className="w-full px-3 py-2 rounded-lg border border-app-border bg-app-inset text-app-text placeholder-app-faint text-sm outline-none focus:border-danger focus:ring-2 focus:ring-danger/20 mb-4"
         />
         <div className="flex gap-3">
           <Button
             variant="danger"
             size="md"
-            className="flex-1"
+            className="flex-1 !rounded-lg"
             disabled={deleteInput !== "DELETE"}
             onClick={handleDelete}
           >
-            Delete Account
+            Delete account
           </Button>
-          <Button variant="secondary" size="md" onClick={() => { setDeleteModal(false); setDeleteInput(""); }}>
+          <Button variant="secondary" size="md" className="!rounded-lg" onClick={() => { setDeleteModal(false); setDeleteInput(""); }}>
             Cancel
           </Button>
         </div>

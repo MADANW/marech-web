@@ -93,19 +93,19 @@ export default function SnippetPage() {
   }, []);
 
   return (
-    <div className="p-6 max-w-2xl mx-auto space-y-6">
+    <div className="p-7 max-w-2xl mx-auto space-y-5">
       <PageHeader
-        title="Your Protection Code"
+        title="Your protection code"
         subtitle="Copy this snippet and paste it into your website's <head> section"
       />
 
       {detected && (
-        <div className="bg-success/15 border border-success/30 rounded-xl px-5 py-4 flex items-center gap-3">
+        <div className="bg-success/10 border border-success/25 rounded-xl px-5 py-4 flex items-center gap-3">
           <svg className="w-5 h-5 text-success shrink-0" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
           </svg>
           <div>
-            <div className="font-semibold text-success text-sm">Installation Detected!</div>
+            <div className="font-semibold text-success text-sm">Installation detected</div>
             <div className="text-success/80 text-xs">Protection is now active on your site.</div>
           </div>
         </div>
@@ -113,12 +113,12 @@ export default function SnippetPage() {
 
       {/* Code block */}
       <Card padding="none" className="overflow-hidden">
-        <div className="bg-[#0d0704] px-5 py-4 border-b border-white/10">
+        <div className="bg-app-inset px-5 py-4 border-b border-app-border">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs text-gray-400 font-mono">HTML · paste in &lt;head&gt;</span>
+            <span className="text-xs text-app-faint font-mono">HTML · paste in &lt;head&gt;</span>
             <button
               onClick={handleCopy}
-              className="text-xs text-gray-400 hover:text-white flex items-center gap-1.5 transition-colors"
+              className="text-xs text-app-faint hover:text-app-text flex items-center gap-1.5 transition-colors"
             >
               {copied ? (
                 <>
@@ -137,13 +137,13 @@ export default function SnippetPage() {
               )}
             </button>
           </div>
-          <pre className="font-mono text-sm text-green-400 whitespace-pre-wrap break-all">
+          <pre className="font-mono text-[13px] text-emerald-300 whitespace-pre-wrap break-all">
             {snippetCode}
           </pre>
         </div>
         <div className="p-5">
-          <Button onClick={handleCopy} variant="accent" size="md" className="w-full">
-            {copied ? (<><CheckIcon className="h-4 w-4" /> Copied to Clipboard!</>) : "Copy Code"}
+          <Button onClick={handleCopy} variant="accent" size="md" className="w-full !rounded-lg">
+            {copied ? (<><CheckIcon className="h-4 w-4" /> Copied to clipboard</>) : "Copy code"}
           </Button>
         </div>
       </Card>
@@ -151,28 +151,28 @@ export default function SnippetPage() {
       {/* Platform selector + instructions */}
       <Card padding="md">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-white text-sm">Installation Instructions</h2>
+          <h2 className="font-semibold text-app-text text-[13.5px]">Installation instructions</h2>
           <select
             value={platform}
             onChange={(e) => setPlatform(e.target.value)}
-            className="text-xs border border-white/15 bg-white/5 rounded-lg px-2 py-1.5 text-white focus:border-accent/50 focus:ring-1 focus:ring-accent outline-none [&>option]:bg-gray-900"
+            className="text-xs border border-app-border bg-app-inset rounded-lg px-2 py-1.5 text-app-text focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none [&>option]:bg-[#141416]"
           >
             {PLATFORMS.map((p) => <option key={p}>{p}</option>)}
           </select>
         </div>
 
-        <div className="bg-white/5 rounded-lg px-4 py-3 text-xs text-white/50 font-mono mb-4">
+        <div className="bg-app-inset rounded-lg px-4 py-3 text-xs text-app-muted font-mono mb-5">
           {platform} → {instructions.nav}
         </div>
 
         <ol className="relative space-y-4">
-          <span className="absolute left-[13px] top-2 bottom-2 w-px bg-white/10" aria-hidden />
+          <span className="absolute left-[13px] top-2 bottom-2 w-px bg-app-border" aria-hidden />
           {instructions.steps.map((step, i) => (
             <li key={i} className="relative flex gap-3 text-sm">
-              <span className="relative z-10 w-7 h-7 rounded-full bg-accent/15 border border-accent/40 text-accent text-xs font-bold flex items-center justify-center shrink-0" style={{ fontFamily: "var(--font-mono)" }}>
+              <span className="relative z-10 w-[26px] h-[26px] rounded-full bg-accent/12 text-accent text-xs font-semibold flex items-center justify-center shrink-0 tabular-nums" style={{ fontFamily: "var(--font-mono)" }}>
                 {i + 1}
               </span>
-              <span className="text-white/70 pt-1">{step}</span>
+              <span className="text-app-muted pt-0.5">{step}</span>
             </li>
           ))}
         </ol>

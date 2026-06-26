@@ -5,10 +5,10 @@ import { TrendingUpIcon, TrendingDownIcon } from "@/components/ui/icons";
 type Accent = "orange" | "red" | "green" | "blue";
 
 const ACCENT: Record<Accent, string> = {
-  orange: "bg-accent/10 text-accent border-accent/25",
-  red: "bg-danger/10 text-red-400 border-danger/30",
-  green: "bg-success/10 text-success border-success/25",
-  blue: "bg-primary/10 text-blue-300 border-primary/30",
+  orange: "bg-accent/12 text-accent",
+  red: "bg-danger/12 text-red-400",
+  green: "bg-success/12 text-success",
+  blue: "bg-white/[0.06] text-app-muted",
 };
 
 interface Trend {
@@ -56,17 +56,14 @@ export function StatCard({
   return (
     <div
       className={cn(
-        "group relative overflow-hidden rounded-2xl border bg-[#1a1a1a] p-5 shadow-[0_6px_24px_rgba(0,0,0,0.35)] transition-colors",
-        highlight ? "border-accent/30 hover:border-accent/50" : "border-white/10 hover:border-white/20"
+        "rounded-xl border bg-app-card p-5 transition-colors",
+        highlight ? "border-accent/35" : "border-app-border hover:border-white/15"
       )}
     >
-      {highlight && (
-        <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-accent/15 blur-2xl" />
-      )}
-      <div className="relative flex items-start justify-between">
+      <div className="flex items-start justify-between">
         <span
           className={cn(
-            "flex h-10 w-10 items-center justify-center rounded-xl border",
+            "flex h-9 w-9 items-center justify-center rounded-lg",
             ACCENT[accent]
           )}
         >
@@ -74,17 +71,15 @@ export function StatCard({
         </span>
         {trend && <TrendPill {...trend} />}
       </div>
-      <div className="relative mt-4">
+      <div className="mt-5">
         <div
-          className="text-3xl font-bold leading-none text-white tabular-nums"
+          className="text-[28px] font-semibold leading-none tracking-tight text-app-text tabular-nums"
           style={{ fontFamily: "var(--font-mono)" }}
         >
           {value}
         </div>
-        <div className="mt-2 text-xs font-medium uppercase tracking-wide text-white/50">
-          {label}
-        </div>
-        {sub && <div className="mt-1 text-xs text-white/40">{sub}</div>}
+        <div className="mt-2.5 text-[13px] text-app-muted">{label}</div>
+        {sub && <div className="mt-1 text-xs text-app-faint">{sub}</div>}
       </div>
     </div>
   );

@@ -30,6 +30,18 @@
   --color-gray-800: #1f2937;
   --color-gray-900: #111827;
 
+  /* App portal surfaces (refined near-black theme) */
+  --color-app-bg: #0a0a0b;
+  --color-app-sidebar: #0b0b0c;
+  --color-app-card: #141416;
+  --color-app-inset: #0f0f11;
+  --color-app-border: rgba(255, 255, 255, 0.07);
+  --color-app-border-faint: rgba(255, 255, 255, 0.05);
+  --color-app-hover: rgba(255, 255, 255, 0.04);
+  --color-app-text: #ededee;
+  --color-app-muted: #9a9aa3;
+  --color-app-faint: #67676f;
+
   /* Fonts */
   --font-sans: var(--font-plus-jakarta);
   --font-display: var(--font-syne);

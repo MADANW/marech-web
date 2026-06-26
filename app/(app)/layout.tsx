@@ -32,23 +32,23 @@ function PortalShell({ children }: { children: React.ReactNode }) {
     if (!user) return null;
     if (user.status === "suspended")
       return (
-        <div className="bg-danger text-white px-4 py-3 text-sm flex items-center justify-between">
-          <span className="flex items-center gap-2"><OctagonAlertIcon className="h-4 w-4 shrink-0" /> Account Suspended — update payment to restore protection</span>
-          <Link href="/billing" className="underline font-medium ml-4">Update Payment</Link>
+        <div className="border-b border-app-border bg-danger/10 text-red-300 px-6 py-2.5 text-[13px] flex items-center justify-between">
+          <span className="flex items-center gap-2"><OctagonAlertIcon className="h-4 w-4 shrink-0" /> Account suspended — update payment to restore protection</span>
+          <Link href="/billing" className="font-medium ml-4 hover:underline">Update payment</Link>
         </div>
       );
     if (user.status === "payment_failed")
       return (
-        <div className="bg-danger text-white px-4 py-3 text-sm flex items-center justify-between">
-          <span className="flex items-center gap-2"><AlertTriangleIcon className="h-4 w-4 shrink-0" /> Payment Failed — protection stops soon</span>
-          <Link href="/billing" className="underline font-medium ml-4">Update Payment</Link>
+        <div className="border-b border-app-border bg-danger/10 text-red-300 px-6 py-2.5 text-[13px] flex items-center justify-between">
+          <span className="flex items-center gap-2"><AlertTriangleIcon className="h-4 w-4 shrink-0" /> Payment failed — protection stops soon</span>
+          <Link href="/billing" className="font-medium ml-4 hover:underline">Update payment</Link>
         </div>
       );
     if (user.status === "trial")
       return (
-        <div className="bg-accent text-white px-4 py-3 text-sm flex items-center justify-between">
-          <span className="flex items-center gap-2"><GiftIcon className="h-4 w-4 shrink-0" /> Free Trial — {user.trialDaysLeft} days left</span>
-          <Link href="/billing" className="underline font-medium ml-4">Add Payment Method</Link>
+        <div className="border-b border-app-border bg-accent/10 text-accent px-6 py-2.5 text-[13px] flex items-center justify-between">
+          <span className="flex items-center gap-2"><GiftIcon className="h-4 w-4 shrink-0" /> Free trial — {user.trialDaysLeft} days left</span>
+          <Link href="/billing" className="font-medium ml-4 hover:underline">Add payment method</Link>
         </div>
       );
     return null;
@@ -56,47 +56,53 @@ function PortalShell({ children }: { children: React.ReactNode }) {
 
   const SidebarContent = () => (
     <nav className="flex flex-col h-full">
-      <div className="px-4 py-5 border-b border-white/10">
+      <div className="px-5 py-5">
         <Link href="/dashboard">
           <Logo />
         </Link>
       </div>
-      <div className="flex-1 px-2 py-4 space-y-0.5 overflow-y-auto">
-        {NAV_ITEMS.map(({ href, label, icon: Icon }) => (
-          <Link
-            key={href}
-            href={href}
-            onClick={() => setSidebarOpen(false)}
-            className={cn(
-              "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
-              pathname === href
-                ? "bg-accent text-white"
-                : "text-white/60 hover:bg-white/10 hover:text-white"
-            )}
-          >
-            <Icon className="w-4 h-4 shrink-0" />
-            {label}
-          </Link>
-        ))}
+      <div className="flex-1 px-3 py-2 space-y-0.5 overflow-y-auto">
+        {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
+          const active = pathname === href;
+          return (
+            <Link
+              key={href}
+              href={href}
+              onClick={() => setSidebarOpen(false)}
+              className={cn(
+                "relative flex items-center gap-3 px-3 py-2 rounded-lg text-[13.5px] font-medium transition-colors",
+                active
+                  ? "bg-app-hover text-app-text"
+                  : "text-app-muted hover:bg-app-hover hover:text-app-text"
+              )}
+            >
+              {active && (
+                <span className="absolute -left-3 top-1.5 bottom-1.5 w-[2.5px] rounded-r bg-accent" />
+              )}
+              <Icon className={cn("w-[17px] h-[17px] shrink-0", active ? "text-accent" : "")} />
+              {label}
+            </Link>
+          );
+        })}
       </div>
-      <div className="px-4 py-4 border-t border-white/10 text-xs text-white/40 truncate">
+      <div className="px-5 py-4 border-t border-app-border text-xs text-app-faint truncate">
         {user?.email}
       </div>
     </nav>
   );
 
   return (
-    <div className="flex h-screen overflow-hidden" style={{ backgroundColor: "#c44a1a" }}>
+    <div className="flex h-screen overflow-hidden bg-app-bg">
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex flex-col w-56 bg-[#0d0704] border-r border-white/10 shrink-0">
+      <aside className="hidden md:flex flex-col w-56 bg-app-sidebar border-r border-app-border shrink-0">
         <SidebarContent />
       </aside>
 
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div className="md:hidden fixed inset-0 z-40">
-          <div className="absolute inset-0 bg-black/60" onClick={() => setSidebarOpen(false)} />
-          <aside className="relative w-56 h-full bg-[#0d0704] shadow-xl">
+          <div className="absolute inset-0 bg-black/70" onClick={() => setSidebarOpen(false)} />
+          <aside className="relative w-56 h-full bg-app-sidebar border-r border-app-border">
             <SidebarContent />
           </aside>
         </div>
@@ -105,9 +111,9 @@ function PortalShell({ children }: { children: React.ReactNode }) {
       {/* Main */}
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
         {/* Top bar */}
-        <header className="bg-[#0d0704] border-b border-white/10 px-4 h-14 flex items-center justify-between shrink-0">
+        <header className="bg-app-sidebar border-b border-app-border px-4 h-14 flex items-center justify-between shrink-0">
           <button
-            className="md:hidden p-2 text-white/60 hover:text-white"
+            className="md:hidden p-2 text-app-muted hover:text-app-text"
             onClick={() => setSidebarOpen(true)}
             aria-label="Open menu"
           >
@@ -119,23 +125,23 @@ function PortalShell({ children }: { children: React.ReactNode }) {
           <div className="relative">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="flex items-center gap-2 text-sm text-white/70 hover:text-white"
+              className="flex items-center gap-2 text-sm text-app-muted hover:text-app-text"
             >
-              <div className="w-7 h-7 rounded-full bg-accent text-white font-bold flex items-center justify-center text-xs">
+              <div className="w-7 h-7 rounded-full bg-accent text-white font-semibold flex items-center justify-center text-xs">
                 {user?.email?.[0]?.toUpperCase() ?? "U"}
               </div>
-              <svg className="w-4 h-4 text-white/40" viewBox="0 0 20 20" fill="currentColor">
+              <svg className="w-4 h-4 text-app-faint" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </button>
             {dropdownOpen && (
               <>
                 <div className="fixed inset-0 z-10" onClick={() => setDropdownOpen(false)} />
-                <div className="absolute right-0 mt-2 w-44 bg-[#1a1a1a] border border-white/10 rounded-xl shadow-lg py-1 z-20">
-                  <Link href="/account" className="block px-4 py-2 text-sm text-white/70 hover:bg-white/5" onClick={() => setDropdownOpen(false)}>Settings</Link>
-                  <Link href="/billing" className="block px-4 py-2 text-sm text-white/70 hover:bg-white/5" onClick={() => setDropdownOpen(false)}>Billing</Link>
-                  <hr className="my-1 border-white/10" />
-                  <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-red-300 hover:bg-white/5">Log out</button>
+                <div className="absolute right-0 mt-2 w-44 bg-app-card border border-app-border rounded-lg shadow-2xl py-1 z-20">
+                  <Link href="/account" className="block px-4 py-2 text-sm text-app-muted hover:bg-app-hover hover:text-app-text" onClick={() => setDropdownOpen(false)}>Settings</Link>
+                  <Link href="/billing" className="block px-4 py-2 text-sm text-app-muted hover:bg-app-hover hover:text-app-text" onClick={() => setDropdownOpen(false)}>Billing</Link>
+                  <hr className="my-1 border-app-border" />
+                  <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-red-300 hover:bg-app-hover">Log out</button>
                 </div>
               </>
             )}

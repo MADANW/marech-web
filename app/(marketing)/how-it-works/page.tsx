@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { BanIcon, ClockIcon, LockIcon } from "@/components/ui/icons";
 
 export const metadata = {
   title: "How It Works — block.me",
@@ -60,8 +61,8 @@ export default function HowItWorksPage() {
           <div className="space-y-3">
             {POLICY_EXAMPLES.map((ex) => (
               <div key={ex.label} className="flex items-center gap-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-4">
-                <div className="w-8 h-8 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0 text-sm">
-                  {ex.icon}
+                <div className="w-8 h-8 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0 text-accent">
+                  <ex.icon className="h-4 w-4" />
                 </div>
                 <div>
                   <div className="font-semibold text-white text-sm">{ex.label}</div>
@@ -100,7 +101,7 @@ const DETECTION = [
 ];
 
 const POLICY_EXAMPLES = [
-  { icon: "🚫", label: "Block all AI scrapers", body: "The default. Zero AI bots get through — GPTBot, Claude, and 20+ others." },
-  { icon: "⏰", label: "Block during business hours only", body: "Let archive bots in at night while protecting during peak traffic." },
-  { icon: "🔒", label: "Block on specific paths", body: "Protect /admin, /api, or /checkout while leaving /blog open." },
+  { icon: BanIcon, label: "Block all AI scrapers", body: "The default. Zero AI bots get through — GPTBot, Claude, and 20+ others." },
+  { icon: ClockIcon, label: "Block during business hours only", body: "Let archive bots in at night while protecting during peak traffic." },
+  { icon: LockIcon, label: "Block on specific paths", body: "Protect /admin, /api, or /checkout while leaving /blog open." },
 ];

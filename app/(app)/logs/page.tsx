@@ -4,9 +4,19 @@ import useSWR from "swr";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { DownloadIcon, SearchIcon, ActivityIcon, BanIcon, ShieldCheckIcon } from "@/components/ui/icons";
 import { formatDate } from "@/lib/utils";
-import { generateLogs, type LogEntry } from "@/lib/mock";
+import { generateLogs, type LogEntry, type BotType } from "@/lib/mock";
 import { isMock, fetchLogs, downloadCsv } from "@/lib/api";
+
+const BOT_DOT: Record<BotType, string> = {
+  scraper: "bg-red-400",
+  ai_tool: "bg-accent",
+  local_llm: "bg-purple-400",
+  human: "bg-success",
+  unknown: "bg-white/40",
+};
 
 const MOCK_LOGS = generateLogs(120);
 const PAGE_SIZE = 50;
@@ -59,24 +69,49 @@ export default function LogsPage() {
 
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-5">
-      <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-white" style={{ fontFamily: "var(--font-mono)" }}>Traffic Logs</h1>
-        <Button variant="secondary" size="sm" onClick={handleExport}>
-          <DownloadIcon className="w-4 h-4" />
-          Export CSV
-        </Button>
+      <PageHeader
+        title="Traffic Logs"
+        subtitle="Every request we've inspected — searchable and exportable"
+        action={
+          <Button variant="secondary" size="sm" onClick={handleExport}>
+            <DownloadIcon className="w-4 h-4" />
+            Export CSV
+          </Button>
+        }
+      />
+
+      {/* Summary chips */}
+      <div className="grid grid-cols-3 gap-4">
+        {[
+          { label: "Matched", value: filtered.length, icon: ActivityIcon, tone: "text-white border-white/10 bg-white/5", iconTone: "text-white/60" },
+          { label: "Blocked", value: filtered.filter((l) => l.action === "block").length, icon: BanIcon, tone: "text-red-400 border-danger/25 bg-danger/10", iconTone: "text-red-400" },
+          { label: "Allowed", value: filtered.filter((l) => l.action === "allow").length, icon: ShieldCheckIcon, tone: "text-success border-success/25 bg-success/10", iconTone: "text-success" },
+        ].map(({ label, value, icon: Icon, tone, iconTone }) => (
+          <div key={label} className={`flex items-center gap-3 rounded-xl border p-4 ${tone}`}>
+            <span className={`flex h-9 w-9 items-center justify-center rounded-lg bg-black/20 ${iconTone}`}>
+              <Icon className="h-4 w-4" />
+            </span>
+            <div>
+              <div className="text-xl font-bold tabular-nums" style={{ fontFamily: "var(--font-mono)" }}>{value.toLocaleString()}</div>
+              <div className="text-[11px] uppercase tracking-wide text-white/45">{label}</div>
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Filters */}
       <Card padding="sm">
         <div className="flex flex-wrap gap-3">
-          <input
-            type="text"
-            placeholder="Search IP, path, or user agent…"
-            value={search}
-            onChange={(e) => { setSearch(e.target.value); setPage(0); }}
-            className="flex-1 min-w-48 px-3 py-2 rounded-lg border border-white/15 bg-white/5 text-white placeholder-white/30 text-sm outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20"
-          />
+          <div className="relative flex-1 min-w-48">
+            <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30" />
+            <input
+              type="text"
+              placeholder="Search IP, path, or user agent…"
+              value={search}
+              onChange={(e) => { setSearch(e.target.value); setPage(0); }}
+              className="w-full pl-9 pr-3 py-2 rounded-lg border border-white/15 bg-white/5 text-white placeholder-white/30 text-sm outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20"
+            />
+          </div>
           <select
             value={botFilter}
             onChange={(e) => { setBotFilter(e.target.value); setPage(0); }}
@@ -139,7 +174,10 @@ export default function LogsPage() {
                   <td className="px-4 py-3 text-white/50 font-mono text-xs whitespace-nowrap">{formatDate(log.timestamp)}</td>
                   <td className="px-4 py-3 text-white/70 max-w-[200px] truncate" title={log.userAgent}>{log.userAgent}</td>
                   <td className="px-4 py-3">
-                    <Badge variant="neutral">{log.botType}</Badge>
+                    <span className="inline-flex items-center gap-2 text-xs text-white/70">
+                      <span className={`h-1.5 w-1.5 rounded-full ${BOT_DOT[log.botType]}`} />
+                      {log.botType}
+                    </span>
                   </td>
                   <td className="px-4 py-3 font-mono text-xs text-white/50">{log.ip}</td>
                   <td className="px-4 py-3 text-white/50 max-w-[160px] truncate font-mono text-xs" title={log.path}>{log.path}</td>
@@ -148,7 +186,17 @@ export default function LogsPage() {
                       {log.action === "block" ? "Blocked" : log.action === "allow" ? "Allowed" : "Log only"}
                     </Badge>
                   </td>
-                  <td className="px-4 py-3 text-white/50 text-xs">{(log.confidence * 100).toFixed(0)}%</td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-12 rounded-full bg-white/10 overflow-hidden">
+                        <div
+                          className={`h-full rounded-full ${log.confidence > 0.66 ? "bg-red-400" : log.confidence > 0.33 ? "bg-warning" : "bg-white/40"}`}
+                          style={{ width: `${log.confidence * 100}%` }}
+                        />
+                      </div>
+                      <span className="text-white/50 text-xs font-mono tabular-nums w-8">{(log.confidence * 100).toFixed(0)}%</span>
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -173,13 +221,5 @@ export default function LogsPage() {
         )}
       </Card>
     </div>
-  );
-}
-
-function DownloadIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-    </svg>
   );
 }

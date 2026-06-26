@@ -21,7 +21,7 @@ export default function WebflowPage() {
         },
         {
           title: "Go to Site Settings → Custom Code",
-          body: "Click the gear icon (⚙) in the top-left, then choose the Custom Code tab.",
+          body: "Click the gear icon in the top-left, then choose the Custom Code tab.",
         },
         {
           title: "Paste into the Head Code section",

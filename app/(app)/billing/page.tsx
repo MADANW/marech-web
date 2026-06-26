@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Modal } from "@/components/ui/Modal";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { CreditCardIcon, ReceiptIcon, ZapIcon } from "@/components/ui/icons";
 import { useAuth } from "@/lib/auth";
 import { MOCK_BILLING_HISTORY } from "@/lib/mock";
 import { formatNumber } from "@/lib/utils";
@@ -48,18 +50,23 @@ export default function BillingPage() {
 
   return (
     <div className="p-6 max-w-3xl mx-auto space-y-6">
-      <h1 className="text-xl font-bold text-white" style={{ fontFamily: "var(--font-mono)" }}>Billing</h1>
+      <PageHeader title="Billing" subtitle="Manage your plan, payment method, and invoices" />
 
       {/* Current plan */}
       <Card padding="md">
         <div className="flex items-start justify-between mb-4">
-          <div>
-            <h2 className="font-semibold text-white mb-1">
-              {PLAN_NAMES[user.plan]} Plan — {PLAN_PRICES[user.plan]}/month
-            </h2>
-            <Badge variant={user.status === "active" ? "success" : user.status === "trial" ? "primary" : "danger"}>
-              {user.status === "trial" ? `Trial · ${user.trialDaysLeft} days left` : user.status}
-            </Badge>
+          <div className="flex items-start gap-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-accent/25 bg-accent/10 text-accent">
+              <ZapIcon className="h-5 w-5" />
+            </span>
+            <div>
+              <h2 className="font-semibold text-white mb-1">
+                {PLAN_NAMES[user.plan]} Plan — {PLAN_PRICES[user.plan]}/month
+              </h2>
+              <Badge variant={user.status === "active" ? "success" : user.status === "trial" ? "primary" : "danger"}>
+                {user.status === "trial" ? `Trial · ${user.trialDaysLeft} days left` : user.status}
+              </Badge>
+            </div>
           </div>
           <Link href="/pricing">
             <Button variant="secondary" size="sm">Upgrade Plan</Button>
@@ -75,7 +82,7 @@ export default function BillingPage() {
           </div>
           <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
             <div
-              className={`h-full rounded-full transition-all ${usagePct > 90 ? "bg-danger" : usagePct > 70 ? "bg-warning" : "bg-accent"}`}
+              className={`h-full rounded-full transition-all ${usagePct > 90 ? "bg-gradient-to-r from-red-500 to-danger" : usagePct > 70 ? "bg-gradient-to-r from-amber-400 to-warning" : "bg-gradient-to-r from-accent to-amber-400"}`}
               style={{ width: `${usagePct}%` }}
             />
           </div>
@@ -86,12 +93,17 @@ export default function BillingPage() {
       {/* Payment method */}
       <Card padding="md">
         <div className="flex items-center justify-between">
-          <div>
-            <h2 className="font-semibold text-white mb-1">Payment Method</h2>
-            <div className="flex items-center gap-3">
-              <div className="bg-white/10 px-3 py-1.5 rounded text-xs font-mono font-bold text-white/80">VISA</div>
-              <div className="text-sm text-white/80">•••• 1234</div>
-              <div className="text-sm text-white/40">Expires 12/25</div>
+          <div className="flex items-start gap-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/70">
+              <CreditCardIcon className="h-5 w-5" />
+            </span>
+            <div>
+              <h2 className="font-semibold text-white mb-1">Payment Method</h2>
+              <div className="flex items-center gap-3">
+                <div className="bg-white/10 px-3 py-1.5 rounded text-xs font-mono font-bold text-white/80">VISA</div>
+                <div className="text-sm text-white/80">•••• 1234</div>
+                <div className="text-sm text-white/40">Expires 12/25</div>
+              </div>
             </div>
           </div>
           <Button variant="secondary" size="sm" onClick={goToPortal} disabled={portalBusy}>
@@ -125,7 +137,9 @@ export default function BillingPage() {
                   <Badge variant="success">{row.status}</Badge>
                 </td>
                 <td className="px-5 py-3">
-                  <button className="text-xs text-accent hover:underline">PDF</button>
+                  <button className="inline-flex items-center gap-1 text-xs text-accent hover:underline">
+                    <ReceiptIcon className="h-3.5 w-3.5" /> PDF
+                  </button>
                 </td>
               </tr>
             ))}

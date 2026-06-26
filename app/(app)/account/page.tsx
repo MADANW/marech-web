@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { CheckIcon } from "@/components/ui/icons";
 import { useAuth } from "@/lib/auth";
 import { isMock, updateMe, updatePassword as apiUpdatePassword, deleteAccount } from "@/lib/api";
 import { useRouter } from "next/navigation";
@@ -71,7 +73,7 @@ export default function AccountPage() {
 
   return (
     <div className="p-6 max-w-2xl mx-auto space-y-6">
-      <h1 className="text-xl font-bold text-white" style={{ fontFamily: "var(--font-mono)" }}>Account Settings</h1>
+      <PageHeader title="Account Settings" subtitle="Manage your profile, security, and account" />
 
       {/* Tabs */}
       <div className="flex gap-1 bg-white/5 p-1 rounded-xl w-fit">
@@ -115,7 +117,7 @@ export default function AccountPage() {
               </select>
             </div>
             <Button type="submit" variant="accent" size="md" disabled={profileForm.formState.isSubmitting}>
-              {profileSaved ? "✓ Saved!" : profileForm.formState.isSubmitting ? "Saving…" : "Save Changes"}
+              {profileSaved ? (<><CheckIcon className="h-4 w-4" /> Saved!</>) : profileForm.formState.isSubmitting ? "Saving…" : "Save Changes"}
             </Button>
           </form>
         </Card>
@@ -151,7 +153,7 @@ export default function AccountPage() {
               {...passwordForm.register("confirm", { required: "Required" })}
             />
             <Button type="submit" variant="accent" size="md" disabled={passwordForm.formState.isSubmitting}>
-              {passwordSaved ? "✓ Password Updated!" : passwordForm.formState.isSubmitting ? "Updating…" : "Update Password"}
+              {passwordSaved ? (<><CheckIcon className="h-4 w-4" /> Password Updated!</>) : passwordForm.formState.isSubmitting ? "Updating…" : "Update Password"}
             </Button>
           </form>
         </Card>

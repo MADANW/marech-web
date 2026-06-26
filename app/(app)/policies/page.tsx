@@ -8,6 +8,8 @@ import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { Toggle } from "@/components/ui/Toggle";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { PlusIcon, ShieldPlusIcon } from "@/components/ui/icons";
 import { MOCK_POLICIES, type Policy, type BotType } from "@/lib/mock";
 import { isMock, fetchPolicies, createPolicy, updatePolicy, deletePolicy as apiDeletePolicy } from "@/lib/api";
 
@@ -126,29 +128,36 @@ export default function PoliciesPage() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold text-white" style={{ fontFamily: "var(--font-mono)" }}>Policies</h1>
-          <p className="text-white/50 text-sm mt-0.5">Rules that decide what gets blocked</p>
-        </div>
-        <Button variant="accent" size="sm" onClick={openCreate}>
-          + Create Policy
-        </Button>
-      </div>
+      <PageHeader
+        title="Policies"
+        subtitle="Rules that decide what gets blocked, allowed, or logged"
+        action={
+          <Button variant="accent" size="sm" onClick={openCreate}>
+            <PlusIcon className="h-4 w-4" /> Create Policy
+          </Button>
+        }
+      />
 
       {policies.length === 0 && (
         <Card padding="lg" className="text-center">
-          <div className="text-4xl mb-3">🛡️</div>
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-accent/25 bg-accent/10 text-accent">
+            <ShieldPlusIcon className="h-7 w-7" />
+          </div>
           <h2 className="font-semibold text-white mb-1">No policies yet</h2>
           <p className="text-white/50 text-sm mb-4">Create your first policy to customize what gets blocked.</p>
-          <Button variant="accent" size="sm" onClick={openCreate}>Create Policy</Button>
+          <Button variant="accent" size="sm" onClick={openCreate}>
+            <PlusIcon className="h-4 w-4" /> Create Policy
+          </Button>
         </Card>
       )}
 
       <div className="space-y-4">
         {policies.map((policy) => (
-          <Card key={policy.id} padding="md">
-            <div className="flex items-start justify-between gap-4">
+          <Card key={policy.id} padding="md" className="transition-colors hover:border-white/20">
+            <div className="flex items-start gap-4">
+              <span className={`mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${policy.enabled ? "border-accent/25 bg-accent/10 text-accent" : "border-white/10 bg-white/5 text-white/40"}`}>
+                <ShieldPlusIcon className="h-5 w-5" />
+              </span>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-3 mb-2">
                   <span className="font-semibold text-white">{policy.name}</span>

@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { CheckIcon } from "@/components/ui/icons";
 import { MOCK_ACCOUNT } from "@/lib/mock";
 import { useAuth } from "@/lib/auth";
 import { isMock, snippetUrl } from "@/lib/api";
@@ -92,10 +94,10 @@ export default function SnippetPage() {
 
   return (
     <div className="p-6 max-w-2xl mx-auto space-y-6">
-      <div>
-        <h1 className="text-xl font-bold text-white mb-1" style={{ fontFamily: "var(--font-mono)" }}>Your Protection Code</h1>
-        <p className="text-white/50 text-sm">Copy this snippet and paste it into your website's &lt;head&gt; section.</p>
-      </div>
+      <PageHeader
+        title="Your Protection Code"
+        subtitle="Copy this snippet and paste it into your website's <head> section"
+      />
 
       {detected && (
         <div className="bg-success/15 border border-success/30 rounded-xl px-5 py-4 flex items-center gap-3">
@@ -111,7 +113,7 @@ export default function SnippetPage() {
 
       {/* Code block */}
       <Card padding="none" className="overflow-hidden">
-        <div className="bg-gray-900 px-5 py-4">
+        <div className="bg-[#0d0704] px-5 py-4 border-b border-white/10">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs text-gray-400 font-mono">HTML · paste in &lt;head&gt;</span>
             <button
@@ -141,7 +143,7 @@ export default function SnippetPage() {
         </div>
         <div className="p-5">
           <Button onClick={handleCopy} variant="accent" size="md" className="w-full">
-            {copied ? "✓ Copied to Clipboard!" : "Copy Code"}
+            {copied ? (<><CheckIcon className="h-4 w-4" /> Copied to Clipboard!</>) : "Copy Code"}
           </Button>
         </div>
       </Card>
@@ -163,13 +165,14 @@ export default function SnippetPage() {
           {platform} → {instructions.nav}
         </div>
 
-        <ol className="space-y-3">
+        <ol className="relative space-y-4">
+          <span className="absolute left-[13px] top-2 bottom-2 w-px bg-white/10" aria-hidden />
           {instructions.steps.map((step, i) => (
-            <li key={i} className="flex gap-3 text-sm">
-              <span className="w-5 h-5 rounded-full bg-accent text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+            <li key={i} className="relative flex gap-3 text-sm">
+              <span className="relative z-10 w-7 h-7 rounded-full bg-accent/15 border border-accent/40 text-accent text-xs font-bold flex items-center justify-center shrink-0" style={{ fontFamily: "var(--font-mono)" }}>
                 {i + 1}
               </span>
-              <span className="text-white/70">{step}</span>
+              <span className="text-white/70 pt-1">{step}</span>
             </li>
           ))}
         </ol>

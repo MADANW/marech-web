@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/marketing/Logo";
+import { OctagonAlertIcon, AlertTriangleIcon, GiftIcon } from "@/components/ui/icons";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: GridIcon },
@@ -32,21 +33,21 @@ function PortalShell({ children }: { children: React.ReactNode }) {
     if (user.status === "suspended")
       return (
         <div className="bg-danger text-white px-4 py-3 text-sm flex items-center justify-between">
-          <span>🛑 Account Suspended — update payment to restore protection</span>
+          <span className="flex items-center gap-2"><OctagonAlertIcon className="h-4 w-4 shrink-0" /> Account Suspended — update payment to restore protection</span>
           <Link href="/billing" className="underline font-medium ml-4">Update Payment</Link>
         </div>
       );
     if (user.status === "payment_failed")
       return (
         <div className="bg-danger text-white px-4 py-3 text-sm flex items-center justify-between">
-          <span>⚠️ Payment Failed — protection stops soon</span>
+          <span className="flex items-center gap-2"><AlertTriangleIcon className="h-4 w-4 shrink-0" /> Payment Failed — protection stops soon</span>
           <Link href="/billing" className="underline font-medium ml-4">Update Payment</Link>
         </div>
       );
     if (user.status === "trial")
       return (
         <div className="bg-accent text-white px-4 py-3 text-sm flex items-center justify-between">
-          <span>🎁 Free Trial — {user.trialDaysLeft} days left</span>
+          <span className="flex items-center gap-2"><GiftIcon className="h-4 w-4 shrink-0" /> Free Trial — {user.trialDaysLeft} days left</span>
           <Link href="/billing" className="underline font-medium ml-4">Add Payment Method</Link>
         </div>
       );

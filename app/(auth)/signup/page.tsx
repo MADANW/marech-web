@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { GoogleButton } from "@/components/auth/GoogleButton";
 import { Logo } from "@/components/marketing/Logo";
+import { CheckIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/auth";
 
@@ -77,7 +78,7 @@ export default function SignupPage() {
                 )}
                 style={{ fontFamily: "var(--font-mono)" }}
               >
-                {step > s ? "✓" : s}
+                {step > s ? <CheckIcon className="h-4 w-4" /> : s}
               </div>
               {s < 3 && <div className={cn("h-px w-8", step > s ? "bg-success/40" : "bg-white/10")} />}
             </div>

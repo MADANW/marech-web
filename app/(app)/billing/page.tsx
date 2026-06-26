@@ -48,13 +48,13 @@ export default function BillingPage() {
 
   return (
     <div className="p-6 max-w-3xl mx-auto space-y-6">
-      <h1 className="text-xl font-bold text-gray-900">Billing</h1>
+      <h1 className="text-xl font-bold text-white" style={{ fontFamily: "var(--font-mono)" }}>Billing</h1>
 
       {/* Current plan */}
       <Card padding="md">
         <div className="flex items-start justify-between mb-4">
           <div>
-            <h2 className="font-semibold text-gray-900 mb-1">
+            <h2 className="font-semibold text-white mb-1">
               {PLAN_NAMES[user.plan]} Plan — {PLAN_PRICES[user.plan]}/month
             </h2>
             <Badge variant={user.status === "active" ? "success" : user.status === "trial" ? "primary" : "danger"}>
@@ -68,18 +68,18 @@ export default function BillingPage() {
 
         <div className="mb-2">
           <div className="flex items-center justify-between text-sm mb-1">
-            <span className="text-gray-600">Usage this month</span>
-            <span className="font-medium text-gray-900">
+            <span className="text-white/60">Usage this month</span>
+            <span className="font-medium text-white">
               {formatNumber(user.usageThisMonth)} / {formatNumber(user.planLimit)} requests
             </span>
           </div>
-          <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
+          <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
             <div
-              className={`h-full rounded-full transition-all ${usagePct > 90 ? "bg-danger" : usagePct > 70 ? "bg-warning" : "bg-primary"}`}
+              className={`h-full rounded-full transition-all ${usagePct > 90 ? "bg-danger" : usagePct > 70 ? "bg-warning" : "bg-accent"}`}
               style={{ width: `${usagePct}%` }}
             />
           </div>
-          <div className="text-xs text-gray-400 mt-1 text-right">{usagePct.toFixed(0)}% used</div>
+          <div className="text-xs text-white/40 mt-1 text-right">{usagePct.toFixed(0)}% used</div>
         </div>
       </Card>
 
@@ -87,11 +87,11 @@ export default function BillingPage() {
       <Card padding="md">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="font-semibold text-gray-900 mb-1">Payment Method</h2>
+            <h2 className="font-semibold text-white mb-1">Payment Method</h2>
             <div className="flex items-center gap-3">
-              <div className="bg-gray-100 px-3 py-1.5 rounded text-xs font-mono font-bold text-gray-700">VISA</div>
-              <div className="text-sm text-gray-700">•••• 1234</div>
-              <div className="text-sm text-gray-400">Expires 12/25</div>
+              <div className="bg-white/10 px-3 py-1.5 rounded text-xs font-mono font-bold text-white/80">VISA</div>
+              <div className="text-sm text-white/80">•••• 1234</div>
+              <div className="text-sm text-white/40">Expires 12/25</div>
             </div>
           </div>
           <Button variant="secondary" size="sm" onClick={goToPortal} disabled={portalBusy}>
@@ -102,30 +102,30 @@ export default function BillingPage() {
 
       {/* Billing history */}
       <Card padding="none" className="overflow-hidden">
-        <div className="px-5 py-4 border-b border-gray-100">
-          <h2 className="font-semibold text-gray-900">Billing History</h2>
+        <div className="px-5 py-4 border-b border-white/10">
+          <h2 className="font-semibold text-white">Billing History</h2>
         </div>
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-gray-50 bg-gray-50 text-left">
-              <th className="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Date</th>
-              <th className="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Description</th>
-              <th className="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Amount</th>
-              <th className="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Status</th>
-              <th className="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Receipt</th>
+            <tr className="border-b border-white/10 bg-white/5 text-left">
+              <th className="px-5 py-3 text-xs font-semibold text-white/50 uppercase tracking-wide">Date</th>
+              <th className="px-5 py-3 text-xs font-semibold text-white/50 uppercase tracking-wide">Description</th>
+              <th className="px-5 py-3 text-xs font-semibold text-white/50 uppercase tracking-wide">Amount</th>
+              <th className="px-5 py-3 text-xs font-semibold text-white/50 uppercase tracking-wide">Status</th>
+              <th className="px-5 py-3 text-xs font-semibold text-white/50 uppercase tracking-wide">Receipt</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50">
+          <tbody className="divide-y divide-white/5">
             {MOCK_BILLING_HISTORY.map((row, i) => (
-              <tr key={i} className="hover:bg-gray-50">
-                <td className="px-5 py-3 text-gray-600">{row.date}</td>
-                <td className="px-5 py-3 text-gray-700">{row.description}</td>
-                <td className="px-5 py-3 font-medium text-gray-900">{row.amount}</td>
+              <tr key={i} className="hover:bg-white/5">
+                <td className="px-5 py-3 text-white/60">{row.date}</td>
+                <td className="px-5 py-3 text-white/70">{row.description}</td>
+                <td className="px-5 py-3 font-medium text-white">{row.amount}</td>
                 <td className="px-5 py-3">
                   <Badge variant="success">{row.status}</Badge>
                 </td>
                 <td className="px-5 py-3">
-                  <button className="text-xs text-primary hover:underline">PDF</button>
+                  <button className="text-xs text-accent hover:underline">PDF</button>
                 </td>
               </tr>
             ))}
@@ -138,21 +138,21 @@ export default function BillingPage() {
         <div className="text-center">
           <button
             onClick={() => setCancelModal(true)}
-            className="text-sm text-gray-400 hover:text-danger transition-colors"
+            className="text-sm text-white/40 hover:text-red-400 transition-colors"
           >
             Cancel subscription
           </button>
         </div>
       )}
       {cancelled && (
-        <div className="text-center text-sm text-gray-500">
+        <div className="text-center text-sm text-white/50">
           Subscription cancelled. Protection stays active until end of billing period.
         </div>
       )}
 
       {/* Cancel modal */}
       <Modal open={cancelModal} onClose={() => setCancelModal(false)} title="Cancel Subscription">
-        <p className="text-gray-600 text-sm mb-6">
+        <p className="text-white/60 text-sm mb-6">
           Are you sure? Your protection will stop at the end of your current billing period.
           You can resubscribe anytime.
         </p>

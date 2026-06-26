@@ -111,6 +111,17 @@ body {
   30%, 60% {
     background-position: calc(100% + var(--shiny-width)) 0;
     }
+  }
+  --animate-pulse-ring: pulse-ring var(--duration, 1.5s) cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  @keyframes pulse-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    }
+  100% {
+    transform: translate(-50%, -50%) scale(1.9);
+    opacity: 0;
+    }
   }}
 
 :root {
@@ -191,5 +202,75 @@ body {
   }
   html {
     @apply font-sans;
+  }
+}
+
+/* ── Logo glitch / "blocked" motif ──────────────────────────────
+   CSS-only, hover-driven. The wordmark sits over two duplicated
+   layers (::before / ::after) that jitter and clip on hover, plus
+   a redaction bar that sweeps across. No JS timers → stays cheap. */
+.logo-glitch {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+.logo-glitch__text {
+  position: relative;
+  z-index: 2;
+}
+.logo-glitch__layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 1;
+}
+.logo-glitch__bar {
+  position: absolute;
+  top: 50%;
+  left: -8%;
+  height: 2px;
+  width: 0;
+  transform: translateY(-50%);
+  background: var(--color-accent);
+  opacity: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.logo-glitch:hover .logo-glitch__layer--a {
+  opacity: 0.85;
+  color: var(--color-accent);
+  animation: logo-glitch-a 0.5s steps(2, end) infinite;
+}
+.logo-glitch:hover .logo-glitch__layer--b {
+  opacity: 0.85;
+  color: #22d3ee;
+  animation: logo-glitch-b 0.55s steps(2, end) infinite;
+}
+.logo-glitch:hover .logo-glitch__bar {
+  animation: logo-glitch-bar 0.6s ease-in-out infinite;
+}
+@keyframes logo-glitch-a {
+  0% { transform: translate(0, 0); clip-path: inset(0 0 65% 0); }
+  50% { transform: translate(-2px, -1px); clip-path: inset(40% 0 20% 0); }
+  100% { transform: translate(2px, 1px); clip-path: inset(70% 0 0 0); }
+}
+@keyframes logo-glitch-b {
+  0% { transform: translate(0, 0); clip-path: inset(60% 0 10% 0); }
+  50% { transform: translate(2px, 1px); clip-path: inset(20% 0 50% 0); }
+  100% { transform: translate(-2px, -1px); clip-path: inset(0 0 75% 0); }
+}
+@keyframes logo-glitch-bar {
+  0% { width: 0; opacity: 0; }
+  35% { width: 116%; opacity: 0.9; }
+  60% { width: 116%; opacity: 0.9; }
+  100% { width: 0; left: 108%; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo-glitch:hover .logo-glitch__layer,
+  .logo-glitch:hover .logo-glitch__bar {
+    animation: none;
+    opacity: 0;
   }
 }

@@ -60,7 +60,7 @@ export default function LogsPage() {
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-5">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-gray-900">Traffic Logs</h1>
+        <h1 className="text-xl font-bold text-white" style={{ fontFamily: "var(--font-mono)" }}>Traffic Logs</h1>
         <Button variant="secondary" size="sm" onClick={handleExport}>
           <DownloadIcon className="w-4 h-4" />
           Export CSV
@@ -75,12 +75,12 @@ export default function LogsPage() {
             placeholder="Search IP, path, or user agent…"
             value={search}
             onChange={(e) => { setSearch(e.target.value); setPage(0); }}
-            className="flex-1 min-w-48 px-3 py-2 rounded-lg border border-gray-200 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+            className="flex-1 min-w-48 px-3 py-2 rounded-lg border border-white/15 bg-white/5 text-white placeholder-white/30 text-sm outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20"
           />
           <select
             value={botFilter}
             onChange={(e) => { setBotFilter(e.target.value); setPage(0); }}
-            className="px-3 py-2 rounded-lg border border-gray-200 text-sm outline-none focus:border-primary"
+            className="px-3 py-2 rounded-lg border border-white/15 bg-white/5 text-white text-sm outline-none focus:border-accent/50 [&>option]:bg-gray-900"
           >
             <option value="all">All bot types</option>
             <option value="scraper">Scraper</option>
@@ -92,7 +92,7 @@ export default function LogsPage() {
           <select
             value={actionFilter}
             onChange={(e) => { setActionFilter(e.target.value); setPage(0); }}
-            className="px-3 py-2 rounded-lg border border-gray-200 text-sm outline-none focus:border-primary"
+            className="px-3 py-2 rounded-lg border border-white/15 bg-white/5 text-white text-sm outline-none focus:border-accent/50 [&>option]:bg-gray-900"
           >
             <option value="all">All actions</option>
             <option value="block">Blocked</option>
@@ -116,39 +116,39 @@ export default function LogsPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-100 bg-gray-50 text-left">
-                <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Timestamp</th>
-                <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">User Agent</th>
-                <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Bot Type</th>
-                <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">IP</th>
-                <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Path</th>
-                <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Action</th>
-                <th className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Confidence</th>
+              <tr className="border-b border-white/10 bg-white/5 text-left">
+                <th className="px-4 py-3 text-xs font-semibold text-white/50 uppercase tracking-wide">Timestamp</th>
+                <th className="px-4 py-3 text-xs font-semibold text-white/50 uppercase tracking-wide">User Agent</th>
+                <th className="px-4 py-3 text-xs font-semibold text-white/50 uppercase tracking-wide">Bot Type</th>
+                <th className="px-4 py-3 text-xs font-semibold text-white/50 uppercase tracking-wide">IP</th>
+                <th className="px-4 py-3 text-xs font-semibold text-white/50 uppercase tracking-wide">Path</th>
+                <th className="px-4 py-3 text-xs font-semibold text-white/50 uppercase tracking-wide">Action</th>
+                <th className="px-4 py-3 text-xs font-semibold text-white/50 uppercase tracking-wide">Confidence</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-white/5">
               {visible.length === 0 && (
                 <tr>
-                  <td colSpan={7} className="px-4 py-12 text-center text-gray-400 text-sm">
+                  <td colSpan={7} className="px-4 py-12 text-center text-white/40 text-sm">
                     No logs match your filters.
                   </td>
                 </tr>
               )}
               {visible.map((log) => (
-                <tr key={log.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-4 py-3 text-gray-500 font-mono text-xs whitespace-nowrap">{formatDate(log.timestamp)}</td>
-                  <td className="px-4 py-3 text-gray-700 max-w-[200px] truncate" title={log.userAgent}>{log.userAgent}</td>
+                <tr key={log.id} className="hover:bg-white/5 transition-colors">
+                  <td className="px-4 py-3 text-white/50 font-mono text-xs whitespace-nowrap">{formatDate(log.timestamp)}</td>
+                  <td className="px-4 py-3 text-white/70 max-w-[200px] truncate" title={log.userAgent}>{log.userAgent}</td>
                   <td className="px-4 py-3">
                     <Badge variant="neutral">{log.botType}</Badge>
                   </td>
-                  <td className="px-4 py-3 font-mono text-xs text-gray-500">{log.ip}</td>
-                  <td className="px-4 py-3 text-gray-500 max-w-[160px] truncate font-mono text-xs" title={log.path}>{log.path}</td>
+                  <td className="px-4 py-3 font-mono text-xs text-white/50">{log.ip}</td>
+                  <td className="px-4 py-3 text-white/50 max-w-[160px] truncate font-mono text-xs" title={log.path}>{log.path}</td>
                   <td className="px-4 py-3">
                     <Badge variant={log.action === "block" ? "danger" : log.action === "allow" ? "success" : "warning"}>
                       {log.action === "block" ? "Blocked" : log.action === "allow" ? "Allowed" : "Log only"}
                     </Badge>
                   </td>
-                  <td className="px-4 py-3 text-gray-500 text-xs">{(log.confidence * 100).toFixed(0)}%</td>
+                  <td className="px-4 py-3 text-white/50 text-xs">{(log.confidence * 100).toFixed(0)}%</td>
                 </tr>
               ))}
             </tbody>
@@ -157,7 +157,7 @@ export default function LogsPage() {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="px-4 py-3 border-t border-gray-100 flex items-center justify-between text-sm text-gray-500">
+          <div className="px-4 py-3 border-t border-white/10 flex items-center justify-between text-sm text-white/50">
             <span>
               {page * PAGE_SIZE + 1}–{Math.min((page + 1) * PAGE_SIZE, filtered.length)} of {filtered.length}
             </span>

@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { Nav } from "@/components/marketing/Nav";
 import { Footer } from "@/components/marketing/Footer";
-import { Button } from "@/components/ui/Button";
+import { PulsatingButton } from "@/components/ui/pulsating-button";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { AnalyticsMockup } from "@/components/marketing/AnalyticsMockup";
 import { AnimatedTerminal } from "@/components/marketing/AnimatedTerminal";
 import { OrbitingPlatforms } from "@/components/marketing/OrbitingPlatforms";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { NumberTicker } from "@/components/ui/number-ticker";
-import { MorphingText } from "@/components/ui/morphing-text";
+import { TypingAnimation } from "@/components/ui/typing-animation";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { ScrollVelocityContainer, ScrollVelocityRow } from "@/components/ui/scroll-based-velocity";
 
@@ -49,18 +50,21 @@ export default function LandingPage() {
                   Block ChatGPT, Claude, and every AI scraper in under 2 minutes.
                   One snippet. Zero maintenance. Full visibility.
                 </p>
-                <div className="mb-8">
-                  <MorphingText
-                    texts={["Protecting your blog.", "Protecting your store.", "Protecting your docs.", "Protecting your work.", "Protecting your revenue."]}
-                    className="h-8 lg:h-8 text-xl lg:text-xl text-black font-bold text-left max-w-none ![filter:none]"
+                <div className="mb-8 h-8">
+                  <TypingAnimation
+                    words={["Protecting your blog.", "Protecting your store.", "Protecting your docs.", "Protecting your work.", "Protecting your revenue."]}
+                    loop
+                    startOnView
+                    className="text-xl lg:text-xl text-black font-bold leading-snug tracking-normal"
+                    cursorStyle="line"
                   />
                 </div>
                 <div className="flex flex-wrap gap-3 mb-8">
                   <Link href="/signup">
-                    <Button variant="accent" size="lg">Start Free Trial →</Button>
+                    <PulsatingButton>Start Free Trial →</PulsatingButton>
                   </Link>
                   <Link href="/how-it-works">
-                    <Button variant="secondary" size="lg">See How It Works</Button>
+                    <InteractiveHoverButton className="border-white/25">See How It Works</InteractiveHoverButton>
                   </Link>
                 </div>
                 <div className="flex flex-wrap gap-4 text-sm text-white/35 font-medium">
@@ -310,7 +314,7 @@ export default function LandingPage() {
                     Plans start small. Scale when you need it. No lock-in.
                   </p>
                   <Link href="/pricing">
-                    <Button variant="accent" size="lg">See All Plans →</Button>
+                    <InteractiveHoverButton>See All Plans →</InteractiveHoverButton>
                   </Link>
                 </div>
 
@@ -363,9 +367,9 @@ export default function LandingPage() {
                     Join thousands of creators blocking AI scrapers every day. Your work is yours — keep it that way.
                   </p>
                   <Link href="/signup">
-                    <Button variant="accent" size="lg">
+                    <PulsatingButton>
                       Start Free Trial — No Credit Card →
-                    </Button>
+                    </PulsatingButton>
                   </Link>
                 </div>
                 {/* Decorative large glyph */}

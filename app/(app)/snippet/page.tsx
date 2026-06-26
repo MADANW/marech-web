@@ -93,18 +93,18 @@ export default function SnippetPage() {
   return (
     <div className="p-6 max-w-2xl mx-auto space-y-6">
       <div>
-        <h1 className="text-xl font-bold text-gray-900 mb-1">Your Protection Code</h1>
-        <p className="text-gray-500 text-sm">Copy this snippet and paste it into your website's &lt;head&gt; section.</p>
+        <h1 className="text-xl font-bold text-white mb-1" style={{ fontFamily: "var(--font-mono)" }}>Your Protection Code</h1>
+        <p className="text-white/50 text-sm">Copy this snippet and paste it into your website's &lt;head&gt; section.</p>
       </div>
 
       {detected && (
-        <div className="bg-success-light border border-success/30 rounded-xl px-5 py-4 flex items-center gap-3">
+        <div className="bg-success/15 border border-success/30 rounded-xl px-5 py-4 flex items-center gap-3">
           <svg className="w-5 h-5 text-success shrink-0" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
           </svg>
           <div>
-            <div className="font-semibold text-emerald-800 text-sm">Installation Detected!</div>
-            <div className="text-emerald-700 text-xs">Protection is now active on your site.</div>
+            <div className="font-semibold text-success text-sm">Installation Detected!</div>
+            <div className="text-success/80 text-xs">Protection is now active on your site.</div>
           </div>
         </div>
       )}
@@ -149,27 +149,27 @@ export default function SnippetPage() {
       {/* Platform selector + instructions */}
       <Card padding="md">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-gray-900 text-sm">Installation Instructions</h2>
+          <h2 className="font-semibold text-white text-sm">Installation Instructions</h2>
           <select
             value={platform}
             onChange={(e) => setPlatform(e.target.value)}
-            className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 text-gray-700 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+            className="text-xs border border-white/15 bg-white/5 rounded-lg px-2 py-1.5 text-white focus:border-accent/50 focus:ring-1 focus:ring-accent outline-none [&>option]:bg-gray-900"
           >
             {PLATFORMS.map((p) => <option key={p}>{p}</option>)}
           </select>
         </div>
 
-        <div className="bg-gray-50 rounded-lg px-4 py-3 text-xs text-gray-500 font-mono mb-4">
+        <div className="bg-white/5 rounded-lg px-4 py-3 text-xs text-white/50 font-mono mb-4">
           {platform} → {instructions.nav}
         </div>
 
         <ol className="space-y-3">
           {instructions.steps.map((step, i) => (
             <li key={i} className="flex gap-3 text-sm">
-              <span className="w-5 h-5 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+              <span className="w-5 h-5 rounded-full bg-accent text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
                 {i + 1}
               </span>
-              <span className="text-gray-600">{step}</span>
+              <span className="text-white/70">{step}</span>
             </li>
           ))}
         </ol>

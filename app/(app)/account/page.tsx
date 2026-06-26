@@ -71,17 +71,17 @@ export default function AccountPage() {
 
   return (
     <div className="p-6 max-w-2xl mx-auto space-y-6">
-      <h1 className="text-xl font-bold text-gray-900">Account Settings</h1>
+      <h1 className="text-xl font-bold text-white" style={{ fontFamily: "var(--font-mono)" }}>Account Settings</h1>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-gray-100 p-1 rounded-xl w-fit">
+      <div className="flex gap-1 bg-white/5 p-1 rounded-xl w-fit">
         {TABS.map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
             className={cn(
               "px-4 py-1.5 rounded-lg text-sm font-medium transition-all",
-              tab === t ? "bg-white text-gray-900 shadow-sm" : "text-gray-500 hover:text-gray-700"
+              tab === t ? "bg-accent text-white shadow-sm" : "text-white/50 hover:text-white"
             )}
           >
             {t}
@@ -93,8 +93,8 @@ export default function AccountPage() {
       {tab === "Profile" && (
         <Card padding="md">
           <div className="mb-4">
-            <div className="text-sm font-medium text-gray-700 mb-1">Email</div>
-            <div className="text-gray-500 text-sm bg-gray-50 rounded-lg px-3 py-2">{user?.email}</div>
+            <div className="text-sm font-medium text-white/70 mb-1">Email</div>
+            <div className="text-white/60 text-sm bg-white/5 rounded-lg px-3 py-2">{user?.email}</div>
           </div>
           <form onSubmit={profileForm.handleSubmit(onSaveProfile)} className="space-y-4">
             <Input
@@ -103,18 +103,18 @@ export default function AccountPage() {
               {...profileForm.register("websiteUrl")}
             />
             <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium text-gray-700">Platform</label>
-              <select className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" {...profileForm.register("platform")}>
+              <label className="text-sm font-medium text-white/70">Platform</label>
+              <select className="w-full px-3 py-2 rounded-lg border border-white/15 bg-white/5 text-white text-sm outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20 [&>option]:bg-gray-900" {...profileForm.register("platform")}>
                 {PLATFORMS.map((p) => <option key={p}>{p}</option>)}
               </select>
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium text-gray-700">Industry</label>
-              <select className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" {...profileForm.register("industry")}>
+              <label className="text-sm font-medium text-white/70">Industry</label>
+              <select className="w-full px-3 py-2 rounded-lg border border-white/15 bg-white/5 text-white text-sm outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20 [&>option]:bg-gray-900" {...profileForm.register("industry")}>
                 {INDUSTRIES.map((i) => <option key={i}>{i}</option>)}
               </select>
             </div>
-            <Button type="submit" variant="primary" size="md" disabled={profileForm.formState.isSubmitting}>
+            <Button type="submit" variant="accent" size="md" disabled={profileForm.formState.isSubmitting}>
               {profileSaved ? "✓ Saved!" : profileForm.formState.isSubmitting ? "Saving…" : "Save Changes"}
             </Button>
           </form>
@@ -124,7 +124,7 @@ export default function AccountPage() {
       {/* Security */}
       {tab === "Security" && (
         <Card padding="md">
-          <h2 className="font-semibold text-gray-900 mb-4">Change Password</h2>
+          <h2 className="font-semibold text-white mb-4">Change Password</h2>
           <form onSubmit={passwordForm.handleSubmit(onSavePassword)} className="space-y-4">
             <Input
               label="Current password"
@@ -150,7 +150,7 @@ export default function AccountPage() {
               error={passwordForm.formState.errors.confirm?.message}
               {...passwordForm.register("confirm", { required: "Required" })}
             />
-            <Button type="submit" variant="primary" size="md" disabled={passwordForm.formState.isSubmitting}>
+            <Button type="submit" variant="accent" size="md" disabled={passwordForm.formState.isSubmitting}>
               {passwordSaved ? "✓ Password Updated!" : passwordForm.formState.isSubmitting ? "Updating…" : "Update Password"}
             </Button>
           </form>
@@ -160,8 +160,8 @@ export default function AccountPage() {
       {/* Danger Zone */}
       {tab === "Danger Zone" && (
         <Card padding="md" className="border-danger/30">
-          <h2 className="font-semibold text-danger mb-2">Delete Account</h2>
-          <p className="text-gray-500 text-sm mb-4">
+          <h2 className="font-semibold text-red-400 mb-2">Delete Account</h2>
+          <p className="text-white/50 text-sm mb-4">
             Permanently deletes your account, snippet, and all data. This cannot be undone.
             Your website will no longer be protected.
           </p>
@@ -173,15 +173,15 @@ export default function AccountPage() {
 
       {/* Delete modal */}
       <Modal open={deleteModal} onClose={() => { setDeleteModal(false); setDeleteInput(""); }} title="Delete Account">
-        <p className="text-gray-600 text-sm mb-4">
-          This will permanently delete your account and stop all protection. Type <strong>DELETE</strong> to confirm.
+        <p className="text-white/60 text-sm mb-4">
+          This will permanently delete your account and stop all protection. Type <strong className="text-white">DELETE</strong> to confirm.
         </p>
         <input
           type="text"
           value={deleteInput}
           onChange={(e) => setDeleteInput(e.target.value)}
           placeholder="Type DELETE"
-          className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm outline-none focus:border-danger focus:ring-2 focus:ring-danger/20 mb-4"
+          className="w-full px-3 py-2 rounded-lg border border-white/15 bg-white/5 text-white placeholder-white/30 text-sm outline-none focus:border-danger focus:ring-2 focus:ring-danger/20 mb-4"
         />
         <div className="flex gap-3">
           <Button

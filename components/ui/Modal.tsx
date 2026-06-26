@@ -29,16 +29,16 @@ export function Modal({ open, onClose, title, children, className }: ModalProps)
       />
       <div
         className={cn(
-          "relative bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto",
+          "relative bg-[#1a1a1a] text-white border border-white/10 rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto",
           className
         )}
       >
         {title && (
-          <div className="flex items-center justify-between p-6 border-b border-gray-100">
-            <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+          <div className="flex items-center justify-between p-6 border-b border-white/10">
+            <h2 className="text-lg font-semibold text-white" style={{ fontFamily: "var(--font-mono)" }}>{title}</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
+              className="text-white/40 hover:text-white transition-colors"
               aria-label="Close"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

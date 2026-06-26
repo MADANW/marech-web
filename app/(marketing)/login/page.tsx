@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { GoogleButton } from "@/components/auth/GoogleButton";
+import { Logo } from "@/components/marketing/Logo";
 import { useAuth } from "@/lib/auth";
 
 interface LoginForm {
@@ -41,15 +42,14 @@ export default function LoginPage() {
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center justify-center gap-2 mb-4">
-            <img src="/logos/blockme-icon-color.svg" className="w-7 h-7" alt="" />
-            <span className="font-bold text-white text-xl" style={{ fontFamily: "var(--font-syne)" }}>block.me</span>
+          <Link href="/" className="inline-flex justify-center mb-4">
+            <Logo className="text-xl" iconClassName="w-7 h-7" />
           </Link>
-          <h1 className="text-2xl font-bold text-white" style={{ fontFamily: "var(--font-syne)" }}>Welcome back</h1>
+          <h1 className="text-2xl font-bold text-white" style={{ fontFamily: "var(--font-mono)" }}>Welcome back</h1>
           <p className="text-white/50 text-sm mt-1">Log in to your dashboard</p>
         </div>
 
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+        <div className="bg-[#1a1a1a]/95 backdrop-blur-sm border border-white/10 rounded-2xl p-8 shadow-[0_6px_28px_rgba(0,0,0,0.4)]">
           {error && (
             <div className="bg-danger/15 border border-danger/30 text-danger text-sm rounded-lg px-4 py-3 mb-4">
               {error}

@@ -128,8 +128,8 @@ export default function PoliciesPage() {
     <div className="p-6 max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-gray-900">Policies</h1>
-          <p className="text-gray-500 text-sm mt-0.5">Rules that decide what gets blocked</p>
+          <h1 className="text-xl font-bold text-white" style={{ fontFamily: "var(--font-mono)" }}>Policies</h1>
+          <p className="text-white/50 text-sm mt-0.5">Rules that decide what gets blocked</p>
         </div>
         <Button variant="accent" size="sm" onClick={openCreate}>
           + Create Policy
@@ -139,8 +139,8 @@ export default function PoliciesPage() {
       {policies.length === 0 && (
         <Card padding="lg" className="text-center">
           <div className="text-4xl mb-3">🛡️</div>
-          <h2 className="font-semibold text-gray-900 mb-1">No policies yet</h2>
-          <p className="text-gray-500 text-sm mb-4">Create your first policy to customize what gets blocked.</p>
+          <h2 className="font-semibold text-white mb-1">No policies yet</h2>
+          <p className="text-white/50 text-sm mb-4">Create your first policy to customize what gets blocked.</p>
           <Button variant="accent" size="sm" onClick={openCreate}>Create Policy</Button>
         </Card>
       )}
@@ -151,13 +151,13 @@ export default function PoliciesPage() {
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="font-semibold text-gray-900">{policy.name}</span>
+                  <span className="font-semibold text-white">{policy.name}</span>
                   <Badge variant={policy.enabled ? "success" : "neutral"}>
                     {policy.enabled ? "Enabled" : "Disabled"}
                   </Badge>
-                  <span className="text-xs text-gray-400">Priority {policy.priority}</span>
+                  <span className="text-xs text-white/40">Priority {policy.priority}</span>
                 </div>
-                <div className="text-sm text-gray-500 space-y-1">
+                <div className="text-sm text-white/50 space-y-1">
                   {policy.conditions.botTypes && (
                     <div>Bot types: {policy.conditions.botTypes.join(", ")}</div>
                   )}
@@ -178,7 +178,7 @@ export default function PoliciesPage() {
                 <Toggle enabled={policy.enabled} onChange={() => toggleEnabled(policy.id)} />
                 <Button variant="ghost" size="sm" onClick={() => openEdit(policy)}>Edit</Button>
                 <Button variant="ghost" size="sm" onClick={() => setDeleteConfirm(policy.id)}
-                  className="text-danger hover:bg-danger-light">Delete</Button>
+                  className="text-red-400 hover:bg-danger/10">Delete</Button>
               </div>
             </div>
           </Card>
@@ -200,7 +200,7 @@ export default function PoliciesPage() {
           />
 
           <div>
-            <label className="text-sm font-medium text-gray-700 block mb-2">Bot types</label>
+            <label className="text-sm font-medium text-white/70 block mb-2">Bot types</label>
             <div className="flex flex-wrap gap-2">
               {BOT_TYPE_OPTIONS.map((bt) => (
                 <button
@@ -209,8 +209,8 @@ export default function PoliciesPage() {
                   onClick={() => toggleBotType(bt.value)}
                   className={`px-3 py-1.5 rounded-lg border text-sm font-medium transition-all ${
                     selectedBotTypes.includes(bt.value)
-                      ? "bg-primary text-white border-primary"
-                      : "bg-white text-gray-700 border-gray-200 hover:border-primary"
+                      ? "bg-accent text-white border-accent"
+                      : "bg-white/5 text-white/70 border-white/15 hover:border-accent/60"
                   }`}
                 >
                   {bt.label}
@@ -231,12 +231,12 @@ export default function PoliciesPage() {
           />
 
           <div>
-            <label className="text-sm font-medium text-gray-700 block mb-2">Action</label>
+            <label className="text-sm font-medium text-white/70 block mb-2">Action</label>
             <div className="flex gap-3">
               {(["block", "allow", "log"] as const).map((a) => (
                 <label key={a} className="flex items-center gap-2 cursor-pointer">
-                  <input type="radio" value={a} {...register("action")} className="text-primary" />
-                  <span className="text-sm capitalize text-gray-700">{a}</span>
+                  <input type="radio" value={a} {...register("action")} className="accent-[#f97316]" />
+                  <span className="text-sm capitalize text-white/70">{a}</span>
                 </label>
               ))}
             </div>
@@ -262,7 +262,7 @@ export default function PoliciesPage() {
 
       {/* Delete confirm modal */}
       <Modal open={deleteConfirm !== null} onClose={() => setDeleteConfirm(null)} title="Delete Policy">
-        <p className="text-gray-600 text-sm mb-6">
+        <p className="text-white/60 text-sm mb-6">
           Are you sure? This policy will be deleted and bots it was blocking may get through.
         </p>
         <div className="flex gap-3">

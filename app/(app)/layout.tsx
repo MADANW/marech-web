@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/marketing/Logo";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: GridIcon },
@@ -44,7 +45,7 @@ function PortalShell({ children }: { children: React.ReactNode }) {
       );
     if (user.status === "trial")
       return (
-        <div className="bg-primary text-white px-4 py-3 text-sm flex items-center justify-between">
+        <div className="bg-accent text-white px-4 py-3 text-sm flex items-center justify-between">
           <span>🎁 Free Trial — {user.trialDaysLeft} days left</span>
           <Link href="/billing" className="underline font-medium ml-4">Add Payment Method</Link>
         </div>
@@ -54,12 +55,9 @@ function PortalShell({ children }: { children: React.ReactNode }) {
 
   const SidebarContent = () => (
     <nav className="flex flex-col h-full">
-      <div className="px-4 py-5 border-b border-gray-100">
-        <Link href="/dashboard" className="flex items-center gap-2 font-bold text-gray-900">
-          <svg className="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2L3 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6l-9-4z" />
-          </svg>
-          block.me
+      <div className="px-4 py-5 border-b border-white/10">
+        <Link href="/dashboard">
+          <Logo />
         </Link>
       </div>
       <div className="flex-1 px-2 py-4 space-y-0.5 overflow-y-auto">
@@ -71,8 +69,8 @@ function PortalShell({ children }: { children: React.ReactNode }) {
             className={cn(
               "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
               pathname === href
-                ? "bg-primary text-white"
-                : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                ? "bg-accent text-white"
+                : "text-white/60 hover:bg-white/10 hover:text-white"
             )}
           >
             <Icon className="w-4 h-4 shrink-0" />
@@ -80,24 +78,24 @@ function PortalShell({ children }: { children: React.ReactNode }) {
           </Link>
         ))}
       </div>
-      <div className="px-4 py-4 border-t border-gray-100 text-xs text-gray-400">
+      <div className="px-4 py-4 border-t border-white/10 text-xs text-white/40 truncate">
         {user?.email}
       </div>
     </nav>
   );
 
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
+    <div className="flex h-screen overflow-hidden" style={{ backgroundColor: "#c44a1a" }}>
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex flex-col w-56 bg-white border-r border-gray-100 shrink-0">
+      <aside className="hidden md:flex flex-col w-56 bg-[#0d0704] border-r border-white/10 shrink-0">
         <SidebarContent />
       </aside>
 
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div className="md:hidden fixed inset-0 z-40">
-          <div className="absolute inset-0 bg-black/40" onClick={() => setSidebarOpen(false)} />
-          <aside className="relative w-56 h-full bg-white shadow-xl">
+          <div className="absolute inset-0 bg-black/60" onClick={() => setSidebarOpen(false)} />
+          <aside className="relative w-56 h-full bg-[#0d0704] shadow-xl">
             <SidebarContent />
           </aside>
         </div>
@@ -106,9 +104,9 @@ function PortalShell({ children }: { children: React.ReactNode }) {
       {/* Main */}
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
         {/* Top bar */}
-        <header className="bg-white border-b border-gray-100 px-4 h-14 flex items-center justify-between shrink-0">
+        <header className="bg-[#0d0704] border-b border-white/10 px-4 h-14 flex items-center justify-between shrink-0">
           <button
-            className="md:hidden p-2 text-gray-600"
+            className="md:hidden p-2 text-white/60 hover:text-white"
             onClick={() => setSidebarOpen(true)}
             aria-label="Open menu"
           >
@@ -120,23 +118,23 @@ function PortalShell({ children }: { children: React.ReactNode }) {
           <div className="relative">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="flex items-center gap-2 text-sm text-gray-700 hover:text-gray-900"
+              className="flex items-center gap-2 text-sm text-white/70 hover:text-white"
             >
-              <div className="w-7 h-7 rounded-full bg-primary text-white font-bold flex items-center justify-center text-xs">
+              <div className="w-7 h-7 rounded-full bg-accent text-white font-bold flex items-center justify-center text-xs">
                 {user?.email?.[0]?.toUpperCase() ?? "U"}
               </div>
-              <svg className="w-4 h-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+              <svg className="w-4 h-4 text-white/40" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </button>
             {dropdownOpen && (
               <>
                 <div className="fixed inset-0 z-10" onClick={() => setDropdownOpen(false)} />
-                <div className="absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-xl shadow-lg py-1 z-20">
-                  <Link href="/account" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setDropdownOpen(false)}>Settings</Link>
-                  <Link href="/billing" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setDropdownOpen(false)}>Billing</Link>
-                  <hr className="my-1 border-gray-100" />
-                  <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-danger hover:bg-gray-50">Log out</button>
+                <div className="absolute right-0 mt-2 w-44 bg-[#1a1a1a] border border-white/10 rounded-xl shadow-lg py-1 z-20">
+                  <Link href="/account" className="block px-4 py-2 text-sm text-white/70 hover:bg-white/5" onClick={() => setDropdownOpen(false)}>Settings</Link>
+                  <Link href="/billing" className="block px-4 py-2 text-sm text-white/70 hover:bg-white/5" onClick={() => setDropdownOpen(false)}>Billing</Link>
+                  <hr className="my-1 border-white/10" />
+                  <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-red-300 hover:bg-white/5">Log out</button>
                 </div>
               </>
             )}

@@ -45,48 +45,51 @@ export default function DashboardPage() {
   return (
     <div className="p-6 max-w-6xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-gray-900">Dashboard</h1>
-        <span className="text-xs text-gray-400">Live · updates every 5s</span>
+        <h1 className="text-xl font-bold text-white" style={{ fontFamily: "var(--font-mono)" }}>Dashboard</h1>
+        <span className="text-xs text-white/40">Live · updates every 5s</span>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Card padding="md">
-          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Requests Today</div>
-          <div className="text-3xl font-bold text-gray-900">{formatNumber(todayTotal)}</div>
+          <div className="text-xs font-semibold text-white/50 uppercase tracking-wide mb-2">Requests Today</div>
+          <div className="text-3xl font-bold text-white" style={{ fontFamily: "var(--font-mono)" }}>{formatNumber(todayTotal)}</div>
         </Card>
         <Card padding="md">
-          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Bots Blocked</div>
-          <div className="text-3xl font-bold text-danger">{formatNumber(todayBlocked)}</div>
-          <div className="text-xs text-gray-400 mt-1">{blockRate}% of traffic</div>
+          <div className="text-xs font-semibold text-white/50 uppercase tracking-wide mb-2">Bots Blocked</div>
+          <div className="text-3xl font-bold text-red-400" style={{ fontFamily: "var(--font-mono)" }}>{formatNumber(todayBlocked)}</div>
+          <div className="text-xs text-white/40 mt-1">{blockRate}% of traffic</div>
         </Card>
         <Card padding="md">
-          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Protection</div>
+          <div className="text-xs font-semibold text-white/50 uppercase tracking-wide mb-2">Protection</div>
           <div className="flex items-center gap-2 mt-1">
             <span className="w-3 h-3 rounded-full bg-success animate-pulse" />
             <span className="text-lg font-semibold text-success">Active</span>
           </div>
-          <div className="text-xs text-gray-400 mt-1">All pages protected</div>
+          <div className="text-xs text-white/40 mt-1">All pages protected</div>
         </Card>
       </div>
 
       {/* Chart */}
       <Card padding="md">
-        <h2 className="text-sm font-semibold text-gray-900 mb-4">Traffic — Last 7 Days</h2>
+        <h2 className="text-sm font-semibold text-white mb-4">Traffic — Last 7 Days</h2>
         <ResponsiveContainer width="100%" height={220}>
           <LineChart data={WEEK_STATS} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-            <XAxis dataKey="date" tick={{ fontSize: 11, fill: "#9ca3af" }} />
-            <YAxis tick={{ fontSize: 11, fill: "#9ca3af" }} />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
+            <XAxis dataKey="date" tick={{ fontSize: 11, fill: "rgba(255,255,255,0.4)" }} />
+            <YAxis tick={{ fontSize: 11, fill: "rgba(255,255,255,0.4)" }} />
             <Tooltip
-              contentStyle={{ borderRadius: "8px", border: "1px solid #e5e7eb", fontSize: 12 }}
+              contentStyle={{ borderRadius: "8px", border: "1px solid rgba(255,255,255,0.12)", background: "#1a1a1a", color: "#fff", fontSize: 12 }}
+              labelStyle={{ color: "rgba(255,255,255,0.6)" }}
+              itemStyle={{ color: "#fff" }}
+              cursor={{ stroke: "rgba(255,255,255,0.15)" }}
             />
-            <Legend wrapperStyle={{ fontSize: 12 }} />
+            <Legend wrapperStyle={{ fontSize: 12, color: "rgba(255,255,255,0.6)" }} />
             <Line
               type="monotone"
               dataKey="total"
               name="Total Requests"
-              stroke="#1a56db"
+              stroke="#f97316"
               strokeWidth={2}
               dot={false}
               activeDot={{ r: 4 }}
@@ -95,7 +98,7 @@ export default function DashboardPage() {
               type="monotone"
               dataKey="blocked"
               name="Bots Blocked"
-              stroke="#dc2626"
+              stroke="#f87171"
               strokeWidth={2}
               dot={false}
               activeDot={{ r: 4 }}
@@ -107,20 +110,20 @@ export default function DashboardPage() {
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Activity feed */}
         <Card padding="none" className="lg:col-span-2 overflow-hidden">
-          <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-gray-900">Live Activity</h2>
-            <Link href="/logs" className="text-xs text-primary hover:underline">View all logs →</Link>
+          <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-white">Live Activity</h2>
+            <Link href="/logs" className="text-xs text-accent hover:underline">View all logs →</Link>
           </div>
-          <div className="divide-y divide-gray-50">
+          <div className="divide-y divide-white/5">
             {logs.map((log) => (
-              <div key={log.id} className="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition-colors">
-                <span className="text-xs text-gray-400 w-14 shrink-0">{formatTime(log.timestamp)}</span>
-                <span className="text-xs font-medium text-gray-700 w-24 shrink-0 truncate">{log.userAgent.split("/")[0]}</span>
+              <div key={log.id} className="flex items-center gap-3 px-5 py-3 hover:bg-white/5 transition-colors">
+                <span className="text-xs text-white/40 w-14 shrink-0">{formatTime(log.timestamp)}</span>
+                <span className="text-xs font-medium text-white/70 w-24 shrink-0 truncate">{log.userAgent.split("/")[0]}</span>
                 <Badge variant={log.action === "block" ? "danger" : "success"} className="shrink-0">
                   {log.action === "block" ? "Blocked" : "Allowed"}
                 </Badge>
-                <span className="text-xs text-gray-400 truncate">{log.path}</span>
-                <span className="text-xs text-gray-300 shrink-0 hidden sm:block">{log.ip}</span>
+                <span className="text-xs text-white/40 truncate">{log.path}</span>
+                <span className="text-xs text-white/30 shrink-0 hidden sm:block">{log.ip}</span>
               </div>
             ))}
           </div>
@@ -129,7 +132,7 @@ export default function DashboardPage() {
         {/* Quick actions */}
         <div className="space-y-3">
           <Card padding="md">
-            <h2 className="text-sm font-semibold text-gray-900 mb-4">Quick Actions</h2>
+            <h2 className="text-sm font-semibold text-white mb-4">Quick Actions</h2>
             <div className="space-y-2">
               <Link href="/snippet" className="block">
                 <Button variant="secondary" size="sm" className="w-full justify-start gap-2">
@@ -150,12 +153,12 @@ export default function DashboardPage() {
           </Card>
 
           <Card padding="md">
-            <h2 className="text-sm font-semibold text-gray-900 mb-3">Top Blockers Today</h2>
+            <h2 className="text-sm font-semibold text-white mb-3">Top Blockers Today</h2>
             <div className="space-y-2">
               {TOP_BOTS.map((b) => (
                 <div key={b.name} className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600">{b.name}</span>
-                  <span className="font-semibold text-danger">{b.count}</span>
+                  <span className="text-white/60">{b.name}</span>
+                  <span className="font-semibold text-red-400 font-mono">{b.count}</span>
                 </div>
               ))}
             </div>

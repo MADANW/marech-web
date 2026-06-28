@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { CheckIcon } from "@/components/ui/icons";
+import { useToast } from "@/components/ui/Toast";
 import { MOCK_ACCOUNT } from "@/lib/mock";
 import { useAuth } from "@/lib/auth";
 import { isMock, snippetUrl } from "@/lib/api";
@@ -71,6 +72,7 @@ const INSTRUCTIONS: Record<string, { steps: string[]; nav: string }> = {
 
 export default function SnippetPage() {
   const { user } = useAuth();
+  const toast = useToast();
   const snippetId = user?.snippetId ?? MOCK_ACCOUNT.snippetId;
   const [platform, setPlatform] = useState(user?.platform ?? MOCK_ACCOUNT.platform);
   const [copied, setCopied] = useState(false);
@@ -82,9 +84,14 @@ export default function SnippetPage() {
   const instructions = INSTRUCTIONS[platform] ?? INSTRUCTIONS["Custom / Other"];
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(snippetCode);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(snippetCode);
+      setCopied(true);
+      toast.success("Copied to clipboard", "Paste the snippet into your site's <head>.");
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.error("Couldn't copy", "Select the code and copy it manually.");
+    }
   };
 
   useEffect(() => {

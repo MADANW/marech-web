@@ -12,6 +12,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { PlusIcon, ShieldPlusIcon } from "@/components/ui/icons";
 import { MOCK_POLICIES, type Policy, type BotType } from "@/lib/mock";
 import { isMock, fetchPolicies, createPolicy, updatePolicy, deletePolicy as apiDeletePolicy } from "@/lib/api";
+import { useToast } from "@/components/ui/Toast";
 
 const BOT_TYPE_OPTIONS: { value: BotType; label: string }[] = [
   { value: "scraper", label: "Scraper" },
@@ -37,6 +38,7 @@ export default function PoliciesPage() {
   const [editPolicy, setEditPolicy] = useState<Policy | null>(null);
   const [selectedBotTypes, setSelectedBotTypes] = useState<BotType[]>([]);
   const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null);
+  const toast = useToast();
 
   useEffect(() => {
     if (!isMock && apiData?.policies) {
@@ -81,22 +83,28 @@ export default function PoliciesPage() {
       priority: Number(data.priority),
     };
 
-    if (isMock) {
-      const policy: Policy = { id: editPolicy?.id ?? Date.now(), ...payload };
-      if (editPolicy) {
-        setPolicies((prev) => prev.map((p) => (p.id === editPolicy.id ? policy : p)));
+    try {
+      if (isMock) {
+        const policy: Policy = { id: editPolicy?.id ?? Date.now(), ...payload };
+        if (editPolicy) {
+          setPolicies((prev) => prev.map((p) => (p.id === editPolicy.id ? policy : p)));
+        } else {
+          setPolicies((prev) => [policy, ...prev]);
+        }
       } else {
-        setPolicies((prev) => [policy, ...prev]);
+        if (editPolicy) {
+          await updatePolicy(editPolicy.id, payload);
+        } else {
+          await createPolicy(payload);
+        }
+        mutate();
       }
-    } else {
-      if (editPolicy) {
-        await updatePolicy(editPolicy.id, payload);
-      } else {
-        await createPolicy(payload);
-      }
-      mutate();
+    } catch {
+      toast.error("Couldn't save policy", "Please try again.");
+      return;
     }
     setModalOpen(false);
+    toast.success(editPolicy ? "Policy updated" : "Policy created", data.name);
   };
 
   const toggleEnabled = async (id: number) => {
@@ -111,13 +119,20 @@ export default function PoliciesPage() {
   };
 
   const deletePolicy = async (id: number) => {
-    if (isMock) {
-      setPolicies((prev) => prev.filter((p) => p.id !== id));
-    } else {
-      await apiDeletePolicy(id);
-      mutate();
+    const name = policies.find((p) => p.id === id)?.name ?? "Policy";
+    try {
+      if (isMock) {
+        setPolicies((prev) => prev.filter((p) => p.id !== id));
+      } else {
+        await apiDeletePolicy(id);
+        mutate();
+      }
+    } catch {
+      toast.error("Couldn't delete policy", "Please try again.");
+      return;
     }
     setDeleteConfirm(null);
+    toast.success("Policy deleted", name);
   };
 
   const toggleBotType = (bt: BotType) => {

@@ -4,9 +4,12 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { PasswordInput } from "@/components/ui/PasswordInput";
+import { Combobox } from "@/components/ui/Combobox";
 import { Modal } from "@/components/ui/Modal";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { CheckIcon } from "@/components/ui/icons";
+import { useToast } from "@/components/ui/Toast";
 import { useAuth } from "@/lib/auth";
 import { isMock, updateMe, updatePassword as apiUpdatePassword, deleteAccount } from "@/lib/api";
 import { useRouter } from "next/navigation";
@@ -24,6 +27,7 @@ interface PasswordForm { current: string; next: string; confirm: string; }
 export default function AccountPage() {
   const { user, logout } = useAuth();
   const router = useRouter();
+  const toast = useToast();
   const [tab, setTab] = useState<Tab>("Profile");
   const [profileSaved, setProfileSaved] = useState(false);
   const [passwordSaved, setPasswordSaved] = useState(false);
@@ -31,19 +35,28 @@ export default function AccountPage() {
   const [deleteInput, setDeleteInput] = useState("");
 
   const profileForm = useForm<ProfileForm>({
+    mode: "onBlur",
     defaultValues: {
       websiteUrl: user?.websiteUrl ?? "",
       platform: user?.platform ?? PLATFORMS[0],
       industry: "Blog",
     },
   });
-  const passwordForm = useForm<PasswordForm>();
+  const passwordForm = useForm<PasswordForm>({ mode: "onBlur" });
+
+  const platform = profileForm.watch("platform");
+  const industry = profileForm.watch("industry");
 
   const onSaveProfile = async (data: ProfileForm) => {
-    if (!isMock) await updateMe({ websiteUrl: data.websiteUrl, platform: data.platform });
-    else await new Promise((r) => setTimeout(r, 600));
-    setProfileSaved(true);
-    setTimeout(() => setProfileSaved(false), 2000);
+    try {
+      if (!isMock) await updateMe({ websiteUrl: data.websiteUrl, platform: data.platform });
+      else await new Promise((r) => setTimeout(r, 600));
+      setProfileSaved(true);
+      toast.success("Profile saved", "Your changes have been applied.");
+      setTimeout(() => setProfileSaved(false), 2000);
+    } catch {
+      toast.error("Couldn't save profile", "Something went wrong. Please try again.");
+    }
   };
 
   const onSavePassword = async (data: PasswordForm) => {
@@ -51,11 +64,16 @@ export default function AccountPage() {
       passwordForm.setError("confirm", { message: "Passwords don't match" });
       return;
     }
-    if (!isMock) await apiUpdatePassword({ currentPassword: data.current, newPassword: data.next });
-    else await new Promise((r) => setTimeout(r, 600));
-    passwordForm.reset();
-    setPasswordSaved(true);
-    setTimeout(() => setPasswordSaved(false), 2000);
+    try {
+      if (!isMock) await apiUpdatePassword({ currentPassword: data.current, newPassword: data.next });
+      else await new Promise((r) => setTimeout(r, 600));
+      passwordForm.reset();
+      setPasswordSaved(true);
+      toast.success("Password updated", "Use your new password next time you sign in.");
+      setTimeout(() => setPasswordSaved(false), 2000);
+    } catch {
+      toast.error("Couldn't update password", "Check your current password and try again.");
+    }
   };
 
   const handleDelete = async () => {
@@ -64,7 +82,7 @@ export default function AccountPage() {
       try {
         await deleteAccount();
       } catch {
-        // Even if the call fails, fall through to local logout.
+        toast.error("Delete failed on the server", "Signing you out locally anyway.");
       }
     }
     logout();
@@ -102,20 +120,23 @@ export default function AccountPage() {
             <Input
               label="Website URL"
               placeholder="https://yoursite.com"
-              {...profileForm.register("websiteUrl")}
+              error={profileForm.formState.errors.websiteUrl?.message}
+              {...profileForm.register("websiteUrl", {
+                pattern: { value: /^(https?:\/\/)?[\w.-]+\.[a-z]{2,}.*$/i, message: "Enter a valid URL" },
+              })}
             />
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium text-app-muted">Platform</label>
-              <select className="w-full px-3 py-2 rounded-lg border border-app-border bg-app-inset text-app-text text-sm outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/15 [&>option]:bg-[#141416]" {...profileForm.register("platform")}>
-                {PLATFORMS.map((p) => <option key={p}>{p}</option>)}
-              </select>
-            </div>
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium text-app-muted">Industry</label>
-              <select className="w-full px-3 py-2 rounded-lg border border-app-border bg-app-inset text-app-text text-sm outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/15 [&>option]:bg-[#141416]" {...profileForm.register("industry")}>
-                {INDUSTRIES.map((i) => <option key={i}>{i}</option>)}
-              </select>
-            </div>
+            <Combobox
+              label="Platform"
+              value={platform}
+              onChange={(v) => profileForm.setValue("platform", v, { shouldDirty: true })}
+              options={PLATFORMS}
+            />
+            <Combobox
+              label="Industry"
+              value={industry}
+              onChange={(v) => profileForm.setValue("industry", v, { shouldDirty: true })}
+              options={INDUSTRIES}
+            />
             <Button type="submit" variant="accent" size="md" className="!rounded-lg" disabled={profileForm.formState.isSubmitting}>
               {profileSaved ? (<><CheckIcon className="h-4 w-4" /> Saved</>) : profileForm.formState.isSubmitting ? "Saving…" : "Save changes"}
             </Button>
@@ -128,16 +149,14 @@ export default function AccountPage() {
         <Card padding="md">
           <h2 className="font-semibold text-app-text mb-4">Change password</h2>
           <form onSubmit={passwordForm.handleSubmit(onSavePassword)} className="space-y-4">
-            <Input
+            <PasswordInput
               label="Current password"
-              type="password"
               placeholder="••••••••"
               error={passwordForm.formState.errors.current?.message}
               {...passwordForm.register("current", { required: "Required" })}
             />
-            <Input
+            <PasswordInput
               label="New password"
-              type="password"
               placeholder="Min. 8 characters"
               error={passwordForm.formState.errors.next?.message}
               {...passwordForm.register("next", {
@@ -145,9 +164,8 @@ export default function AccountPage() {
                 minLength: { value: 8, message: "At least 8 characters" },
               })}
             />
-            <Input
+            <PasswordInput
               label="Confirm new password"
-              type="password"
               placeholder="••••••••"
               error={passwordForm.formState.errors.confirm?.message}
               {...passwordForm.register("confirm", { required: "Required" })}

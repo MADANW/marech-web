@@ -392,3 +392,25 @@ body {
     animation: none;
   }
 }
+/* ── UX primitives ──────────────────────────────────────────────── */
+
+/* Toast entrance */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.toast-enter {
+  animation: toast-in 0.22s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .toast-enter { animation: none; }
+}
+
+/* Consistent keyboard focus rings (form fields keep their own ring styles) */
+@layer base {
+  :where(a, button, [role="button"], [tabindex]):focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}

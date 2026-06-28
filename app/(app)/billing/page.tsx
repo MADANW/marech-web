@@ -11,6 +11,7 @@ import { useAuth } from "@/lib/auth";
 import { MOCK_BILLING_HISTORY } from "@/lib/mock";
 import { formatNumber } from "@/lib/utils";
 import { isMock, openBillingPortal } from "@/lib/api";
+import { useToast } from "@/components/ui/Toast";
 
 const PLAN_NAMES: Record<string, string> = {
   free: "Free",
@@ -28,6 +29,7 @@ const PLAN_PRICES: Record<string, string> = {
 
 export default function BillingPage() {
   const { user } = useAuth();
+  const toast = useToast();
   const [cancelModal, setCancelModal] = useState(false);
   const [cancelled, setCancelled] = useState(false);
   const [portalBusy, setPortalBusy] = useState(false);
@@ -41,6 +43,7 @@ export default function BillingPage() {
       window.location.href = url;
     } catch {
       setPortalBusy(false);
+      toast.error("Couldn't open billing portal", "Please try again in a moment.");
     }
   };
 
@@ -179,6 +182,7 @@ export default function BillingPage() {
               if (isMock) {
                 setCancelled(true);
                 setCancelModal(false);
+                toast.success("Subscription cancelled", "Protection stays active until the period ends.");
               } else {
                 goToPortal();
               }

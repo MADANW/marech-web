@@ -147,7 +147,7 @@ function PortalShell({ children }: { children: React.ReactNode }) {
             {dropdownOpen && (
               <>
                 <div className="fixed inset-0 z-10" onClick={() => setDropdownOpen(false)} />
-                <div className="absolute right-0 mt-2 w-44 bg-app-card border border-app-border rounded-lg shadow-2xl py-1 z-20">
+                <div className="absolute right-0 mt-2 w-44 mars-card rounded-lg shadow-2xl py-1 z-20">
                   <Link href="/account" className="block px-4 py-2 text-sm text-app-muted hover:bg-app-hover hover:text-app-text" onClick={() => setDropdownOpen(false)}>Settings</Link>
                   <Link href="/billing" className="block px-4 py-2 text-sm text-app-muted hover:bg-app-hover hover:text-app-text" onClick={() => setDropdownOpen(false)}>Billing</Link>
                   <hr className="my-1 border-app-border" />

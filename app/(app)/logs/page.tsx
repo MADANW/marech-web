@@ -87,7 +87,7 @@ export default function LogsPage() {
           { label: "Blocked", value: filtered.filter((l) => l.action === "block").length, icon: BanIcon, iconTone: "bg-danger/12 text-red-400" },
           { label: "Allowed", value: filtered.filter((l) => l.action === "allow").length, icon: ShieldCheckIcon, iconTone: "bg-success/12 text-success" },
         ].map(({ label, value, icon: Icon, iconTone }) => (
-          <div key={label} className="flex items-center gap-3 rounded-xl border border-app-border bg-app-card p-4">
+          <div key={label} className="flex items-center gap-3 rounded-xl mars-card p-4">
             <span className={`flex h-9 w-9 items-center justify-center rounded-lg ${iconTone}`}>
               <Icon className="h-4 w-4" />
             </span>

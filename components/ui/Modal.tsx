@@ -29,7 +29,7 @@ export function Modal({ open, onClose, title, children, className }: ModalProps)
       />
       <div
         className={cn(
-          "relative bg-app-card text-app-text border border-app-border rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto",
+          "relative mars-card text-app-text rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto",
           className
         )}
       >

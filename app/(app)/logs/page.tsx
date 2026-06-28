@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { DownloadIcon, SearchIcon, ActivityIcon, BanIcon, ShieldCheckIcon } from "@/components/ui/icons";
-import { formatDate } from "@/lib/utils";
+import { LocalTime } from "@/components/ui/LocalTime";
 import { generateLogs, type LogEntry, type BotType } from "@/lib/mock";
 import { isMock, fetchLogs, downloadCsv } from "@/lib/api";
 
@@ -171,7 +171,7 @@ export default function LogsPage() {
               )}
               {visible.map((log) => (
                 <tr key={log.id} className="hover:bg-app-hover transition-colors">
-                  <td className="px-4 py-3.5 text-app-faint font-mono text-xs whitespace-nowrap">{formatDate(log.timestamp)}</td>
+                  <td className="px-4 py-3.5 text-app-faint font-mono text-xs whitespace-nowrap"><LocalTime ts={log.timestamp} mode="date" /></td>
                   <td className="px-4 py-3.5 text-app-text text-[13px] max-w-[200px] truncate" title={log.userAgent}>{log.userAgent}</td>
                   <td className="px-4 py-3.5">
                     <span className="inline-flex items-center gap-2 text-xs text-app-muted">

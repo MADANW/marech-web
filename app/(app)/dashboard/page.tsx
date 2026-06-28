@@ -23,7 +23,8 @@ import {
   DownloadIcon,
   ChevronRightIcon,
 } from "@/components/ui/icons";
-import { formatNumber, formatTime } from "@/lib/utils";
+import { formatNumber } from "@/lib/utils";
+import { LocalTime } from "@/components/ui/LocalTime";
 import { generateLogs, generateWeekStats, type LogEntry } from "@/lib/mock";
 import { isMock, fetchLogs } from "@/lib/api";
 
@@ -223,7 +224,7 @@ export default function DashboardPage() {
                     {blocked ? "Blocked" : "Allowed"}
                   </Badge>
                   <span className="hidden sm:block text-[11px] text-app-faint font-mono w-24 text-right shrink-0">{log.ip}</span>
-                  <span className="text-[11px] text-app-faint w-14 text-right shrink-0 tabular-nums">{formatTime(log.timestamp)}</span>
+                  <LocalTime ts={log.timestamp} className="text-[11px] text-app-faint w-14 text-right shrink-0 tabular-nums" />
                 </div>
               );
             })}

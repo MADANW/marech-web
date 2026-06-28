@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AreaChart,
   Area,
@@ -24,6 +24,8 @@ import {
   ChevronRightIcon,
 } from "@/components/ui/icons";
 import { formatNumber } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/Skeleton";
+import { useToast } from "@/components/ui/Toast";
 import { LocalTime } from "@/components/ui/LocalTime";
 import { generateLogs, generateWeekStats, type LogEntry } from "@/lib/mock";
 import { isMock, fetchLogs } from "@/lib/api";
@@ -46,20 +48,34 @@ const TOP_BOTS = [
 ];
 
 export default function DashboardPage() {
-  const [logs, setLogs] = useState<LogEntry[]>(INITIAL_LOGS);
+  const toast = useToast();
+  const [logs, setLogs] = useState<LogEntry[]>(isMock ? INITIAL_LOGS : []);
+  const [loaded, setLoaded] = useState(isMock);
+  const erroredRef = useRef(false);
 
   useEffect(() => {
     const refresh = () => {
       if (isMock) {
         setLogs(generateLogs(20, true));
-      } else {
-        fetchLogs({ limit: 20 })
-          .then((res) => setLogs(res.logs as LogEntry[]))
-          .catch(console.error);
+        return;
       }
+      fetchLogs({ limit: 20 })
+        .then((res) => {
+          setLogs(res.logs as LogEntry[]);
+          setLoaded(true);
+          erroredRef.current = false;
+        })
+        .catch(() => {
+          if (!erroredRef.current) {
+            erroredRef.current = true;
+            toast.error("Live feed disconnected", "Couldn't reach the API. Retrying every 5s.");
+          }
+        });
     };
+    refresh();
     const interval = setInterval(refresh, 5000);
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const today = WEEK_STATS[WEEK_STATS.length - 1];
@@ -209,7 +225,19 @@ export default function DashboardPage() {
             </Link>
           </div>
           <div className="divide-y divide-app-border-faint">
-            {logs.slice(0, 8).map((log) => {
+            {!isMock && !loaded ? (
+              Array.from({ length: 6 }).map((_, i) => (
+                <div key={`sk-${i}`} className="flex items-center gap-3 px-5 py-3">
+                  <Skeleton className="h-7 w-7 shrink-0 rounded-lg" />
+                  <div className="min-w-0 flex-1 space-y-1.5">
+                    <Skeleton className="h-3 w-28" />
+                    <Skeleton className="h-2.5 w-40" />
+                  </div>
+                  <Skeleton className="h-5 w-16 shrink-0 rounded-md" />
+                </div>
+              ))
+            ) : (
+              logs.slice(0, 8).map((log) => {
               const blocked = log.action === "block";
               return (
                 <div key={log.id} className="flex items-center gap-3 px-5 py-3 hover:bg-app-hover transition-colors">
@@ -227,7 +255,8 @@ export default function DashboardPage() {
                   <LocalTime ts={log.timestamp} className="text-[11px] text-app-faint w-14 text-right shrink-0 tabular-nums" />
                 </div>
               );
-            })}
+            })
+            )}
           </div>
         </div>
 

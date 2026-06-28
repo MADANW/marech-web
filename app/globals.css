@@ -414,3 +414,10 @@ body {
     border-radius: 4px;
   }
 }
+
+/* Marketing accent re-tint: warm the brand orange to Mars rust across the
+   public site, leaving layout/surfaces untouched (mirrors .portal-theme). */
+.marketing-theme {
+  --color-accent: var(--color-mars-rust);
+  --color-accent-dark: var(--color-mars-rust-dim);
+}

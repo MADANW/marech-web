@@ -87,8 +87,8 @@ export function AnalyticsMockup() {
           <svg viewBox="0 0 400 100" className="w-full h-32" preserveAspectRatio="none">
             <defs>
               <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#f97316" stopOpacity="0.18" />
-                <stop offset="100%" stopColor="#f97316" stopOpacity="0" />
+                <stop offset="0%" stopColor="#e2562a" stopOpacity="0.18" />
+                <stop offset="100%" stopColor="#e2562a" stopOpacity="0" />
               </linearGradient>
             </defs>
             {/* Grid lines */}
@@ -107,7 +107,7 @@ export function AnalyticsMockup() {
             <motion.path
               d={CHART_PATH}
               fill="none"
-              stroke="#f97316"
+              stroke="#e2562a"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -119,7 +119,7 @@ export function AnalyticsMockup() {
             <motion.line
               y1="0"
               y2="100"
-              stroke="#f97316"
+              stroke="#e2562a"
               strokeWidth="1.5"
               strokeOpacity="0.5"
               initial={{ x1: 0, x2: 0 }}
@@ -131,7 +131,7 @@ export function AnalyticsMockup() {
               cx="400"
               cy="72"
               r="4"
-              fill="#f97316"
+              fill="#e2562a"
               animate={{ scale: [1, 1.6, 1], opacity: [1, 0.45, 1] }}
               transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity }}
               style={{ transformOrigin: "400px 72px" }}
@@ -166,7 +166,7 @@ export function AnalyticsMockup() {
                 </span>
                 <motion.span
                   key={bot.count}
-                  initial={{ color: flash[bot.name] ? "#f97316" : "rgba(255,255,255,0.35)" }}
+                  initial={{ color: flash[bot.name] ? "#e2562a" : "rgba(255,255,255,0.35)" }}
                   animate={{ color: "rgba(255,255,255,0.35)" }}
                   transition={{ duration: 0.9 }}
                   className="font-mono"

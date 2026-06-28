@@ -21,15 +21,16 @@ const PAD = "px-6 sm:px-10 lg:px-16";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#c44a1a" }}>
+    <div className="marketing-theme min-h-screen flex flex-col" style={{ backgroundColor: "#c44a1a" }}>
       <div className="relative flex flex-col flex-1">
-        <ScrollProgress className="h-0.5 from-black via-[#f97316] to-white" />
+        <ScrollProgress className="h-0.5 from-black via-[#e2562a] to-white" />
         <Nav />
         <main className="flex-1">
 
           {/* ── Hero — text left-padded, mockup bleeds to right edge ── */}
-          <section className="pt-24 pb-16 overflow-hidden">
-            <div className="grid md:grid-cols-[1fr_1fr] items-stretch min-h-[75vh]">
+          <section className="relative pt-24 pb-16 overflow-hidden">
+            <div className="mars-horizon" />
+            <div className="relative z-10 grid md:grid-cols-[1fr_1fr] items-stretch min-h-[75vh]">
 
               <FadeIn className="flex flex-col justify-center px-6 sm:px-10 lg:px-16 pb-8 md:pb-0 md:pr-6">
                 <span
@@ -347,8 +348,9 @@ export default function LandingPage() {
           </section>
 
           {/* ── Final CTA — left-aligned ── */}
-          <section className={`${PAD} py-28`}>
-            <FadeIn>
+          <section className={`relative ${PAD} py-28`}>
+            <div className="mars-horizon" />
+            <FadeIn className="relative z-10">
               <div className="grid md:grid-cols-[4fr_1fr] gap-8 items-end">
                 <div>
                   <span

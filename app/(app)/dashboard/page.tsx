@@ -50,7 +50,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const refresh = () => {
       if (isMock) {
-        setLogs(generateLogs(20));
+        setLogs(generateLogs(20, true));
       } else {
         fetchLogs({ limit: 20 })
           .then((res) => setLogs(res.logs as LogEntry[]))

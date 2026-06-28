@@ -79,41 +79,57 @@ const IPS = [
   "185.191.171.4",
 ];
 
-function randomItem<T>(arr: T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)];
+/**
+ * Seeded PRNG (mulberry32). The mock is deterministic by default so the
+ * server and client render identical markup — no hydration mismatch. Pass
+ * `live` for fresh random data in client-only contexts (e.g. the dashboard's
+ * polling interval), which run after hydration and so can't cause a mismatch.
+ */
+function mulberry32(seed: number): () => number {
+  return () => {
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
 }
 
-function hoursAgo(h: number): string {
-  return new Date(Date.now() - h * 3_600_000).toISOString();
+/** Fixed reference instant so mock timestamps are deterministic. */
+const MOCK_NOW = Date.parse("2026-06-28T12:00:00Z");
+
+function pick<T>(arr: T[], rng: () => number): T {
+  return arr[Math.floor(rng() * arr.length)];
 }
 
-export function generateLogs(count = 60): LogEntry[] {
+export function generateLogs(count = 60, live = false): LogEntry[] {
+  const rng = live ? Math.random : mulberry32(0x9e3779b9 ^ count);
+  const base = live ? Date.now() : MOCK_NOW;
   return Array.from({ length: count }, (_, i) => {
-    const bot = randomItem(BOT_NAMES);
+    const bot = pick(BOT_NAMES, rng);
     const isBot = bot.type !== "human";
     return {
       id: count - i,
-      timestamp: hoursAgo(i * 0.4),
+      timestamp: new Date(base - i * 0.4 * 3_600_000).toISOString(),
       userAgent: bot.ua,
-      ip: randomItem(IPS),
-      path: randomItem(PATHS),
+      ip: pick(IPS, rng),
+      path: pick(PATHS, rng),
       action: isBot ? "block" : "allow",
       reason: isBot ? "Known AI scraper" : "Human visitor",
       botType: bot.type,
-      confidence: isBot ? 0.85 + Math.random() * 0.14 : 0.1 + Math.random() * 0.2,
+      confidence: isBot ? 0.85 + rng() * 0.14 : 0.1 + rng() * 0.2,
     };
   });
 }
 
 export function generateWeekStats(): DayStats[] {
-  const now = new Date();
+  const rng = mulberry32(0x1234abcd);
   return Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(now);
-    d.setDate(d.getDate() - (6 - i));
-    const total = 800 + Math.floor(Math.random() * 600);
-    const blocked = Math.floor(total * (0.05 + Math.random() * 0.12));
+    const d = new Date(MOCK_NOW);
+    d.setUTCDate(d.getUTCDate() - (6 - i));
+    const total = 800 + Math.floor(rng() * 600);
+    const blocked = Math.floor(total * (0.05 + rng() * 0.12));
     return {
-      date: d.toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+      date: d.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" }),
       total,
       blocked,
     };

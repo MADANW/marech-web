@@ -11,10 +11,13 @@ export function formatNumber(n: number): string {
   return n.toString();
 }
 
+// Format in a fixed timezone (UTC) so server and client produce identical
+// strings — otherwise dates/times differ between the SSR (UTC) and the
+// browser (local tz) render and trigger a hydration mismatch.
 export function formatDate(ts: string | number | Date): string {
-  return new Date(ts).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  return new Date(ts).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
 }
 
 export function formatTime(ts: string | number | Date): string {
-  return new Date(ts).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+  return new Date(ts).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", timeZone: "UTC" });
 }

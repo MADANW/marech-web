@@ -12,7 +12,7 @@ interface PulsatingButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export function PulsatingButton({
   className,
   children,
-  pulseColor = "#f97316",
+  pulseColor = "var(--color-accent)",
   duration = "1.5s",
   ...props
 }: PulsatingButtonProps) {
@@ -32,7 +32,7 @@ export function PulsatingButton({
     >
       <span className="relative z-10">{children}</span>
       <span
-        className="absolute left-1/2 top-1/2 -z-0 h-full w-full -translate-x-1/2 -translate-y-1/2 animate-pulse-ring rounded-full"
+        className="absolute inset-0 -z-0 animate-pulse-ring rounded-full"
         style={{ backgroundColor: "var(--pulse-color)" }}
       />
     </button>

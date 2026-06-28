@@ -10,7 +10,7 @@ export function Card({ children, className, padding = "md" }: CardProps) {
   return (
     <div
       className={cn(
-        "bg-app-card text-app-text rounded-xl border border-app-border",
+        "mars-card text-app-text rounded-xl",
         {
           none: "",
           sm: "p-4",

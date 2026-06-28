@@ -5,10 +5,10 @@ import { TrendingUpIcon, TrendingDownIcon } from "@/components/ui/icons";
 type Accent = "orange" | "red" | "green" | "blue";
 
 const ACCENT: Record<Accent, string> = {
-  orange: "bg-accent/12 text-accent",
-  red: "bg-danger/12 text-red-400",
-  green: "bg-success/12 text-success",
-  blue: "bg-white/[0.06] text-app-muted",
+  orange: "bg-accent/15 text-accent ring-1 ring-accent/20",
+  red: "bg-danger/12 text-red-400 ring-1 ring-danger/20",
+  green: "bg-success/12 text-success ring-1 ring-success/20",
+  blue: "bg-mars-cyan/12 text-mars-cyan ring-1 ring-mars-cyan/20",
 };
 
 interface Trend {
@@ -56,8 +56,8 @@ export function StatCard({
   return (
     <div
       className={cn(
-        "rounded-xl border bg-app-card p-5 transition-colors",
-        highlight ? "border-accent/35" : "border-app-border hover:border-white/15"
+        "mars-card rounded-xl p-5 transition-colors",
+        highlight ? "mars-glow-rust" : "hover:border-white/15"
       )}
     >
       <div className="flex items-start justify-between">
@@ -78,8 +78,10 @@ export function StatCard({
         >
           {value}
         </div>
-        <div className="mt-2.5 text-[13px] text-app-muted">{label}</div>
-        {sub && <div className="mt-1 text-xs text-app-faint">{sub}</div>}
+        <div className="mt-3 text-[11px] font-medium uppercase tracking-[0.14em] text-app-faint">
+          {label}
+        </div>
+        {sub && <div className="mt-1.5 text-xs text-app-muted">{sub}</div>}
       </div>
     </div>
   );

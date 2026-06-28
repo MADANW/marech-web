@@ -56,10 +56,17 @@ function PortalShell({ children }: { children: React.ReactNode }) {
 
   const SidebarContent = () => (
     <nav className="flex flex-col h-full">
-      <div className="px-5 py-5">
+      <div className="px-5 py-5 border-b border-app-border-faint">
         <Link href="/dashboard">
           <Logo />
         </Link>
+        <div className="mt-2.5 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.16em] text-app-faint">
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-60" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
+          </span>
+          Systems nominal
+        </div>
       </div>
       <div className="flex-1 px-3 py-2 space-y-0.5 overflow-y-auto">
         {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
@@ -92,9 +99,12 @@ function PortalShell({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <div className="flex h-screen overflow-hidden bg-app-bg">
+    <div className="portal-theme relative flex h-screen overflow-hidden bg-app-bg">
+      {/* Atmospheric horizon glow behind everything */}
+      <div className="mars-horizon z-0" />
+
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex flex-col w-56 bg-app-sidebar border-r border-app-border shrink-0">
+      <aside className="relative z-10 hidden md:flex flex-col w-56 bg-app-sidebar border-r border-app-border shrink-0">
         <SidebarContent />
       </aside>
 
@@ -109,7 +119,7 @@ function PortalShell({ children }: { children: React.ReactNode }) {
       )}
 
       {/* Main */}
-      <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
+      <div className="relative z-10 flex flex-col flex-1 min-w-0 overflow-hidden">
         {/* Top bar */}
         <header className="bg-app-sidebar border-b border-app-border px-4 h-14 flex items-center justify-between shrink-0">
           <button

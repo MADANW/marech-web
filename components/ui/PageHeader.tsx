@@ -11,7 +11,10 @@ export function PageHeader({ title, subtitle, action }: PageHeaderProps) {
   return (
     <div className="flex flex-wrap items-end justify-between gap-3">
       <div>
-        <h1 className="text-[21px] font-semibold tracking-[-0.02em] text-app-text">
+        <h1
+          className="text-[22px] font-bold tracking-[-0.01em] text-app-text"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
           {title}
         </h1>
         {subtitle && <p className="mt-1 text-[13px] text-app-muted">{subtitle}</p>}

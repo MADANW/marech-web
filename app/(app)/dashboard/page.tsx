@@ -2,8 +2,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -80,6 +80,35 @@ export default function DashboardPage() {
         action={<LivePill>Live · updates every 5s</LivePill>}
       />
 
+      {/* Hero / telemetry band */}
+      <div className="relative overflow-hidden rounded-xl mars-card px-6 py-6 sm:px-7">
+        <div className="mars-grid absolute inset-0" />
+        <div className="mars-horizon" />
+        <div className="relative flex items-center justify-between gap-6">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-mars-rust">
+              <span className="h-1.5 w-1.5 rounded-full bg-mars-rust shadow-[0_0_8px_1px_rgba(226,86,42,0.7)]" />
+              Marech control
+            </div>
+            <h2
+              className="mt-2.5 text-2xl font-bold tracking-[-0.01em] text-app-text"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Protection active
+            </h2>
+            <p className="mt-1.5 max-w-md text-[13px] text-app-muted">
+              Your site is shielded across every page. Live telemetry refreshes every 5 seconds.
+            </p>
+            <div className="mt-5 flex flex-wrap items-center gap-x-8 gap-y-3">
+              <Telemetry label="Uptime" value="99.98%" />
+              <Telemetry label="Edge regions" value="14" />
+              <Telemetry label="Throughput" value={`${formatNumber(Math.round(todayTotal / 1440))}/min`} />
+            </div>
+          </div>
+          <PlanetOrbit />
+        </div>
+      </div>
+
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <StatCard
@@ -117,38 +146,55 @@ export default function DashboardPage() {
       </div>
 
       {/* Chart */}
-      <div className="rounded-xl border border-app-border bg-app-card p-5">
+      <div className="rounded-xl mars-card p-5">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-[13.5px] font-semibold text-app-text">Traffic · last 7 days</h2>
           <div className="flex items-center gap-4 text-xs">
             <span className="inline-flex items-center gap-1.5 text-app-muted">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Total
+              <span className="h-1.5 w-1.5 rounded-full bg-mars-cyan" /> Total
             </span>
             <span className="inline-flex items-center gap-1.5 text-app-muted">
-              <span className="h-1.5 w-1.5 rounded-full bg-red-400" /> Blocked
+              <span className="h-1.5 w-1.5 rounded-full bg-mars-rust" /> Blocked
             </span>
           </div>
         </div>
         <ResponsiveContainer width="100%" height={210}>
-          <LineChart data={WEEK_STATS} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
+          <AreaChart data={WEEK_STATS} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
+            <defs>
+              <linearGradient id="fillTotal" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.16} />
+                <stop offset="100%" stopColor="#22d3ee" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="fillBlocked" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#e2562a" stopOpacity={0.3} />
+                <stop offset="100%" stopColor="#e2562a" stopOpacity={0} />
+              </linearGradient>
+              <filter id="glowRust" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
             <CartesianGrid strokeDasharray="2 4" stroke="rgba(255,255,255,0.05)" vertical={false} />
-            <XAxis dataKey="date" tick={{ fontSize: 11, fill: "#67676f" }} axisLine={false} tickLine={false} dy={6} />
-            <YAxis tick={{ fontSize: 11, fill: "#67676f" }} axisLine={false} tickLine={false} />
+            <XAxis dataKey="date" tick={{ fontSize: 11, fill: "#8a7f76" }} axisLine={false} tickLine={false} dy={6} />
+            <YAxis tick={{ fontSize: 11, fill: "#8a7f76" }} axisLine={false} tickLine={false} />
             <Tooltip
-              contentStyle={{ borderRadius: "10px", border: "1px solid rgba(255,255,255,0.1)", background: "#141416", color: "#ededee", fontSize: 12, boxShadow: "0 12px 32px rgba(0,0,0,0.6)" }}
+              contentStyle={{ borderRadius: "10px", border: "1px solid rgba(255,255,255,0.1)", background: "#16130f", color: "#ededee", fontSize: 12, boxShadow: "0 12px 32px rgba(0,0,0,0.6)" }}
               labelStyle={{ color: "#9a9aa3" }}
               itemStyle={{ color: "#ededee" }}
               cursor={{ stroke: "rgba(255,255,255,0.12)" }}
             />
-            <Line type="monotone" dataKey="total" name="Total" stroke="#f97316" strokeWidth={2} dot={false} activeDot={{ r: 4 }} />
-            <Line type="monotone" dataKey="blocked" name="Blocked" stroke="#f87171" strokeWidth={2} dot={false} activeDot={{ r: 4 }} />
-          </LineChart>
+            <Area type="monotone" dataKey="total" name="Total" stroke="#22d3ee" strokeWidth={2} fill="url(#fillTotal)" dot={false} activeDot={{ r: 4 }} />
+            <Area type="monotone" dataKey="blocked" name="Blocked" stroke="#e2562a" strokeWidth={2} fill="url(#fillBlocked)" filter="url(#glowRust)" dot={false} activeDot={{ r: 4, fill: "#e2562a" }} />
+          </AreaChart>
         </ResponsiveContainer>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-4">
         {/* Activity feed */}
-        <div className="lg:col-span-2 rounded-xl border border-app-border bg-app-card overflow-hidden">
+        <div className="lg:col-span-2 rounded-xl mars-card overflow-hidden">
           <div className="px-5 py-3.5 border-b border-app-border flex items-center justify-between">
             <h2 className="text-[13.5px] font-semibold text-app-text flex items-center gap-2">
               <span className="relative flex h-1.5 w-1.5">
@@ -186,7 +232,7 @@ export default function DashboardPage() {
 
         {/* Quick actions + top blockers */}
         <div className="space-y-4">
-          <div className="rounded-xl border border-app-border bg-app-card p-4">
+          <div className="rounded-xl mars-card p-4">
             <h2 className="text-[13.5px] font-semibold text-app-text mb-2 px-1">Quick actions</h2>
             <div className="space-y-0.5">
               {QUICK_ACTIONS.map(({ href, label, icon: Icon }) => (
@@ -203,7 +249,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="rounded-xl border border-app-border bg-app-card p-5">
+          <div className="rounded-xl mars-card p-5">
             <h2 className="text-[13.5px] font-semibold text-app-text mb-3.5">Top blockers today</h2>
             <div className="space-y-3">
               {TOP_BOTS.map((b) => (
@@ -224,6 +270,35 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function Telemetry({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <div
+        className="text-base font-semibold text-app-text tabular-nums"
+        style={{ fontFamily: "var(--font-mono)" }}
+      >
+        {value}
+      </div>
+      <div className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.14em] text-app-faint">
+        {label}
+      </div>
+    </div>
+  );
+}
+
+/** Decorative Mars planet with an orbiting satellite. */
+function PlanetOrbit() {
+  return (
+    <div className="relative hidden h-36 w-36 shrink-0 sm:block" aria-hidden>
+      <div className="mars-orbit-ring mars-orbit-spin absolute inset-0">
+        <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-mars-cyan shadow-[0_0_10px_2px_rgba(34,211,238,0.6)]" />
+      </div>
+      <div className="mars-orbit-ring absolute inset-[18px] opacity-50" />
+      <div className="mars-planet absolute inset-[34px]" />
     </div>
   );
 }

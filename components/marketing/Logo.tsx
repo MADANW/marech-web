@@ -30,13 +30,13 @@ export function Logo({ className, iconClassName, hideIcon = false }: LogoProps) 
         style={MONO}
       >
         <span className="logo-glitch__text">
-          block<span className="text-accent">.me</span>
+          mare<span className="text-accent">ch</span>
         </span>
         <span aria-hidden className="logo-glitch__layer logo-glitch__layer--a">
-          Marech
+          marech
         </span>
         <span aria-hidden className="logo-glitch__layer logo-glitch__layer--b">
-          Marech
+          marech
         </span>
         <span aria-hidden className="logo-glitch__bar" />
       </span>

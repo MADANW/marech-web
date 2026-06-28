@@ -1,12 +1,12 @@
 export const metadata = {
-  title: "Privacy Policy — block.me",
-  description: "block.me Privacy Policy",
+  title: "Privacy Policy — Marech",
+  description: "Marech Privacy Policy",
 };
 
 const LAST_UPDATED = "June 21, 2026";
 const EFFECTIVE_DATE = "June 21, 2026";
-const COMPANY = "block.me";
-const CONTACT_EMAIL = "privacy@blockme.io";
+const COMPANY = "Marech";
+const CONTACT_EMAIL = "privacy@marech.tech";
 
 export default function PrivacyPage() {
   return (
@@ -32,7 +32,7 @@ export default function PrivacyPage() {
           <p>
             {COMPANY} (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is committed to protecting your privacy.
             This Privacy Policy explains what information we collect, how we use it,
-            and your rights regarding that information when you use blockme.io and
+            and your rights regarding that information when you use marech.tech and
             related services (the &ldquo;Service&rdquo;).
           </p>
         </Section>
@@ -206,7 +206,7 @@ export default function PrivacyPage() {
             </a>
           </p>
           <p className="text-white/40 text-sm mt-2">
-            block.me · Privacy Team · Delaware, USA
+            Marech · Privacy Team · Delaware, USA
           </p>
         </Section>
 

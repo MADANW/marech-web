@@ -1,19 +1,19 @@
 import { PlatformPage } from "@/components/marketing/PlatformPage";
 
 export const metadata = {
-  title: "block.me for WordPress — Protect Your Blog from AI Scrapers",
+  title: "Marech for WordPress — Protect Your Blog from AI Scrapers",
 };
 
 export default function WordPressPage() {
   return (
     <PlatformPage
       name="WordPress"
-      headline="block.me for WordPress"
+      headline="Marech for WordPress"
       subheadline="Stop AI from scraping your blog posts, recipes, and articles. Takes 30 seconds."
       steps={[
         {
-          title: "Copy your block.me snippet",
-          body: 'Sign up and grab your unique script tag from the block.me dashboard ("Get Snippet Code").',
+          title: "Copy your Marech snippet",
+          body: 'Sign up and grab your unique script tag from the Marech dashboard ("Get Snippet Code").',
         },
         {
           title: "Go to WordPress Admin → Appearance → Theme Editor",
@@ -25,7 +25,7 @@ export default function WordPressPage() {
         },
         {
           title: "Paste snippet before </head>",
-          body: "Find the </head> closing tag and paste your block.me snippet immediately before it.",
+          body: "Find the </head> closing tag and paste your Marech snippet immediately before it.",
         },
         {
           title: "Click Update File",

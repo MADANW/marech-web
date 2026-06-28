@@ -13,7 +13,7 @@ import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { ScrollVelocityContainer, ScrollVelocityRow } from "@/components/ui/scroll-based-velocity";
 
 export const metadata = {
-  title: "block.me — Stop AI from Stealing Your Content",
+  title: "Marech — Stop AI from Stealing Your Content",
   description: "Block ChatGPT, Claude, and other AI scrapers in 30 seconds. No code required.",
 };
 
@@ -110,7 +110,7 @@ export default function LandingPage() {
             </div>
           </section>
 
-          {/* ── Why block.me — orbit LEFT, features RIGHT ── */}
+          {/* ── Why Marech — orbit LEFT, features RIGHT ── */}
           <section className={`${PAD} py-20`}>
             <div className="grid md:grid-cols-[5fr_6fr] gap-16 items-start">
 
@@ -126,7 +126,7 @@ export default function LandingPage() {
                     className="text-[#f5f0eb] text-xs font-bold tracking-[0.2em] uppercase block mb-3"
                     style={{ fontFamily: "var(--font-mono)" }}
                   >
-                    Why block.me
+                    Why Marech
                   </span>
                   <h2
                     className="text-4xl sm:text-5xl font-bold text-white mb-10"
@@ -237,7 +237,7 @@ export default function LandingPage() {
                     </p>
                   </div>
                   <div className="mt-4 bg-black/40 rounded-lg p-3 font-mono text-xs text-green-400">
-                    {"<script src=\"blockme.js\"></script>"}
+                    {"<script src=\"marech.js\"></script>"}
                   </div>
                 </div>
               </FadeIn>
@@ -434,13 +434,13 @@ const TESTIMONIALS = [
     name: "Sarah Chen",
     title: "Food Blogger · sarahcooks.com",
     quote:
-      "I was livid when I found my recipes being fed to AI chatbots. block.me stopped it in seconds. Incredibly satisfying to watch every scraper get blocked.",
+      "I was livid when I found my recipes being fed to AI chatbots. Marech stopped it in seconds. Incredibly satisfying to watch every scraper get blocked.",
   },
   {
     name: "Mike Torres",
     title: "Shopify Store Owner · gearup.io",
     quote:
-      "Competitors were using AI to scrape my product descriptions and undercut my prices. block.me caught 2,000+ scrapes in week one. Game changer.",
+      "Competitors were using AI to scrape my product descriptions and undercut my prices. Marech caught 2,000+ scrapes in week one. Game changer.",
   },
   {
     name: "Lisa Park",

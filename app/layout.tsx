@@ -27,7 +27,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "block.me — Stop AI from Stealing Your Content",
+  title: "Marech — Stop AI from Stealing Your Content",
   description:
     "Block ChatGPT, Claude, and other AI scrapers in 30 seconds. No code required. Real-time dashboard shows every bot blocked.",
 };

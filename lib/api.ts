@@ -3,7 +3,7 @@ const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://3.144.114.30:3000";
 export const isMock = process.env.NEXT_PUBLIC_MOCK !== "false";
 export const apiBase = BASE;
 
-const TOKEN_KEY = "blockme_token";
+const TOKEN_KEY = "marech_token";
 
 /* ----------------------------- token storage ----------------------------- */
 // Stored in localStorage (persists across tabs/reloads) and mirrored to a
@@ -96,7 +96,7 @@ export async function downloadCsv() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "blockme-logs.csv";
+  a.download = "marech-logs.csv";
   a.click();
   URL.revokeObjectURL(url);
 }

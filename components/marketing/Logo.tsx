@@ -12,7 +12,7 @@ interface LogoProps {
 const MONO = { fontFamily: "var(--font-mono)" } as const;
 
 /**
- * block.me wordmark with a CSS-only glitch / "blocked" motif on hover.
+ * Marech wordmark with a CSS-only glitch / "blocked" motif on hover.
  * Shared by the marketing nav, auth screens, and the portal sidebar.
  */
 export function Logo({ className, iconClassName, hideIcon = false }: LogoProps) {
@@ -20,7 +20,7 @@ export function Logo({ className, iconClassName, hideIcon = false }: LogoProps) 
     <span className="inline-flex items-center gap-2">
       {!hideIcon && (
         <img
-          src="/logos/blockme-icon-color.svg"
+          src="/logos/marech-icon-color.svg"
           className={cn("w-5 h-5", iconClassName)}
           alt=""
         />
@@ -33,10 +33,10 @@ export function Logo({ className, iconClassName, hideIcon = false }: LogoProps) 
           block<span className="text-accent">.me</span>
         </span>
         <span aria-hidden className="logo-glitch__layer logo-glitch__layer--a">
-          block.me
+          Marech
         </span>
         <span aria-hidden className="logo-glitch__layer logo-glitch__layer--b">
-          block.me
+          Marech
         </span>
         <span aria-hidden className="logo-glitch__bar" />
       </span>

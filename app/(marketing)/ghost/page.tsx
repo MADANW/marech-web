@@ -1,19 +1,19 @@
 import { PlatformPage } from "@/components/marketing/PlatformPage";
 
 export const metadata = {
-  title: "block.me for Ghost — Protect Your Ghost Blog from AI Scrapers",
+  title: "Marech for Ghost — Protect Your Ghost Blog from AI Scrapers",
 };
 
 export default function GhostPage() {
   return (
     <PlatformPage
       name="Ghost"
-      headline="block.me for Ghost Blogs"
+      headline="Marech for Ghost Blogs"
       subheadline="Stop AI bots from scraping your Ghost publications — injected once into your theme, protects everything."
       steps={[
         {
-          title: "Copy your block.me snippet",
-          body: 'After signing up, open your block.me dashboard and click "Get Snippet Code". Copy the script tag.',
+          title: "Copy your Marech snippet",
+          body: 'After signing up, open your Marech dashboard and click "Get Snippet Code". Copy the script tag.',
         },
         {
           title: "Open Ghost Admin",
@@ -25,11 +25,11 @@ export default function GhostPage() {
         },
         {
           title: "Paste into the Site Header field",
-          body: "Paste your block.me snippet into the Site Header box. This injects it into the <head> of every page and post.",
+          body: "Paste your Marech snippet into the Site Header box. This injects it into the <head> of every page and post.",
         },
         {
           title: "Click Save",
-          body: "Hit Save. block.me is now live across your entire Ghost publication.",
+          body: "Hit Save. Marech is now live across your entire Ghost publication.",
         },
       ]}
     />

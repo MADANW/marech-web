@@ -62,7 +62,7 @@ export default function LogsPage() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "blockme-logs.csv";
+    a.download = "marech-logs.csv";
     a.click();
     URL.revokeObjectURL(url);
   };

@@ -1,5 +1,5 @@
 {
-  "name": "blockme-web",
+  "name": "marech-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,6 +13,7 @@
   "dependencies": {
     "@base-ui/react": "^1.6.0",
     "@radix-ui/react-icons": "^1.3.2",
+    "@tanstack/react-table": "^8.21.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.40.0",

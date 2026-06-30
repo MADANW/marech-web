@@ -3,6 +3,7 @@ import { Syne, Plus_Jakarta_Sans, JetBrains_Mono, Geist } from "next/font/google
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/lib/auth";
+import { ToastProvider } from "@/components/ui/Toast";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -27,7 +28,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "block.me — Stop AI from Stealing Your Content",
+  title: "Marech — Stop AI from Stealing Your Content",
   description:
     "Block ChatGPT, Claude, and other AI scrapers in 30 seconds. No code required. Real-time dashboard shows every bot blocked.",
 };
@@ -43,7 +44,9 @@ export default function RootLayout({
       className={cn("h-full", syne.variable, plusJakarta.variable, jetbrainsMono.variable, "font-sans", geist.variable)}
     >
       <body className="min-h-full flex flex-col">
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <ToastProvider>{children}</ToastProvider>
+        </AuthProvider>
       </body>
     </html>
   );

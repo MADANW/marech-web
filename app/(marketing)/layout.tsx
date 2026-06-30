@@ -16,8 +16,9 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
         }}
       />
       <div className="fixed inset-0 bg-black/55 pointer-events-none" style={{ zIndex: 1 }} />
-      <div className="relative flex flex-col flex-1" style={{ zIndex: 2 }}>
-        <ScrollProgress className="h-0.5 from-black via-[#f97316] to-white" />
+      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}><div className="mars-horizon" /></div>
+      <div className="marketing-theme relative flex flex-col flex-1" style={{ zIndex: 2 }}>
+        <ScrollProgress className="h-0.5 from-black via-[#e2562a] to-white" />
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />

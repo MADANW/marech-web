@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useInView } from "motion/react";
 
 const LINES = [
-  { text: "$ blockme scan --watch", color: "text-white/60" },
+  { text: "$ marech scan --watch", color: "text-white/60" },
   { text: "⟶  scanning incoming requests...", color: "text-white/35" },
   { text: "⚠  GPTBot/1.0  [103.21.xx.xx]", color: "text-yellow-400/80" },
   { text: "   ✓ BLOCKED → 403 Forbidden", color: "text-green-400" },
@@ -45,7 +45,7 @@ export function AnimatedTerminal() {
         <span className="w-2.5 h-2.5 rounded-full bg-white/10 block" />
         <span className="w-2.5 h-2.5 rounded-full bg-white/10 block" />
         <span className="w-2.5 h-2.5 rounded-full bg-white/10 block" />
-        <span className="ml-2 text-white/20 text-xs">blockme — terminal</span>
+        <span className="ml-2 text-white/20 text-xs">marech — terminal</span>
       </div>
 
       <div className="space-y-1.5 leading-relaxed">

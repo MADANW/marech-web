@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { Logo } from "@/components/marketing/Logo";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 
 export function Nav() {
   const [open, setOpen] = useState(false);
@@ -10,13 +12,8 @@ export function Nav() {
       <nav className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 h-14 flex items-center justify-between gap-8">
 
         {/* Logo */}
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-white font-bold text-base shrink-0"
-          style={{ fontFamily: "var(--font-mono)" }}
-        >
-          <img src="/logos/blockme-icon-color.svg" className="w-5 h-5" alt="" />
-          block.me
+        <Link href="/" className="shrink-0">
+          <Logo />
         </Link>
 
         {/* Desktop nav — center */}
@@ -46,12 +43,13 @@ export function Nav() {
           >
             Log In
           </Link>
-          <Link
-            href="/signup"
-            className="text-xs font-bold tracking-widest uppercase bg-[#c44a1a] hover:bg-[#d45520] text-white px-4 py-2 rounded transition-colors"
-            style={{ fontFamily: "var(--font-mono)" }}
-          >
-            Start Free →
+          <Link href="/signup">
+            <InteractiveHoverButton
+              className="rounded-md border-accent/50 bg-[#c44a1a]/90 px-4 py-2 text-xs font-bold tracking-widest uppercase"
+              style={{ fontFamily: "var(--font-mono)" }}
+            >
+              Start Free
+            </InteractiveHoverButton>
           </Link>
         </div>
 

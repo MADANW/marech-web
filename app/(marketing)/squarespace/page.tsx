@@ -1,19 +1,19 @@
 import { PlatformPage } from "@/components/marketing/PlatformPage";
 
 export const metadata = {
-  title: "block.me for Squarespace — Protect Your Site from AI Scrapers",
+  title: "Marech for Squarespace — Protect Your Site from AI Scrapers",
 };
 
 export default function SquarespacePage() {
   return (
     <PlatformPage
       name="Squarespace"
-      headline="block.me for Squarespace"
+      headline="Marech for Squarespace"
       subheadline="Protect your Squarespace site from AI content scrapers without touching any code."
       steps={[
         {
-          title: "Copy your block.me snippet",
-          body: 'After signing up, click "Get Snippet Code" in your block.me dashboard and copy the script tag.',
+          title: "Copy your Marech snippet",
+          body: 'After signing up, click "Get Snippet Code" in your Marech dashboard and copy the script tag.',
         },
         {
           title: "Open Squarespace Admin",
@@ -25,7 +25,7 @@ export default function SquarespacePage() {
         },
         {
           title: "Paste into the Header section",
-          body: "In the Header field, paste your block.me snippet. This applies to every page automatically.",
+          body: "In the Header field, paste your Marech snippet. This applies to every page automatically.",
         },
         {
           title: "Click Save",

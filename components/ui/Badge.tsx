@@ -10,13 +10,13 @@ export function Badge({ variant = "neutral", children, className }: BadgeProps) 
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold",
+        "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-xs font-semibold",
         {
-          success: "bg-success-light text-emerald-800",
-          danger: "bg-danger-light text-red-800",
-          warning: "bg-warning-light text-amber-800",
-          neutral: "bg-gray-100 text-gray-700",
-          primary: "bg-primary-light text-primary",
+          success: "bg-success/12 text-success",
+          danger: "bg-danger/12 text-red-300",
+          warning: "bg-warning/12 text-warning",
+          neutral: "bg-white/8 text-app-muted",
+          primary: "bg-accent/12 text-accent",
         }[variant],
         className
       )}

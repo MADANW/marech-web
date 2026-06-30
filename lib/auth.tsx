@@ -29,7 +29,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (isMock) {
-      const stored = sessionStorage.getItem("blockme_user");
+      const stored = sessionStorage.getItem("marech_user");
       if (stored) setUser(JSON.parse(stored));
       setIsLoading(false);
       return;
@@ -51,7 +51,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await new Promise((r) => setTimeout(r, 800));
       const account = { ...MOCK_ACCOUNT, email };
       setUser(account);
-      sessionStorage.setItem("blockme_user", JSON.stringify(account));
+      sessionStorage.setItem("marech_user", JSON.stringify(account));
       setToken("mock");
       return;
     }
@@ -72,7 +72,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await new Promise((r) => setTimeout(r, 600));
       const account = { ...MOCK_ACCOUNT, email: "you@gmail.com" };
       setUser(account);
-      sessionStorage.setItem("blockme_user", JSON.stringify(account));
+      sessionStorage.setItem("marech_user", JSON.stringify(account));
       setToken("mock");
       return;
     }
@@ -83,7 +83,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = () => {
     setUser(null);
-    if (isMock) sessionStorage.removeItem("blockme_user");
+    if (isMock) sessionStorage.removeItem("marech_user");
     clearToken();
   };
 
@@ -92,7 +92,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await new Promise((r) => setTimeout(r, 800));
       const account = { ...MOCK_ACCOUNT, email, websiteUrl, platform };
       setUser(account);
-      sessionStorage.setItem("blockme_user", JSON.stringify(account));
+      sessionStorage.setItem("marech_user", JSON.stringify(account));
       setToken("mock");
       return;
     }

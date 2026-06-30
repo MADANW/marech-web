@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { BanIcon, ClockIcon, LockIcon } from "@/components/ui/icons";
 
 export const metadata = {
-  title: "How It Works — block.me",
-  description: "See exactly how block.me detects and blocks AI scrapers from your website.",
+  title: "How It Works — Marech",
+  description: "See exactly how Marech detects and blocks AI scrapers from your website.",
 };
 
 export default function HowItWorksPage() {
@@ -13,9 +14,9 @@ export default function HowItWorksPage() {
 
         <div className="text-center mb-16">
           <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase block mb-3" style={{ fontFamily: "var(--font-syne)" }}>Under the hood</span>
-          <h1 className="text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-syne)" }}>How block.me Works</h1>
+          <h1 className="text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-syne)" }}>How Marech Works</h1>
           <p className="text-white/60 text-lg max-w-2xl mx-auto">
-            Every request to your website goes through block.me's detection engine. Here's what happens in milliseconds.
+            Every request to your website goes through Marech's detection engine. Here's what happens in milliseconds.
           </p>
         </div>
 
@@ -60,8 +61,8 @@ export default function HowItWorksPage() {
           <div className="space-y-3">
             {POLICY_EXAMPLES.map((ex) => (
               <div key={ex.label} className="flex items-center gap-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-4">
-                <div className="w-8 h-8 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0 text-sm">
-                  {ex.icon}
+                <div className="w-8 h-8 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0 text-accent">
+                  <ex.icon className="h-4 w-4" />
                 </div>
                 <div>
                   <div className="font-semibold text-white text-sm">{ex.label}</div>
@@ -87,8 +88,8 @@ export default function HowItWorksPage() {
 }
 
 const FLOW = [
-  { label: "Visitor arrives at your website", body: "Your block.me snippet loads invisibly on page load.", color: "bg-white/10 text-white" },
-  { label: "Is it an AI bot?", body: "block.me checks user agent, headers, IP reputation, and behavior patterns in real time.", color: "bg-accent/20 text-accent" },
+  { label: "Visitor arrives at your website", body: "Your Marech snippet loads invisibly on page load.", color: "bg-white/10 text-white" },
+  { label: "Is it an AI bot?", body: "Marech checks user agent, headers, IP reputation, and behavior patterns in real time.", color: "bg-accent/20 text-accent" },
   { label: "Decision: Block or Allow", body: "Based on your policies, the bot is blocked (403) or allowed through.", color: "bg-warning/20 text-warning" },
   { label: "Logged in your dashboard", body: "Every decision is recorded — bot type, IP, path, confidence score, and action taken.", color: "bg-success/20 text-success" },
 ];
@@ -100,7 +101,7 @@ const DETECTION = [
 ];
 
 const POLICY_EXAMPLES = [
-  { icon: "🚫", label: "Block all AI scrapers", body: "The default. Zero AI bots get through — GPTBot, Claude, and 20+ others." },
-  { icon: "⏰", label: "Block during business hours only", body: "Let archive bots in at night while protecting during peak traffic." },
-  { icon: "🔒", label: "Block on specific paths", body: "Protect /admin, /api, or /checkout while leaving /blog open." },
+  { icon: BanIcon, label: "Block all AI scrapers", body: "The default. Zero AI bots get through — GPTBot, Claude, and 20+ others." },
+  { icon: ClockIcon, label: "Block during business hours only", body: "Let archive bots in at night while protecting during peak traffic." },
+  { icon: LockIcon, label: "Block on specific paths", body: "Protect /admin, /api, or /checkout while leaving /blog open." },
 ];

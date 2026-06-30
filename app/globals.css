@@ -11,6 +11,14 @@
   --color-primary-light: #e8f0fe;
   --color-accent: #f97316;
   --color-accent-dark: #ea6c0d;
+
+  /* Mars palette (portal identity) */
+  --color-mars-rust: #e2562a;
+  --color-mars-rust-dim: #c1440e;
+  --color-mars-ember: #ff8a5b;
+  --color-mars-sand: #c8a98a;
+  --color-mars-cyan: #22d3ee;
+
   --color-success: #10b981;
   --color-success-light: #d1fae5;
   --color-danger: #dc2626;
@@ -29,6 +37,18 @@
   --color-gray-700: #374151;
   --color-gray-800: #1f2937;
   --color-gray-900: #111827;
+
+  /* App portal surfaces (warm near-black "Mars night" theme) */
+  --color-app-bg: #0a0908;
+  --color-app-sidebar: #0c0a09;
+  --color-app-card: #16130f;
+  --color-app-inset: #100e0c;
+  --color-app-border: rgba(255, 255, 255, 0.07);
+  --color-app-border-faint: rgba(255, 255, 255, 0.05);
+  --color-app-hover: rgba(255, 255, 255, 0.04);
+  --color-app-text: #ededee;
+  --color-app-muted: #9a9aa3;
+  --color-app-faint: #67676f;
 
   /* Fonts */
   --font-sans: var(--font-plus-jakarta);
@@ -111,6 +131,17 @@ body {
   30%, 60% {
     background-position: calc(100% + var(--shiny-width)) 0;
     }
+  }
+  --animate-pulse-ring: pulse-ring var(--duration, 1.5s) cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  @keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+    }
   }}
 
 :root {
@@ -192,4 +223,201 @@ body {
   html {
     @apply font-sans;
   }
+}
+
+/* ── Logo glitch / "blocked" motif ──────────────────────────────
+   CSS-only, hover-driven. The wordmark sits over two duplicated
+   layers (::before / ::after) that jitter and clip on hover, plus
+   a redaction bar that sweeps across. No JS timers → stays cheap. */
+.logo-glitch {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+.logo-glitch__text {
+  position: relative;
+  z-index: 2;
+}
+.logo-glitch__layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 1;
+}
+.logo-glitch__bar {
+  position: absolute;
+  top: 50%;
+  left: -8%;
+  height: 2px;
+  width: 0;
+  transform: translateY(-50%);
+  background: var(--color-accent);
+  opacity: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.logo-glitch:hover .logo-glitch__layer--a {
+  opacity: 0.85;
+  color: var(--color-accent);
+  animation: logo-glitch-a 0.5s steps(2, end) infinite;
+}
+.logo-glitch:hover .logo-glitch__layer--b {
+  opacity: 0.85;
+  color: #22d3ee;
+  animation: logo-glitch-b 0.55s steps(2, end) infinite;
+}
+.logo-glitch:hover .logo-glitch__bar {
+  animation: logo-glitch-bar 0.6s ease-in-out infinite;
+}
+@keyframes logo-glitch-a {
+  0% { transform: translate(0, 0); clip-path: inset(0 0 65% 0); }
+  50% { transform: translate(-2px, -1px); clip-path: inset(40% 0 20% 0); }
+  100% { transform: translate(2px, 1px); clip-path: inset(70% 0 0 0); }
+}
+@keyframes logo-glitch-b {
+  0% { transform: translate(0, 0); clip-path: inset(60% 0 10% 0); }
+  50% { transform: translate(2px, 1px); clip-path: inset(20% 0 50% 0); }
+  100% { transform: translate(-2px, -1px); clip-path: inset(0 0 75% 0); }
+}
+@keyframes logo-glitch-bar {
+  0% { width: 0; opacity: 0; }
+  35% { width: 116%; opacity: 0.9; }
+  60% { width: 116%; opacity: 0.9; }
+  100% { width: 0; left: 108%; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo-glitch:hover .logo-glitch__layer,
+  .logo-glitch:hover .logo-glitch__bar {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* ── Mars portal theme ──────────────────────────────────────────
+   Scoped to the authenticated portal. Re-tints the shared `accent`
+   token to oxide-rust so every `bg-accent`/`text-accent` utility
+   (buttons, nav, badges, avatar) turns Martian inside the portal
+   only — marketing pages keep the original orange. */
+.portal-theme {
+  --color-accent: var(--color-mars-rust);
+  --color-accent-dark: var(--color-mars-rust-dim);
+}
+
+/* Lit-from-above card surface: soft top gradient + inner highlight
+   hairline + layered shadow. Replaces the flat single-fill card. */
+.mars-card {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0) 140px),
+    var(--color-app-card);
+  border: 1px solid var(--color-app-border);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05),
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 12px 28px -16px rgba(0, 0, 0, 0.7);
+}
+
+/* Rust emphasis ring + glow for "highlight" surfaces. */
+.mars-glow-rust {
+  border-color: rgba(226, 86, 42, 0.4) !important;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
+    0 0 0 1px rgba(226, 86, 42, 0.12),
+    0 16px 44px -18px rgba(226, 86, 42, 0.45);
+}
+
+/* Page-level radial "horizon" glow — sits behind content, no events. */
+.mars-horizon {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 70% at 50% -15%,
+    rgba(226, 86, 42, 0.1),
+    rgba(226, 86, 42, 0) 55%
+  );
+}
+
+/* Cheap CSS-only starfield (hero only). */
+.mars-starfield {
+  background-image:
+    radial-gradient(1px 1px at 25% 30%, rgba(255, 255, 255, 0.22), transparent 60%),
+    radial-gradient(1px 1px at 70% 55%, rgba(255, 255, 255, 0.16), transparent 60%),
+    radial-gradient(1px 1px at 45% 80%, rgba(255, 255, 255, 0.12), transparent 60%),
+    radial-gradient(1px 1px at 88% 22%, rgba(255, 255, 255, 0.14), transparent 60%);
+  background-size: 200px 200px, 260px 260px, 320px 320px, 180px 180px;
+}
+
+/* Faint mission-control grid, masked to fade at the edges. */
+.mars-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 38px 38px;
+  -webkit-mask-image: radial-gradient(circle at 70% 50%, black, transparent 78%);
+  mask-image: radial-gradient(circle at 70% 50%, black, transparent 78%);
+}
+
+/* Dashboard hero planet + orbit. */
+.mars-planet {
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle at 32% 28%,
+    var(--color-mars-ember),
+    var(--color-mars-rust) 44%,
+    #8f2f15 76%,
+    #561a0a
+  );
+  box-shadow:
+    inset -7px -9px 20px rgba(0, 0, 0, 0.55),
+    inset 5px 5px 12px rgba(255, 200, 160, 0.22),
+    0 0 60px -8px rgba(226, 86, 42, 0.55);
+}
+.mars-orbit-ring {
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.mars-orbit-spin {
+  animation: mars-spin 22s linear infinite;
+}
+@keyframes mars-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mars-orbit-spin {
+    animation: none;
+  }
+}
+/* ── UX primitives ──────────────────────────────────────────────── */
+
+/* Toast entrance */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.toast-enter {
+  animation: toast-in 0.22s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .toast-enter { animation: none; }
+}
+
+/* Consistent keyboard focus rings (form fields keep their own ring styles) */
+@layer base {
+  :where(a, button, [role="button"], [tabindex]):focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* Marketing accent re-tint: warm the brand orange to Mars rust across the
+   public site, leaving layout/surfaces untouched (mirrors .portal-theme). */
+.marketing-theme {
+  --color-accent: var(--color-mars-rust);
+  --color-accent-dark: var(--color-mars-rust-dim);
 }

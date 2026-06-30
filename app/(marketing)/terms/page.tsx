@@ -1,12 +1,12 @@
 export const metadata = {
-  title: "Terms of Service — block.me",
-  description: "block.me Terms of Service",
+  title: "Terms of Service — Marech",
+  description: "Marech Terms of Service",
 };
 
 const LAST_UPDATED = "June 21, 2026";
 const EFFECTIVE_DATE = "June 21, 2026";
-const COMPANY = "block.me";
-const CONTACT_EMAIL = "legal@blockme.io";
+const COMPANY = "Marech";
+const CONTACT_EMAIL = "legal@marech.tech";
 
 export default function TermsPage() {
   return (

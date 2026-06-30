@@ -4,7 +4,12 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { PasswordInput } from "@/components/ui/PasswordInput";
+import { Combobox } from "@/components/ui/Combobox";
 import { Modal } from "@/components/ui/Modal";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { CheckIcon } from "@/components/ui/icons";
+import { useToast } from "@/components/ui/Toast";
 import { useAuth } from "@/lib/auth";
 import { isMock, updateMe, updatePassword as apiUpdatePassword, deleteAccount } from "@/lib/api";
 import { useRouter } from "next/navigation";
@@ -22,6 +27,7 @@ interface PasswordForm { current: string; next: string; confirm: string; }
 export default function AccountPage() {
   const { user, logout } = useAuth();
   const router = useRouter();
+  const toast = useToast();
   const [tab, setTab] = useState<Tab>("Profile");
   const [profileSaved, setProfileSaved] = useState(false);
   const [passwordSaved, setPasswordSaved] = useState(false);
@@ -29,19 +35,28 @@ export default function AccountPage() {
   const [deleteInput, setDeleteInput] = useState("");
 
   const profileForm = useForm<ProfileForm>({
+    mode: "onBlur",
     defaultValues: {
       websiteUrl: user?.websiteUrl ?? "",
       platform: user?.platform ?? PLATFORMS[0],
       industry: "Blog",
     },
   });
-  const passwordForm = useForm<PasswordForm>();
+  const passwordForm = useForm<PasswordForm>({ mode: "onBlur" });
+
+  const platform = profileForm.watch("platform");
+  const industry = profileForm.watch("industry");
 
   const onSaveProfile = async (data: ProfileForm) => {
-    if (!isMock) await updateMe({ websiteUrl: data.websiteUrl, platform: data.platform });
-    else await new Promise((r) => setTimeout(r, 600));
-    setProfileSaved(true);
-    setTimeout(() => setProfileSaved(false), 2000);
+    try {
+      if (!isMock) await updateMe({ websiteUrl: data.websiteUrl, platform: data.platform });
+      else await new Promise((r) => setTimeout(r, 600));
+      setProfileSaved(true);
+      toast.success("Profile saved", "Your changes have been applied.");
+      setTimeout(() => setProfileSaved(false), 2000);
+    } catch {
+      toast.error("Couldn't save profile", "Something went wrong. Please try again.");
+    }
   };
 
   const onSavePassword = async (data: PasswordForm) => {
@@ -49,11 +64,16 @@ export default function AccountPage() {
       passwordForm.setError("confirm", { message: "Passwords don't match" });
       return;
     }
-    if (!isMock) await apiUpdatePassword({ currentPassword: data.current, newPassword: data.next });
-    else await new Promise((r) => setTimeout(r, 600));
-    passwordForm.reset();
-    setPasswordSaved(true);
-    setTimeout(() => setPasswordSaved(false), 2000);
+    try {
+      if (!isMock) await apiUpdatePassword({ currentPassword: data.current, newPassword: data.next });
+      else await new Promise((r) => setTimeout(r, 600));
+      passwordForm.reset();
+      setPasswordSaved(true);
+      toast.success("Password updated", "Use your new password next time you sign in.");
+      setTimeout(() => setPasswordSaved(false), 2000);
+    } catch {
+      toast.error("Couldn't update password", "Check your current password and try again.");
+    }
   };
 
   const handleDelete = async () => {
@@ -62,7 +82,7 @@ export default function AccountPage() {
       try {
         await deleteAccount();
       } catch {
-        // Even if the call fails, fall through to local logout.
+        toast.error("Delete failed on the server", "Signing you out locally anyway.");
       }
     }
     logout();
@@ -70,18 +90,18 @@ export default function AccountPage() {
   };
 
   return (
-    <div className="p-6 max-w-2xl mx-auto space-y-6">
-      <h1 className="text-xl font-bold text-gray-900">Account Settings</h1>
+    <div className="p-7 max-w-2xl mx-auto space-y-5">
+      <PageHeader title="Account settings" subtitle="Manage your profile, security, and account" />
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-gray-100 p-1 rounded-xl w-fit">
+      <div className="flex gap-1 bg-app-inset p-1 rounded-lg w-fit border border-app-border">
         {TABS.map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
             className={cn(
-              "px-4 py-1.5 rounded-lg text-sm font-medium transition-all",
-              tab === t ? "bg-white text-gray-900 shadow-sm" : "text-gray-500 hover:text-gray-700"
+              "px-4 py-1.5 rounded-md text-sm font-medium transition-colors",
+              tab === t ? "bg-app-card text-app-text" : "text-app-muted hover:text-app-text"
             )}
           >
             {t}
@@ -93,29 +113,32 @@ export default function AccountPage() {
       {tab === "Profile" && (
         <Card padding="md">
           <div className="mb-4">
-            <div className="text-sm font-medium text-gray-700 mb-1">Email</div>
-            <div className="text-gray-500 text-sm bg-gray-50 rounded-lg px-3 py-2">{user?.email}</div>
+            <div className="text-sm font-medium text-app-muted mb-1.5">Email</div>
+            <div className="text-app-muted text-sm bg-app-inset border border-app-border rounded-lg px-3 py-2">{user?.email}</div>
           </div>
           <form onSubmit={profileForm.handleSubmit(onSaveProfile)} className="space-y-4">
             <Input
               label="Website URL"
               placeholder="https://yoursite.com"
-              {...profileForm.register("websiteUrl")}
+              error={profileForm.formState.errors.websiteUrl?.message}
+              {...profileForm.register("websiteUrl", {
+                pattern: { value: /^(https?:\/\/)?[\w.-]+\.[a-z]{2,}.*$/i, message: "Enter a valid URL" },
+              })}
             />
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium text-gray-700">Platform</label>
-              <select className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" {...profileForm.register("platform")}>
-                {PLATFORMS.map((p) => <option key={p}>{p}</option>)}
-              </select>
-            </div>
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium text-gray-700">Industry</label>
-              <select className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" {...profileForm.register("industry")}>
-                {INDUSTRIES.map((i) => <option key={i}>{i}</option>)}
-              </select>
-            </div>
-            <Button type="submit" variant="primary" size="md" disabled={profileForm.formState.isSubmitting}>
-              {profileSaved ? "✓ Saved!" : profileForm.formState.isSubmitting ? "Saving…" : "Save Changes"}
+            <Combobox
+              label="Platform"
+              value={platform}
+              onChange={(v) => profileForm.setValue("platform", v, { shouldDirty: true })}
+              options={PLATFORMS}
+            />
+            <Combobox
+              label="Industry"
+              value={industry}
+              onChange={(v) => profileForm.setValue("industry", v, { shouldDirty: true })}
+              options={INDUSTRIES}
+            />
+            <Button type="submit" variant="accent" size="md" className="!rounded-lg" disabled={profileForm.formState.isSubmitting}>
+              {profileSaved ? (<><CheckIcon className="h-4 w-4" /> Saved</>) : profileForm.formState.isSubmitting ? "Saving…" : "Save changes"}
             </Button>
           </form>
         </Card>
@@ -124,18 +147,16 @@ export default function AccountPage() {
       {/* Security */}
       {tab === "Security" && (
         <Card padding="md">
-          <h2 className="font-semibold text-gray-900 mb-4">Change Password</h2>
+          <h2 className="font-semibold text-app-text mb-4">Change password</h2>
           <form onSubmit={passwordForm.handleSubmit(onSavePassword)} className="space-y-4">
-            <Input
+            <PasswordInput
               label="Current password"
-              type="password"
               placeholder="••••••••"
               error={passwordForm.formState.errors.current?.message}
               {...passwordForm.register("current", { required: "Required" })}
             />
-            <Input
+            <PasswordInput
               label="New password"
-              type="password"
               placeholder="Min. 8 characters"
               error={passwordForm.formState.errors.next?.message}
               {...passwordForm.register("next", {
@@ -143,15 +164,14 @@ export default function AccountPage() {
                 minLength: { value: 8, message: "At least 8 characters" },
               })}
             />
-            <Input
+            <PasswordInput
               label="Confirm new password"
-              type="password"
               placeholder="••••••••"
               error={passwordForm.formState.errors.confirm?.message}
               {...passwordForm.register("confirm", { required: "Required" })}
             />
-            <Button type="submit" variant="primary" size="md" disabled={passwordForm.formState.isSubmitting}>
-              {passwordSaved ? "✓ Password Updated!" : passwordForm.formState.isSubmitting ? "Updating…" : "Update Password"}
+            <Button type="submit" variant="accent" size="md" className="!rounded-lg" disabled={passwordForm.formState.isSubmitting}>
+              {passwordSaved ? (<><CheckIcon className="h-4 w-4" /> Password updated</>) : passwordForm.formState.isSubmitting ? "Updating…" : "Update password"}
             </Button>
           </form>
         </Card>
@@ -160,40 +180,40 @@ export default function AccountPage() {
       {/* Danger Zone */}
       {tab === "Danger Zone" && (
         <Card padding="md" className="border-danger/30">
-          <h2 className="font-semibold text-danger mb-2">Delete Account</h2>
-          <p className="text-gray-500 text-sm mb-4">
+          <h2 className="font-semibold text-red-400 mb-2">Delete account</h2>
+          <p className="text-app-muted text-sm mb-4">
             Permanently deletes your account, snippet, and all data. This cannot be undone.
             Your website will no longer be protected.
           </p>
-          <Button variant="danger" size="sm" onClick={() => setDeleteModal(true)}>
-            Delete My Account
+          <Button variant="danger" size="sm" className="!rounded-lg" onClick={() => setDeleteModal(true)}>
+            Delete my account
           </Button>
         </Card>
       )}
 
       {/* Delete modal */}
-      <Modal open={deleteModal} onClose={() => { setDeleteModal(false); setDeleteInput(""); }} title="Delete Account">
-        <p className="text-gray-600 text-sm mb-4">
-          This will permanently delete your account and stop all protection. Type <strong>DELETE</strong> to confirm.
+      <Modal open={deleteModal} onClose={() => { setDeleteModal(false); setDeleteInput(""); }} title="Delete account">
+        <p className="text-app-muted text-sm mb-4">
+          This will permanently delete your account and stop all protection. Type <strong className="text-app-text">DELETE</strong> to confirm.
         </p>
         <input
           type="text"
           value={deleteInput}
           onChange={(e) => setDeleteInput(e.target.value)}
           placeholder="Type DELETE"
-          className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm outline-none focus:border-danger focus:ring-2 focus:ring-danger/20 mb-4"
+          className="w-full px-3 py-2 rounded-lg border border-app-border bg-app-inset text-app-text placeholder-app-faint text-sm outline-none focus:border-danger focus:ring-2 focus:ring-danger/20 mb-4"
         />
         <div className="flex gap-3">
           <Button
             variant="danger"
             size="md"
-            className="flex-1"
+            className="flex-1 !rounded-lg"
             disabled={deleteInput !== "DELETE"}
             onClick={handleDelete}
           >
-            Delete Account
+            Delete account
           </Button>
-          <Button variant="secondary" size="md" onClick={() => { setDeleteModal(false); setDeleteInput(""); }}>
+          <Button variant="secondary" size="md" className="!rounded-lg" onClick={() => { setDeleteModal(false); setDeleteInput(""); }}>
             Cancel
           </Button>
         </div>

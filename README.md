@@ -1,8 +1,8 @@
-# block.me Web
+# Marech Web
 
-Marketing site **and** customer portal for [block.me](https://github.com/MADANW/block-me) —
+Marketing site **and** customer portal for [Marech](https://github.com/MADANW/block-me) —
 the AI-scraper protection SaaS. Built with Next.js (App Router) + Tailwind, deployed on **Vercel**.
-It talks to the block.me backend API (hosted on **AWS**) over HTTPS.
+It talks to the Marech backend API (hosted on **AWS**) over HTTPS.
 
 ## What's here
 
@@ -22,7 +22,7 @@ Set `NEXT_PUBLIC_MOCK=false` to connect to the real API.
 | Env var | Purpose |
 |---|---|
 | `NEXT_PUBLIC_MOCK` | `false` = use the real backend; anything else = mock data |
-| `NEXT_PUBLIC_API_URL` | Backend base URL, e.g. `https://api.block.me` |
+| `NEXT_PUBLIC_API_URL` | Backend base URL, e.g. `https://api.marech.tech` |
 | `NEXT_PUBLIC_CDN_URL` | Optional snippet host; defaults to `NEXT_PUBLIC_API_URL` |
 | `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | Google OAuth Web client id (same id the backend verifies) |
 
@@ -47,16 +47,16 @@ npm run dev:demo                 # http://localhost:3001
 1. Import this repo in Vercel (framework auto-detected as Next.js).
 2. Add Environment Variables (Production + Preview):
    - `NEXT_PUBLIC_MOCK=false`
-   - `NEXT_PUBLIC_API_URL=https://api.block.me`
+   - `NEXT_PUBLIC_API_URL=https://api.marech.tech`
    - `NEXT_PUBLIC_GOOGLE_CLIENT_ID=<your-google-web-client-id>`
-3. Deploy. Add your custom domain(s) (e.g. `block.me`, `app.block.me`).
+3. Deploy. Add your custom domain(s) (e.g. `marech.tech`, `app.marech.tech`).
 4. In the **backend**, add your Vercel domains to `CORS_ORIGINS` so the browser
    can call the API. See the backend repo's `DEPLOY.md` and `INTEGRATION.md`.
 
 ## How it connects to the backend
 
 ```
-Browser ──▶ Vercel (this app) ──▶ https://api.block.me (AWS backend) ──▶ Postgres
+Browser ──▶ Vercel (this app) ──▶ https://api.marech.tech (AWS backend) ──▶ Postgres
 ```
 
 - Login/signup/Google → `POST /auth/login | /auth/register | /auth/google` → returns a JWT.

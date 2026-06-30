@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { GoogleButton } from "@/components/auth/GoogleButton";
+import { Logo } from "@/components/marketing/Logo";
+import { CheckIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/auth";
 
@@ -56,9 +58,8 @@ export default function SignupPage() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2">
-            <img src="/logos/blockme-icon-color.svg" className="w-7 h-7" alt="" />
-            <span className="font-bold text-white text-xl" style={{ fontFamily: "var(--font-syne)" }}>block.me</span>
+          <Link href="/" className="inline-flex">
+            <Logo className="text-xl" iconClassName="w-7 h-7" />
           </Link>
         </div>
 
@@ -75,20 +76,20 @@ export default function SignupPage() {
                     ? "bg-accent/20 border border-accent/50 text-accent"
                     : "bg-white/5 border border-white/15 text-white/30"
                 )}
-                style={{ fontFamily: "var(--font-syne)" }}
+                style={{ fontFamily: "var(--font-mono)" }}
               >
-                {step > s ? "✓" : s}
+                {step > s ? <CheckIcon className="h-4 w-4" /> : s}
               </div>
               {s < 3 && <div className={cn("h-px w-8", step > s ? "bg-success/40" : "bg-white/10")} />}
             </div>
           ))}
         </div>
 
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+        <div className="bg-[#1a1a1a]/95 backdrop-blur-sm border border-white/10 rounded-2xl p-8 shadow-[0_6px_28px_rgba(0,0,0,0.4)]">
           {/* Step 1 */}
           {step === 1 && (
             <>
-              <h1 className="text-xl font-bold text-white mb-1" style={{ fontFamily: "var(--font-syne)" }}>Create your account</h1>
+              <h1 className="text-xl font-bold text-white mb-1" style={{ fontFamily: "var(--font-mono)" }}>Create your account</h1>
               <p className="text-white/50 text-sm mb-6">7-day free trial — no credit card needed</p>
               <div className="mb-5">
                 <GoogleButton onError={(m) => step1.setError("email", { message: m })} />
@@ -136,7 +137,7 @@ export default function SignupPage() {
               <button onClick={() => setStep(1)} className="text-sm text-white/40 hover:text-white/70 mb-4 flex items-center gap-1 transition-colors">
                 ← Back
               </button>
-              <h1 className="text-xl font-bold text-white mb-1" style={{ fontFamily: "var(--font-syne)" }}>Tell us about your site</h1>
+              <h1 className="text-xl font-bold text-white mb-1" style={{ fontFamily: "var(--font-mono)" }}>Tell us about your site</h1>
               <p className="text-white/50 text-sm mb-6">We&apos;ll show you the right setup instructions</p>
               <form onSubmit={step2.handleSubmit(onStep2)} className="space-y-4">
                 <Input
@@ -186,7 +187,7 @@ export default function SignupPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h2 className="text-xl font-bold text-white mb-2" style={{ fontFamily: "var(--font-syne)" }}>Check your email</h2>
+              <h2 className="text-xl font-bold text-white mb-2" style={{ fontFamily: "var(--font-mono)" }}>Check your email</h2>
               <p className="text-white/50 text-sm mb-4">
                 We sent a verification link to <strong className="text-white/80">{step1Data?.email}</strong>
               </p>

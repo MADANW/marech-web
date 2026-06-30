@@ -1,18 +1,19 @@
 import Link from "next/link";
 import { Nav } from "@/components/marketing/Nav";
 import { Footer } from "@/components/marketing/Footer";
-import { Button } from "@/components/ui/Button";
+import { PulsatingButton } from "@/components/ui/pulsating-button";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { AnalyticsMockup } from "@/components/marketing/AnalyticsMockup";
 import { AnimatedTerminal } from "@/components/marketing/AnimatedTerminal";
 import { OrbitingPlatforms } from "@/components/marketing/OrbitingPlatforms";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { NumberTicker } from "@/components/ui/number-ticker";
-import { MorphingText } from "@/components/ui/morphing-text";
+import { TypingAnimation } from "@/components/ui/typing-animation";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { ScrollVelocityContainer, ScrollVelocityRow } from "@/components/ui/scroll-based-velocity";
 
 export const metadata = {
-  title: "block.me — Stop AI from Stealing Your Content",
+  title: "Marech — Stop AI from Stealing Your Content",
   description: "Block ChatGPT, Claude, and other AI scrapers in 30 seconds. No code required.",
 };
 
@@ -20,15 +21,16 @@ const PAD = "px-6 sm:px-10 lg:px-16";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#c44a1a" }}>
+    <div className="marketing-theme min-h-screen flex flex-col" style={{ backgroundColor: "#c44a1a" }}>
       <div className="relative flex flex-col flex-1">
-        <ScrollProgress className="h-0.5 from-black via-[#f97316] to-white" />
+        <ScrollProgress className="h-0.5 from-black via-[#e2562a] to-white" />
         <Nav />
         <main className="flex-1">
 
           {/* ── Hero — text left-padded, mockup bleeds to right edge ── */}
-          <section className="pt-24 pb-16 overflow-hidden">
-            <div className="grid md:grid-cols-[1fr_1fr] items-stretch min-h-[75vh]">
+          <section className="relative pt-24 pb-16 overflow-hidden">
+            <div className="mars-horizon" />
+            <div className="relative z-10 grid md:grid-cols-[1fr_1fr] items-stretch min-h-[75vh]">
 
               <FadeIn className="flex flex-col justify-center px-6 sm:px-10 lg:px-16 pb-8 md:pb-0 md:pr-6">
                 <span
@@ -49,18 +51,21 @@ export default function LandingPage() {
                   Block ChatGPT, Claude, and every AI scraper in under 2 minutes.
                   One snippet. Zero maintenance. Full visibility.
                 </p>
-                <div className="mb-8">
-                  <MorphingText
-                    texts={["Protecting your blog.", "Protecting your store.", "Protecting your docs.", "Protecting your work.", "Protecting your revenue."]}
-                    className="h-8 lg:h-8 text-xl lg:text-xl text-black font-bold text-left max-w-none ![filter:none]"
+                <div className="mb-8 h-8">
+                  <TypingAnimation
+                    words={["Protecting your blog.", "Protecting your store.", "Protecting your docs.", "Protecting your work.", "Protecting your revenue."]}
+                    loop
+                    startOnView
+                    className="text-xl lg:text-xl text-black font-bold leading-snug tracking-normal"
+                    cursorStyle="line"
                   />
                 </div>
                 <div className="flex flex-wrap gap-3 mb-8">
                   <Link href="/signup">
-                    <Button variant="accent" size="lg">Start Free Trial →</Button>
+                    <PulsatingButton>Start Free Trial →</PulsatingButton>
                   </Link>
                   <Link href="/how-it-works">
-                    <Button variant="secondary" size="lg">See How It Works</Button>
+                    <InteractiveHoverButton className="border-white/25">See How It Works</InteractiveHoverButton>
                   </Link>
                 </div>
                 <div className="flex flex-wrap gap-4 text-sm text-white/35 font-medium">
@@ -106,7 +111,7 @@ export default function LandingPage() {
             </div>
           </section>
 
-          {/* ── Why block.me — orbit LEFT, features RIGHT ── */}
+          {/* ── Why Marech — orbit LEFT, features RIGHT ── */}
           <section className={`${PAD} py-20`}>
             <div className="grid md:grid-cols-[5fr_6fr] gap-16 items-start">
 
@@ -122,7 +127,7 @@ export default function LandingPage() {
                     className="text-[#f5f0eb] text-xs font-bold tracking-[0.2em] uppercase block mb-3"
                     style={{ fontFamily: "var(--font-mono)" }}
                   >
-                    Why block.me
+                    Why Marech
                   </span>
                   <h2
                     className="text-4xl sm:text-5xl font-bold text-white mb-10"
@@ -233,7 +238,7 @@ export default function LandingPage() {
                     </p>
                   </div>
                   <div className="mt-4 bg-black/40 rounded-lg p-3 font-mono text-xs text-green-400">
-                    {"<script src=\"blockme.js\"></script>"}
+                    {"<script src=\"marech.js\"></script>"}
                   </div>
                 </div>
               </FadeIn>
@@ -310,7 +315,7 @@ export default function LandingPage() {
                     Plans start small. Scale when you need it. No lock-in.
                   </p>
                   <Link href="/pricing">
-                    <Button variant="accent" size="lg">See All Plans →</Button>
+                    <InteractiveHoverButton>See All Plans →</InteractiveHoverButton>
                   </Link>
                 </div>
 
@@ -343,8 +348,9 @@ export default function LandingPage() {
           </section>
 
           {/* ── Final CTA — left-aligned ── */}
-          <section className={`${PAD} py-28`}>
-            <FadeIn>
+          <section className={`relative ${PAD} py-28`}>
+            <div className="mars-horizon" />
+            <FadeIn className="relative z-10">
               <div className="grid md:grid-cols-[4fr_1fr] gap-8 items-end">
                 <div>
                   <span
@@ -363,9 +369,9 @@ export default function LandingPage() {
                     Join thousands of creators blocking AI scrapers every day. Your work is yours — keep it that way.
                   </p>
                   <Link href="/signup">
-                    <Button variant="accent" size="lg">
+                    <PulsatingButton>
                       Start Free Trial — No Credit Card →
-                    </Button>
+                    </PulsatingButton>
                   </Link>
                 </div>
                 {/* Decorative large glyph */}
@@ -430,13 +436,13 @@ const TESTIMONIALS = [
     name: "Sarah Chen",
     title: "Food Blogger · sarahcooks.com",
     quote:
-      "I was livid when I found my recipes being fed to AI chatbots. block.me stopped it in seconds. Incredibly satisfying to watch every scraper get blocked.",
+      "I was livid when I found my recipes being fed to AI chatbots. Marech stopped it in seconds. Incredibly satisfying to watch every scraper get blocked.",
   },
   {
     name: "Mike Torres",
     title: "Shopify Store Owner · gearup.io",
     quote:
-      "Competitors were using AI to scrape my product descriptions and undercut my prices. block.me caught 2,000+ scrapes in week one. Game changer.",
+      "Competitors were using AI to scrape my product descriptions and undercut my prices. Marech caught 2,000+ scrapes in week one. Game changer.",
   },
   {
     name: "Lisa Park",

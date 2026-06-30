@@ -2,6 +2,9 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { CheckIcon } from "@/components/ui/icons";
+import { useToast } from "@/components/ui/Toast";
 import { MOCK_ACCOUNT } from "@/lib/mock";
 import { useAuth } from "@/lib/auth";
 import { isMock, snippetUrl } from "@/lib/api";
@@ -69,20 +72,26 @@ const INSTRUCTIONS: Record<string, { steps: string[]; nav: string }> = {
 
 export default function SnippetPage() {
   const { user } = useAuth();
+  const toast = useToast();
   const snippetId = user?.snippetId ?? MOCK_ACCOUNT.snippetId;
   const [platform, setPlatform] = useState(user?.platform ?? MOCK_ACCOUNT.platform);
   const [copied, setCopied] = useState(false);
   const [detected, setDetected] = useState(false);
 
   const snippetCode = isMock
-    ? `<script src="https://cdn.block.me/${snippetId}.js"></script>`
+    ? `<script src="https://cdn.marech.tech/${snippetId}.js"></script>`
     : `<script src="${snippetUrl(snippetId)}"></script>`;
   const instructions = INSTRUCTIONS[platform] ?? INSTRUCTIONS["Custom / Other"];
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(snippetCode);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(snippetCode);
+      setCopied(true);
+      toast.success("Copied to clipboard", "Paste the snippet into your site's <head>.");
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.error("Couldn't copy", "Select the code and copy it manually.");
+    }
   };
 
   useEffect(() => {
@@ -91,32 +100,32 @@ export default function SnippetPage() {
   }, []);
 
   return (
-    <div className="p-6 max-w-2xl mx-auto space-y-6">
-      <div>
-        <h1 className="text-xl font-bold text-gray-900 mb-1">Your Protection Code</h1>
-        <p className="text-gray-500 text-sm">Copy this snippet and paste it into your website's &lt;head&gt; section.</p>
-      </div>
+    <div className="p-7 max-w-2xl mx-auto space-y-5">
+      <PageHeader
+        title="Your protection code"
+        subtitle="Copy this snippet and paste it into your website's <head> section"
+      />
 
       {detected && (
-        <div className="bg-success-light border border-success/30 rounded-xl px-5 py-4 flex items-center gap-3">
+        <div className="bg-success/10 border border-success/25 rounded-xl px-5 py-4 flex items-center gap-3">
           <svg className="w-5 h-5 text-success shrink-0" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
           </svg>
           <div>
-            <div className="font-semibold text-emerald-800 text-sm">Installation Detected!</div>
-            <div className="text-emerald-700 text-xs">Protection is now active on your site.</div>
+            <div className="font-semibold text-success text-sm">Installation detected</div>
+            <div className="text-success/80 text-xs">Protection is now active on your site.</div>
           </div>
         </div>
       )}
 
       {/* Code block */}
       <Card padding="none" className="overflow-hidden">
-        <div className="bg-gray-900 px-5 py-4">
+        <div className="bg-app-inset px-5 py-4 border-b border-app-border">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs text-gray-400 font-mono">HTML · paste in &lt;head&gt;</span>
+            <span className="text-xs text-app-faint font-mono">HTML · paste in &lt;head&gt;</span>
             <button
               onClick={handleCopy}
-              className="text-xs text-gray-400 hover:text-white flex items-center gap-1.5 transition-colors"
+              className="text-xs text-app-faint hover:text-app-text flex items-center gap-1.5 transition-colors"
             >
               {copied ? (
                 <>
@@ -135,13 +144,13 @@ export default function SnippetPage() {
               )}
             </button>
           </div>
-          <pre className="font-mono text-sm text-green-400 whitespace-pre-wrap break-all">
+          <pre className="font-mono text-[13px] text-emerald-300 whitespace-pre-wrap break-all">
             {snippetCode}
           </pre>
         </div>
         <div className="p-5">
-          <Button onClick={handleCopy} variant="accent" size="md" className="w-full">
-            {copied ? "✓ Copied to Clipboard!" : "Copy Code"}
+          <Button onClick={handleCopy} variant="accent" size="md" className="w-full !rounded-lg">
+            {copied ? (<><CheckIcon className="h-4 w-4" /> Copied to clipboard</>) : "Copy code"}
           </Button>
         </div>
       </Card>
@@ -149,27 +158,28 @@ export default function SnippetPage() {
       {/* Platform selector + instructions */}
       <Card padding="md">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-gray-900 text-sm">Installation Instructions</h2>
+          <h2 className="font-semibold text-app-text text-[13.5px]">Installation instructions</h2>
           <select
             value={platform}
             onChange={(e) => setPlatform(e.target.value)}
-            className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 text-gray-700 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+            className="text-xs border border-app-border bg-app-inset rounded-lg px-2 py-1.5 text-app-text focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none [&>option]:bg-[#141416]"
           >
             {PLATFORMS.map((p) => <option key={p}>{p}</option>)}
           </select>
         </div>
 
-        <div className="bg-gray-50 rounded-lg px-4 py-3 text-xs text-gray-500 font-mono mb-4">
+        <div className="bg-app-inset rounded-lg px-4 py-3 text-xs text-app-muted font-mono mb-5">
           {platform} → {instructions.nav}
         </div>
 
-        <ol className="space-y-3">
+        <ol className="relative space-y-4">
+          <span className="absolute left-[13px] top-2 bottom-2 w-px bg-app-border" aria-hidden />
           {instructions.steps.map((step, i) => (
-            <li key={i} className="flex gap-3 text-sm">
-              <span className="w-5 h-5 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+            <li key={i} className="relative flex gap-3 text-sm">
+              <span className="relative z-10 w-[26px] h-[26px] rounded-full bg-accent/12 text-accent text-xs font-semibold flex items-center justify-center shrink-0 tabular-nums" style={{ fontFamily: "var(--font-mono)" }}>
                 {i + 1}
               </span>
-              <span className="text-gray-600">{step}</span>
+              <span className="text-app-muted pt-0.5">{step}</span>
             </li>
           ))}
         </ol>

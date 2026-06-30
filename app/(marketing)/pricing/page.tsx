@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
 export const metadata = {
-  title: "Pricing — block.me",
+  title: "Pricing — Marech",
   description: "Simple, transparent pricing. Start free, upgrade when you're ready.",
 };
 
@@ -47,7 +47,7 @@ const PLANS = [
     limit: "Unlimited requests",
     sites: "Unlimited websites",
     cta: "Contact Sales",
-    href: "mailto:hello@block.me",
+    href: "mailto:hello@marech.tech",
     highlight: false,
     features: ["Everything in Pro", "Custom integration", "SLA guarantee", "Priority support", "Dedicated account manager"],
   },

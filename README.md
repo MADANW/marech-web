@@ -44,6 +44,11 @@ npm run dev:demo                 # http://localhost:3001
 
 ## Deploy to Vercel
 
+> **Status (2026-07-05):** this app is already deployed at https://www.marech.tech but
+> runs in **mock mode** — signup fakes an account in the browser. Flipping to live mode
+> requires the backend to be reachable over HTTPS first. The full sequence (backend DNS +
+> TLS + redeploy, then the Vercel env flip below) is in the backend repo's **GO-LIVE.md**.
+
 1. Import this repo in Vercel (framework auto-detected as Next.js).
 2. Add Environment Variables (Production + Preview):
    - `NEXT_PUBLIC_MOCK=false`

@@ -76,7 +76,6 @@ export function Nav() {
 
         {/* Desktop right: status chip + CTAs */}
         <div className="hidden md:flex items-center gap-5 shrink-0">
-          <GridActiveChip className="hidden lg:inline-flex" />
           <NavLink href="/login" active={pathname === "/login"}>
             Log In
           </NavLink>
@@ -141,9 +140,6 @@ export function Nav() {
           <Link href="/signup" onClick={() => setOpen(false)} className="block">
             <Button variant="accent" size="md" className="w-full">Start Free →</Button>
           </Link>
-          <div className="mt-5 flex justify-center">
-            <GridActiveChip />
-          </div>
         </div>
       </div>
     </header>
@@ -175,24 +171,5 @@ function NavLink({
     >
       {children}
     </Link>
-  );
-}
-
-/** Tiny mission-status chip — public echo of the portal's "Systems nominal". */
-function GridActiveChip({ className }: { className?: string }) {
-  return (
-    <span
-      className={cn(
-        "items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-white/45 inline-flex",
-        className
-      )}
-      style={{ fontFamily: "var(--font-mono)" }}
-    >
-      <span className="relative flex h-1.5 w-1.5">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-60" />
-        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
-      </span>
-      Grid active
-    </span>
   );
 }

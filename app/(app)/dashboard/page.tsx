@@ -29,6 +29,11 @@ import { useToast } from "@/components/ui/Toast";
 import { LocalTime } from "@/components/ui/LocalTime";
 import { generateLogs, generateWeekStats, type LogEntry } from "@/lib/mock";
 import { isMock, fetchLogs } from "@/lib/api";
+import { MarsSetPieceLazy } from "@/components/gfx/lazy";
+
+/* Chart palette — mirrors the globals.css tokens (recharts needs literal
+   SVG paint values): mars-cyan-deep, mars-rust, app-muted. */
+const CHART = { total: "#0891b2", blocked: "#e2562a", tick: "#9a9aa3" };
 
 const INITIAL_LOGS = generateLogs(20);
 const WEEK_STATS = generateWeekStats();
@@ -122,7 +127,7 @@ export default function DashboardPage() {
               <Telemetry label="Throughput" value={`${formatNumber(Math.round(todayTotal / 1440))}/min`} />
             </div>
           </div>
-          <PlanetOrbit />
+          <MarsSetPieceLazy />
         </div>
       </div>
 
@@ -168,7 +173,7 @@ export default function DashboardPage() {
           <h2 className="text-[13.5px] font-semibold text-app-text">Traffic · last 7 days</h2>
           <div className="flex items-center gap-4 text-xs">
             <span className="inline-flex items-center gap-1.5 text-app-muted">
-              <span className="h-1.5 w-1.5 rounded-full bg-mars-cyan" /> Total
+              <span className="h-1.5 w-1.5 rounded-full bg-mars-cyan-deep" /> Total
             </span>
             <span className="inline-flex items-center gap-1.5 text-app-muted">
               <span className="h-1.5 w-1.5 rounded-full bg-mars-rust" /> Blocked
@@ -179,15 +184,15 @@ export default function DashboardPage() {
           <AreaChart data={WEEK_STATS} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
             <defs>
               <linearGradient id="fillTotal" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.16} />
-                <stop offset="100%" stopColor="#22d3ee" stopOpacity={0} />
+                <stop offset="0%" stopColor={CHART.total} stopOpacity={0.16} />
+                <stop offset="100%" stopColor={CHART.total} stopOpacity={0} />
               </linearGradient>
               <linearGradient id="fillBlocked" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#e2562a" stopOpacity={0.3} />
-                <stop offset="100%" stopColor="#e2562a" stopOpacity={0} />
+                <stop offset="0%" stopColor={CHART.blocked} stopOpacity={0.3} />
+                <stop offset="100%" stopColor={CHART.blocked} stopOpacity={0} />
               </linearGradient>
               <filter id="glowRust" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feGaussianBlur stdDeviation="1.5" result="blur" />
                 <feMerge>
                   <feMergeNode in="blur" />
                   <feMergeNode in="SourceGraphic" />
@@ -195,16 +200,16 @@ export default function DashboardPage() {
               </filter>
             </defs>
             <CartesianGrid strokeDasharray="2 4" stroke="rgba(255,255,255,0.05)" vertical={false} />
-            <XAxis dataKey="date" tick={{ fontSize: 11, fill: "#8a7f76" }} axisLine={false} tickLine={false} dy={6} />
-            <YAxis tick={{ fontSize: 11, fill: "#8a7f76" }} axisLine={false} tickLine={false} />
+            <XAxis dataKey="date" tick={{ fontSize: 11, fill: CHART.tick, fontFamily: "var(--font-mono)" }} axisLine={false} tickLine={false} dy={6} />
+            <YAxis tick={{ fontSize: 11, fill: CHART.tick, fontFamily: "var(--font-mono)" }} axisLine={false} tickLine={false} />
             <Tooltip
               contentStyle={{ borderRadius: "10px", border: "1px solid rgba(255,255,255,0.1)", background: "#16130f", color: "#ededee", fontSize: 12, boxShadow: "0 12px 32px rgba(0,0,0,0.6)" }}
               labelStyle={{ color: "#9a9aa3" }}
               itemStyle={{ color: "#ededee" }}
               cursor={{ stroke: "rgba(255,255,255,0.12)" }}
             />
-            <Area type="monotone" dataKey="total" name="Total" stroke="#22d3ee" strokeWidth={2} fill="url(#fillTotal)" dot={false} activeDot={{ r: 4 }} />
-            <Area type="monotone" dataKey="blocked" name="Blocked" stroke="#e2562a" strokeWidth={2} fill="url(#fillBlocked)" filter="url(#glowRust)" dot={false} activeDot={{ r: 4, fill: "#e2562a" }} />
+            <Area type="monotone" dataKey="total" name="Total" stroke={CHART.total} strokeWidth={2} fill="url(#fillTotal)" dot={false} activeDot={{ r: 4 }} />
+            <Area type="monotone" dataKey="blocked" name="Blocked" stroke={CHART.blocked} strokeWidth={2} fill="url(#fillBlocked)" filter="url(#glowRust)" dot={false} activeDot={{ r: 4, fill: CHART.blocked }} />
           </AreaChart>
         </ResponsiveContainer>
       </div>
@@ -320,15 +325,3 @@ function Telemetry({ label, value }: { label: string; value: string }) {
   );
 }
 
-/** Decorative Mars planet with an orbiting satellite. */
-function PlanetOrbit() {
-  return (
-    <div className="relative hidden h-36 w-36 shrink-0 sm:block" aria-hidden>
-      <div className="mars-orbit-ring mars-orbit-spin absolute inset-0">
-        <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-mars-cyan shadow-[0_0_10px_2px_rgba(34,211,238,0.6)]" />
-      </div>
-      <div className="mars-orbit-ring absolute inset-[18px] opacity-50" />
-      <div className="mars-planet absolute inset-[34px]" />
-    </div>
-  );
-}

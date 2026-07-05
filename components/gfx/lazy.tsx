@@ -1,5 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
+import { MarsPlanetStatic } from "./MarsPlanetStatic";
 
 /**
  * Single home for the ssr-less dynamic-import idiom (Next lazy-loading
@@ -10,4 +11,9 @@ import dynamic from "next/dynamic";
 export const MarsBackdropLazy = dynamic(() => import("./MarsBackdrop"), {
   ssr: false,
   loading: () => null,
+});
+
+export const MarsSetPieceLazy = dynamic(() => import("./MarsSetPiece"), {
+  ssr: false,
+  loading: () => <MarsPlanetStatic />,
 });

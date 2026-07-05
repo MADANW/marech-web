@@ -32,22 +32,22 @@ function PortalShell({ children }: { children: React.ReactNode }) {
     if (!user) return null;
     if (user.status === "suspended")
       return (
-        <div className="border-b border-app-border bg-danger/10 text-red-300 px-6 py-2.5 text-[13px] flex items-center justify-between">
-          <span className="flex items-center gap-2"><OctagonAlertIcon className="h-4 w-4 shrink-0" /> Account suspended — update payment to restore protection</span>
+        <div className="border-b border-app-border bg-danger/10 text-red-300 px-6 py-2.5 text-[12px] flex items-center justify-between" style={{ fontFamily: "var(--font-mono)" }}>
+          <span className="flex items-center gap-2 uppercase tracking-[0.08em]"><OctagonAlertIcon className="h-4 w-4 shrink-0" /> Account suspended — update payment to restore protection</span>
           <Link href="/billing" className="font-medium ml-4 hover:underline">Update payment</Link>
         </div>
       );
     if (user.status === "payment_failed")
       return (
-        <div className="border-b border-app-border bg-danger/10 text-red-300 px-6 py-2.5 text-[13px] flex items-center justify-between">
-          <span className="flex items-center gap-2"><AlertTriangleIcon className="h-4 w-4 shrink-0" /> Payment failed — protection stops soon</span>
+        <div className="border-b border-app-border bg-danger/10 text-red-300 px-6 py-2.5 text-[12px] flex items-center justify-between" style={{ fontFamily: "var(--font-mono)" }}>
+          <span className="flex items-center gap-2 uppercase tracking-[0.08em]"><AlertTriangleIcon className="h-4 w-4 shrink-0" /> Payment failed — protection stops soon</span>
           <Link href="/billing" className="font-medium ml-4 hover:underline">Update payment</Link>
         </div>
       );
     if (user.status === "trial")
       return (
-        <div className="border-b border-app-border bg-accent/10 text-accent px-6 py-2.5 text-[13px] flex items-center justify-between">
-          <span className="flex items-center gap-2"><GiftIcon className="h-4 w-4 shrink-0" /> Free trial — {user.trialDaysLeft} days left</span>
+        <div className="border-b border-app-border bg-accent/10 text-accent px-6 py-2.5 text-[12px] flex items-center justify-between" style={{ fontFamily: "var(--font-mono)" }}>
+          <span className="flex items-center gap-2 uppercase tracking-[0.08em]"><GiftIcon className="h-4 w-4 shrink-0" /> Free trial — {user.trialDaysLeft} days left</span>
           <Link href="/billing" className="font-medium ml-4 hover:underline">Add payment method</Link>
         </div>
       );
@@ -77,11 +77,12 @@ function PortalShell({ children }: { children: React.ReactNode }) {
               href={href}
               onClick={() => setSidebarOpen(false)}
               className={cn(
-                "relative flex items-center gap-3 px-3 py-2 rounded-lg text-[13.5px] font-medium transition-colors",
+                "relative flex items-center gap-3 px-3 py-2 rounded-lg text-[11.5px] font-medium uppercase tracking-[0.12em] transition-colors",
                 active
                   ? "bg-app-hover text-app-text"
                   : "text-app-muted hover:bg-app-hover hover:text-app-text"
               )}
+              style={{ fontFamily: "var(--font-mono)" }}
             >
               {active && (
                 <span className="absolute -left-3 top-1.5 bottom-1.5 w-[2.5px] rounded-r bg-accent" />

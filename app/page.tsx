@@ -21,7 +21,7 @@ const PAD = "px-6 sm:px-10 lg:px-16";
 
 export default function LandingPage() {
   return (
-    <div className="marketing-theme min-h-screen flex flex-col" style={{ backgroundColor: "#c44a1a" }}>
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: "#c44a1a" }}>
       <div className="relative flex flex-col flex-1">
         <ScrollProgress className="h-0.5 from-black via-[#e2562a] to-white" />
         <Nav />

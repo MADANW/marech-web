@@ -99,7 +99,7 @@ function PortalShell({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <div className="portal-theme relative flex h-screen overflow-hidden bg-app-bg">
+    <div className="relative flex h-screen overflow-hidden bg-app-bg">
       {/* Atmospheric horizon glow behind everything */}
       <div className="mars-horizon z-0" />
 

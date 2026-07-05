@@ -67,8 +67,8 @@ export default function PricingPage() {
       <div className="max-w-6xl mx-auto">
 
         <div className="text-center mb-16">
-          <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase block mb-3" style={{ fontFamily: "var(--font-syne)" }}>Pricing</span>
-          <h1 className="text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-syne)" }}>Simple, transparent pricing.</h1>
+          <span className="text-eyebrow text-mars-ember block mb-3">Pricing</span>
+          <h1 className="text-5xl font-bold text-white tracking-[-0.02em] mb-4" style={{ fontFamily: "var(--font-display)" }}>Simple, transparent pricing.</h1>
           <p className="text-white/60 text-lg">Start free. No credit card required.</p>
         </div>
 
@@ -77,10 +77,8 @@ export default function PricingPage() {
           {PLANS.map((plan) => (
             <div
               key={plan.name}
-              className={`rounded-2xl border p-6 flex flex-col backdrop-blur-xl ${
-                plan.highlight
-                  ? "border-accent/40 bg-accent/10 shadow-xl shadow-accent/10 scale-105"
-                  : "border-white/10 bg-white/5"
+              className={`mars-card--marketing rounded-2xl p-6 flex flex-col ${
+                plan.highlight ? "mars-glow-rust lg:scale-105" : ""
               }`}
             >
               {plan.highlight && (
@@ -88,11 +86,11 @@ export default function PricingPage() {
                   Most Popular
                 </div>
               )}
-              <div className="text-xs font-bold tracking-widest uppercase text-white/50 mb-3" style={{ fontFamily: "var(--font-syne)" }}>
+              <div className="text-eyebrow text-white/50 mb-3">
                 {plan.name}
               </div>
               <div className="flex items-end gap-1 mb-1">
-                <span className="text-4xl font-bold text-white" style={{ fontFamily: "var(--font-syne)" }}>{plan.price}</span>
+                <span className="text-4xl font-bold text-white" style={{ fontFamily: "var(--font-mono)" }}>{plan.price}</span>
                 <span className="text-sm mb-1 text-white/40">{plan.period}</span>
               </div>
               <div className="text-xs text-white/50 mb-1">{plan.limit}</div>
@@ -118,15 +116,15 @@ export default function PricingPage() {
 
         {/* FAQ */}
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-3xl font-bold text-white text-center mb-10" style={{ fontFamily: "var(--font-syne)" }}>Common questions</h2>
+          <h2 className="text-3xl font-bold text-white tracking-[-0.02em] text-center mb-10" style={{ fontFamily: "var(--font-display)" }}>Common questions</h2>
           <div className="space-y-3">
             {FAQS.map((faq) => (
-              <details key={faq.q} className="group bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden">
-                <summary className="px-6 py-4 cursor-pointer font-medium text-white flex items-center justify-between hover:bg-white/5 transition-colors list-none">
+              <details key={faq.q} className="group mars-card--marketing rounded-xl overflow-hidden">
+                <summary className="px-6 py-4 cursor-pointer font-medium text-white flex items-center justify-between hover:bg-white/5 transition-colors duration-150 list-none">
                   {faq.q}
                   <ChevronIcon className="w-5 h-5 text-white/40 group-open:rotate-180 transition-transform shrink-0 ml-4" />
                 </summary>
-                <div className="px-6 pb-5 text-white/60 text-sm leading-relaxed border-t border-white/10 pt-4">{faq.a}</div>
+                <div className="px-6 pb-5 text-white/60 text-sm leading-relaxed border-t border-app-border-faint pt-4">{faq.a}</div>
               </details>
             ))}
           </div>

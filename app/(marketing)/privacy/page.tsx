@@ -12,12 +12,12 @@ export default function PrivacyPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-20">
       <div className="mb-12">
-        <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase block mb-3">
+        <span className="text-eyebrow text-mars-ember block mb-3">
           Legal
         </span>
         <h1
-          className="text-4xl sm:text-5xl font-bold text-white mb-4"
-          style={{ fontFamily: "var(--font-syne)" }}
+          className="text-4xl sm:text-5xl font-bold text-white tracking-[-0.02em] mb-4"
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Privacy Policy
         </h1>
@@ -219,8 +219,8 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   return (
     <section>
       <h2
-        className="text-lg font-bold text-white mb-3"
-        style={{ fontFamily: "var(--font-syne)" }}
+        className="text-lg font-bold text-white tracking-[-0.02em] mb-3"
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {title}
       </h2>

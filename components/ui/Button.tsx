@@ -8,7 +8,7 @@ const VARIANTS: Record<Variant, string> = {
   ghost:
     "text-white/70 rounded-full hover:text-white hover:bg-white/10 active:scale-[0.97]",
   primary:
-    "bg-primary text-white rounded-full hover:bg-primary-dark active:scale-[0.97] shadow-sm",
+    "bg-accent text-white rounded-full hover:bg-accent-dark active:scale-[0.97] shadow-sm",
   accent:
     "bg-accent text-white rounded-full hover:bg-accent-dark active:scale-[0.97] shadow-sm",
   secondary:

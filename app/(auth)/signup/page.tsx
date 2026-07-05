@@ -7,8 +7,6 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { GoogleButton } from "@/components/auth/GoogleButton";
 import { Logo } from "@/components/marketing/Logo";
-import { CheckIcon } from "@/components/ui/icons";
-import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/auth";
 
 const PLATFORMS = ["Wix", "Squarespace", "Shopify", "WordPress", "Webflow", "Custom / Other"];
@@ -64,32 +62,27 @@ export default function SignupPage() {
         </div>
 
         {/* Progress */}
-        <div className="flex items-center justify-center gap-2 mb-8">
-          {[1, 2, 3].map((s) => (
-            <div key={s} className="flex items-center gap-2">
-              <div
-                className={cn(
-                  "w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all",
-                  step > s
-                    ? "bg-success/20 border border-success/50 text-success"
-                    : step === s
-                    ? "bg-accent/20 border border-accent/50 text-accent"
-                    : "bg-white/5 border border-white/15 text-white/30"
-                )}
-                style={{ fontFamily: "var(--font-mono)" }}
-              >
-                {step > s ? <CheckIcon className="h-4 w-4" /> : s}
-              </div>
-              {s < 3 && <div className={cn("h-px w-8", step > s ? "bg-success/40" : "bg-white/10")} />}
-            </div>
-          ))}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-eyebrow text-white/40">Account setup</span>
+            <span className="text-eyebrow text-mars-ember">Step 0{step} / 03</span>
+          </div>
+          <div className="relative h-px bg-white/10 overflow-hidden">
+            <div
+              className="absolute inset-y-0 left-0 bg-accent"
+              style={{
+                width: `${(step / 3) * 100}%`,
+                transition: "width 450ms var(--ease-mission)",
+              }}
+            />
+          </div>
         </div>
 
-        <div className="bg-[#1a1a1a]/95 backdrop-blur-sm border border-white/10 rounded-2xl p-8 shadow-[0_6px_28px_rgba(0,0,0,0.4)]">
+        <div className="mars-card--marketing rounded-2xl p-8">
           {/* Step 1 */}
           {step === 1 && (
             <>
-              <h1 className="text-xl font-bold text-white mb-1" style={{ fontFamily: "var(--font-mono)" }}>Create your account</h1>
+              <h1 className="text-xl font-semibold text-white mb-1">Create your account</h1>
               <p className="text-white/50 text-sm mb-6">7-day free trial — no credit card needed</p>
               <div className="mb-5">
                 <GoogleButton onError={(m) => step1.setError("email", { message: m })} />
@@ -137,7 +130,7 @@ export default function SignupPage() {
               <button onClick={() => setStep(1)} className="text-sm text-white/40 hover:text-white/70 mb-4 flex items-center gap-1 transition-colors">
                 ← Back
               </button>
-              <h1 className="text-xl font-bold text-white mb-1" style={{ fontFamily: "var(--font-mono)" }}>Tell us about your site</h1>
+              <h1 className="text-xl font-semibold text-white mb-1">Tell us about your site</h1>
               <p className="text-white/50 text-sm mb-6">We&apos;ll show you the right setup instructions</p>
               <form onSubmit={step2.handleSubmit(onStep2)} className="space-y-4">
                 <Input
@@ -187,7 +180,7 @@ export default function SignupPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h2 className="text-xl font-bold text-white mb-2" style={{ fontFamily: "var(--font-mono)" }}>Check your email</h2>
+              <h2 className="text-xl font-semibold text-white mb-2">Check your email</h2>
               <p className="text-white/50 text-sm mb-4">
                 We sent a verification link to <strong className="text-white/80">{step1Data?.email}</strong>
               </p>

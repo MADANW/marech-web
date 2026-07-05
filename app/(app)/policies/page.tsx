@@ -259,7 +259,7 @@ export default function PoliciesPage() {
             <div className="flex gap-3">
               {(["block", "allow", "log"] as const).map((a) => (
                 <label key={a} className="flex items-center gap-2 cursor-pointer">
-                  <input type="radio" value={a} {...register("action")} className="accent-[#f97316]" />
+                  <input type="radio" value={a} {...register("action")} className="accent-mars-rust" />
                   <span className="text-sm capitalize text-app-muted">{a}</span>
                 </label>
               ))}

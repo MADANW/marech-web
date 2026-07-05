@@ -277,7 +277,7 @@ export default function LogsPage() {
           <select
             value={botFilter}
             onChange={(e) => setColFilter("botType", e.target.value)}
-            className="rounded-lg border border-app-border bg-app-inset px-3 py-2 text-sm text-app-text outline-none focus:border-accent/50 [&>option]:bg-[#141416]"
+            className="rounded-lg border border-app-border bg-app-inset px-3 py-2 text-sm text-app-text outline-none focus:border-accent/50 [&>option]:bg-app-inset"
           >
             <option value="all">All bot types</option>
             <option value="scraper">scraper</option>
@@ -289,7 +289,7 @@ export default function LogsPage() {
           <select
             value={actionFilter}
             onChange={(e) => setColFilter("action", e.target.value)}
-            className="rounded-lg border border-app-border bg-app-inset px-3 py-2 text-sm text-app-text outline-none focus:border-accent/50 [&>option]:bg-[#141416]"
+            className="rounded-lg border border-app-border bg-app-inset px-3 py-2 text-sm text-app-text outline-none focus:border-accent/50 [&>option]:bg-app-inset"
           >
             <option value="all">All actions</option>
             <option value="block">Blocked</option>
@@ -325,7 +325,7 @@ export default function LogsPage() {
                 <div className="mars-card absolute right-0 z-20 mt-1 w-44 rounded-lg py-1 shadow-2xl">
                   {table.getAllLeafColumns().filter((c) => c.getCanHide()).map((c) => (
                     <label key={c.id} className="flex cursor-pointer items-center gap-2 px-3 py-1.5 text-sm text-app-muted hover:bg-app-hover hover:text-app-text">
-                      <input type="checkbox" checked={c.getIsVisible()} onChange={c.getToggleVisibilityHandler()} className="accent-[#e2562a]" />
+                      <input type="checkbox" checked={c.getIsVisible()} onChange={c.getToggleVisibilityHandler()} className="accent-mars-rust" />
                       <span className="capitalize">{c.id === "userAgent" ? "User agent" : c.id === "botType" ? "Bot type" : c.id}</span>
                     </label>
                   ))}
@@ -429,7 +429,7 @@ export default function LogsPage() {
               <select
                 value={pg.pageSize}
                 onChange={(e) => table.setPageSize(Number(e.target.value))}
-                className="rounded-md border border-app-border bg-app-inset px-2 py-1 text-xs text-app-muted outline-none [&>option]:bg-[#141416]"
+                className="rounded-md border border-app-border bg-app-inset px-2 py-1 text-xs text-app-muted outline-none [&>option]:bg-app-inset"
               >
                 {[25, 50, 100].map((n) => <option key={n} value={n}>{n} / page</option>)}
               </select>

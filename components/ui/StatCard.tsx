@@ -8,7 +8,7 @@ const ACCENT: Record<Accent, string> = {
   orange: "bg-accent/15 text-accent ring-1 ring-accent/20",
   red: "bg-danger/12 text-red-400 ring-1 ring-danger/20",
   green: "bg-success/12 text-success ring-1 ring-success/20",
-  blue: "bg-mars-cyan/12 text-mars-cyan ring-1 ring-mars-cyan/20",
+  blue: "bg-mars-cyan-deep/15 text-mars-cyan ring-1 ring-mars-cyan-deep/25",
 };
 
 interface Trend {

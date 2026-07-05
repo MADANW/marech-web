@@ -13,8 +13,8 @@ export default function HowItWorksPage() {
       <div className="max-w-4xl mx-auto">
 
         <div className="text-center mb-16">
-          <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase block mb-3" style={{ fontFamily: "var(--font-syne)" }}>Under the hood</span>
-          <h1 className="text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-syne)" }}>How Marech Works</h1>
+          <span className="text-eyebrow text-mars-ember block mb-3">Under the hood</span>
+          <h1 className="text-5xl font-bold text-white tracking-[-0.02em] mb-4" style={{ fontFamily: "var(--font-display)" }}>How Marech Works</h1>
           <p className="text-white/60 text-lg max-w-2xl mx-auto">
             Every request to your website goes through Marech's detection engine. Here's what happens in milliseconds.
           </p>
@@ -25,13 +25,13 @@ export default function HowItWorksPage() {
           {FLOW.map((step, i) => (
             <div key={step.label} className="flex gap-5 items-start">
               <div className="flex flex-col items-center shrink-0">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${step.color}`} style={{ fontFamily: "var(--font-syne)" }}>
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${step.color}`} style={{ fontFamily: "var(--font-mono)" }}>
                   {i + 1}
                 </div>
                 {i < FLOW.length - 1 && <div className="w-px flex-1 bg-white/10 my-2 h-6" />}
               </div>
-              <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-5 flex-1 mb-2">
-                <div className="font-semibold text-white mb-1" style={{ fontFamily: "var(--font-syne)" }}>{step.label}</div>
+              <div className="mars-card--marketing rounded-xl p-5 flex-1 mb-2">
+                <div className="font-semibold text-white mb-1">{step.label}</div>
                 <div className="text-sm text-white/60">{step.body}</div>
               </div>
             </div>
@@ -40,14 +40,14 @@ export default function HowItWorksPage() {
 
         {/* Detection methods */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold text-white mb-8" style={{ fontFamily: "var(--font-syne)" }}>How we detect AI bots</h2>
+          <h2 className="text-3xl font-bold text-white mb-8" style={{ fontFamily: "var(--font-display)" }}>How we detect AI bots</h2>
           <div className="grid md:grid-cols-3 gap-4">
             {DETECTION.map((d, i) => (
-              <div key={d.title} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
-                <span className="text-4xl font-bold text-accent/25 block mb-4" style={{ fontFamily: "var(--font-syne)" }}>
+              <div key={d.title} className="mars-card--marketing rounded-2xl p-6">
+                <span className="text-eyebrow text-white/25 block mb-4">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="font-bold text-white mb-2" style={{ fontFamily: "var(--font-syne)" }}>{d.title}</h3>
+                <h3 className="font-semibold text-white mb-2">{d.title}</h3>
                 <p className="text-sm text-white/60 leading-relaxed">{d.body}</p>
               </div>
             ))}
@@ -56,11 +56,11 @@ export default function HowItWorksPage() {
 
         {/* Policy control */}
         <div className="mb-16">
-          <h2 className="text-3xl font-bold text-white mb-3" style={{ fontFamily: "var(--font-syne)" }}>You're in control</h2>
+          <h2 className="text-3xl font-bold text-white mb-3" style={{ fontFamily: "var(--font-display)" }}>You&apos;re in control</h2>
           <p className="text-white/60 mb-8">Policies let you decide exactly what gets blocked. No one-size-fits-all rules.</p>
           <div className="space-y-3">
             {POLICY_EXAMPLES.map((ex) => (
-              <div key={ex.label} className="flex items-center gap-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-4">
+              <div key={ex.label} className="mars-card--marketing flex items-center gap-4 rounded-xl p-4">
                 <div className="w-8 h-8 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center shrink-0 text-accent">
                   <ex.icon className="h-4 w-4" />
                 </div>
@@ -74,8 +74,8 @@ export default function HowItWorksPage() {
         </div>
 
         {/* CTA */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 text-center">
-          <h2 className="text-2xl font-bold text-white mb-3" style={{ fontFamily: "var(--font-syne)" }}>See it blocking bots live</h2>
+        <div className="mars-card--marketing rounded-2xl p-10 text-center">
+          <h2 className="text-2xl font-bold text-white tracking-[-0.02em] mb-3" style={{ fontFamily: "var(--font-display)" }}>See it blocking bots live</h2>
           <p className="text-white/60 mb-6">Start your free trial and watch the real-time feed fill up.</p>
           <Link href="/signup">
             <Button variant="accent" size="lg">Start Free Trial</Button>

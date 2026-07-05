@@ -53,8 +53,8 @@ export default function BlogPage() {
       <div className="max-w-4xl mx-auto">
 
         <div className="text-center mb-14">
-          <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase block mb-3" style={{ fontFamily: "var(--font-syne)" }}>Blog</span>
-          <h1 className="text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-syne)" }}>Tips, guides & updates.</h1>
+          <span className="text-eyebrow text-mars-ember block mb-3">Blog</span>
+          <h1 className="text-5xl font-bold text-white tracking-[-0.02em] mb-4" style={{ fontFamily: "var(--font-display)" }}>Tips, guides & updates.</h1>
           <p className="text-white/60 text-lg">From the Marech team.</p>
         </div>
 
@@ -63,18 +63,18 @@ export default function BlogPage() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group block bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-white/20 transition-all"
+              className="group block mars-card--marketing rounded-2xl p-6 hover:border-white/20 transition-colors duration-150"
             >
               <div className="flex items-center gap-2 mb-4">
                 <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${CATEGORY_COLORS[post.category]}`}>
                   {post.category}
                 </span>
               </div>
-              <h2 className="font-bold text-white mb-3 group-hover:text-accent transition-colors leading-snug" style={{ fontFamily: "var(--font-syne)" }}>
+              <h2 className="font-bold text-white mb-3 group-hover:text-accent transition-colors leading-snug" style={{ fontFamily: "var(--font-display)" }}>
                 {post.title}
               </h2>
               <p className="text-white/50 text-sm leading-relaxed mb-4">{post.excerpt}</p>
-              <div className="flex items-center gap-3 text-xs text-white/30">
+              <div className="text-eyebrow flex items-center gap-3 text-white/30">
                 <span>{post.date}</span>
                 <span>·</span>
                 <span>{post.readTime} read</span>

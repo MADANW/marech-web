@@ -70,10 +70,10 @@ export default function HtmlPage() {
 
         {/* Header */}
         <div className="text-center">
-          <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase block mb-3" style={{ fontFamily: "var(--font-syne)" }}>
+          <span className="text-eyebrow text-mars-ember block mb-3">
             HTML Guide
           </span>
-          <h1 className="text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-syne)" }}>
+          <h1 className="text-5xl font-bold text-white tracking-[-0.02em] mb-4" style={{ fontFamily: "var(--font-display)" }}>
             Marech for Any HTML Site
           </h1>
           <p className="text-white/60 text-lg">
@@ -83,15 +83,15 @@ export default function HtmlPage() {
 
         {/* Steps */}
         <section>
-          <h2 className="text-xl font-bold text-white mb-6" style={{ fontFamily: "var(--font-syne)" }}>
+          <h2 className="text-xl font-bold text-white tracking-[-0.02em] mb-6" style={{ fontFamily: "var(--font-display)" }}>
             Step-by-step instructions
           </h2>
           <div className="space-y-3">
             {STEPS.map((step, i) => (
-              <div key={i} className="flex gap-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-5">
+              <div key={i} className="mars-card--marketing flex gap-4 rounded-xl p-5">
                 <div
                   className="w-8 h-8 rounded-full bg-accent/20 border border-accent/30 text-accent font-bold flex items-center justify-center shrink-0 text-sm"
-                  style={{ fontFamily: "var(--font-syne)" }}
+                  style={{ fontFamily: "var(--font-mono)" }}
                 >
                   {i + 1}
                 </div>
@@ -107,10 +107,10 @@ export default function HtmlPage() {
         {/* AI Prompting section */}
         <section>
           <div className="mb-6">
-            <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase block mb-2" style={{ fontFamily: "var(--font-syne)" }}>
+            <span className="text-eyebrow text-mars-ember block mb-2">
               Not a developer?
             </span>
-            <h2 className="text-xl font-bold text-white" style={{ fontFamily: "var(--font-syne)" }}>
+            <h2 className="text-xl font-bold text-white tracking-[-0.02em]" style={{ fontFamily: "var(--font-display)" }}>
               Let AI add it for you
             </h2>
             <p className="text-white/50 text-sm mt-2">
@@ -127,10 +127,10 @@ export default function HtmlPage() {
         {/* Prompt injection defense section */}
         <section>
           <div className="mb-6">
-            <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase block mb-2" style={{ fontFamily: "var(--font-syne)" }}>
+            <span className="text-eyebrow text-mars-ember block mb-2">
               Why it matters for HTML sites
             </span>
-            <h2 className="text-xl font-bold text-white" style={{ fontFamily: "var(--font-syne)" }}>
+            <h2 className="text-xl font-bold text-white tracking-[-0.02em]" style={{ fontFamily: "var(--font-display)" }}>
               HTML sites are high-value AI targets
             </h2>
           </div>
@@ -153,7 +153,7 @@ export default function HtmlPage() {
                 body: "Businesses deploy AI crawlers to harvest pricing, copy, and product data from competitor HTML sites. Marech detects non-human request patterns and returns a 403 before any data is read.",
               },
             ].map((card) => (
-              <div key={card.title} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-5">
+              <div key={card.title} className="mars-card--marketing rounded-xl p-5">
                 <div className="font-semibold text-white mb-2">{card.title}</div>
                 <p className="text-sm text-white/55 leading-relaxed">{card.body}</p>
               </div>
@@ -162,7 +162,7 @@ export default function HtmlPage() {
         </section>
 
         {/* Video placeholder */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl aspect-video flex items-center justify-center">
+        <div className="mars-card--marketing rounded-2xl aspect-video flex items-center justify-center">
           <div className="text-center">
             <div className="w-16 h-16 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-3">
               <svg className="w-8 h-8 text-accent" fill="currentColor" viewBox="0 0 20 20">
@@ -174,8 +174,8 @@ export default function HtmlPage() {
         </div>
 
         {/* CTA */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 text-center">
-          <h2 className="text-2xl font-bold text-white mb-3" style={{ fontFamily: "var(--font-syne)" }}>
+        <div className="mars-card--marketing rounded-2xl p-10 text-center">
+          <h2 className="text-2xl font-bold text-white tracking-[-0.02em] mb-3" style={{ fontFamily: "var(--font-display)" }}>
             Ready to protect your HTML site?
           </h2>
           <p className="text-white/60 mb-6">Free 7-day trial. No credit card required.</p>
@@ -199,7 +199,7 @@ function PromptCard({ label, prompt }: { label: string; prompt: string }) {
   }
 
   return (
-    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden">
+    <div className="mars-card--marketing rounded-xl overflow-hidden">
       <div className="flex items-center justify-between px-5 py-3 border-b border-white/10">
         <span className="text-sm font-semibold text-white">{label}</span>
         <button

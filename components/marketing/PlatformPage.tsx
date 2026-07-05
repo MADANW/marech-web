@@ -19,22 +19,22 @@ export function PlatformPage({ name, headline, subheadline, steps }: PlatformPag
       <div className="max-w-3xl mx-auto">
 
         <div className="text-center mb-14">
-          <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase block mb-3" style={{ fontFamily: "var(--font-syne)" }}>
+          <span className="text-eyebrow text-mars-ember block mb-3">
             {name} Guide
           </span>
-          <h1 className="text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-syne)" }}>{headline}</h1>
+          <h1 className="text-5xl font-bold text-white tracking-[-0.02em] mb-4" style={{ fontFamily: "var(--font-display)" }}>{headline}</h1>
           <p className="text-white/60 text-lg">{subheadline}</p>
         </div>
 
         {/* Steps */}
         <div className="mb-14">
-          <h2 className="text-xl font-bold text-white mb-6" style={{ fontFamily: "var(--font-syne)" }}>Step-by-step instructions</h2>
+          <h2 className="text-xl font-bold text-white tracking-[-0.02em] mb-6" style={{ fontFamily: "var(--font-display)" }}>Step-by-step instructions</h2>
           <div className="space-y-3">
             {steps.map((step, i) => (
-              <div key={i} className="flex gap-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-5">
+              <div key={i} className="mars-card--marketing flex gap-4 rounded-xl p-5">
                 <div
-                  className="w-8 h-8 rounded-full bg-accent/20 border border-accent/30 text-accent font-bold flex items-center justify-center shrink-0 text-sm"
-                  style={{ fontFamily: "var(--font-syne)" }}
+                  className="w-8 h-8 rounded-full bg-accent/20 border border-accent/30 text-mars-ember font-bold flex items-center justify-center shrink-0 text-sm"
+                  style={{ fontFamily: "var(--font-mono)" }}
                 >
                   {i + 1}
                 </div>
@@ -48,7 +48,7 @@ export function PlatformPage({ name, headline, subheadline, steps }: PlatformPag
         </div>
 
         {/* Video placeholder */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl aspect-video flex items-center justify-center mb-14">
+        <div className="mars-card--marketing rounded-2xl aspect-video flex items-center justify-center mb-14">
           <div className="text-center">
             <div className="w-16 h-16 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-3">
               <svg className="w-8 h-8 text-accent" fill="currentColor" viewBox="0 0 20 20">
@@ -60,8 +60,8 @@ export function PlatformPage({ name, headline, subheadline, steps }: PlatformPag
         </div>
 
         {/* CTA */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-10 text-center">
-          <h2 className="text-2xl font-bold text-white mb-3" style={{ fontFamily: "var(--font-syne)" }}>
+        <div className="mars-card--marketing rounded-2xl p-10 text-center">
+          <h2 className="text-2xl font-bold text-white tracking-[-0.02em] mb-3" style={{ fontFamily: "var(--font-display)" }}>
             Ready to protect your {name} site?
           </h2>
           <p className="text-white/60 mb-6">Free 7-day trial. No credit card required.</p>

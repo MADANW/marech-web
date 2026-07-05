@@ -45,11 +45,11 @@ export default function LoginPage() {
           <Link href="/" className="inline-flex justify-center mb-4">
             <Logo className="text-xl" iconClassName="w-7 h-7" />
           </Link>
-          <h1 className="text-2xl font-bold text-white" style={{ fontFamily: "var(--font-mono)" }}>Welcome back</h1>
+          <h1 className="text-2xl font-semibold text-white">Welcome back</h1>
           <p className="text-white/50 text-sm mt-1">Log in to your dashboard</p>
         </div>
 
-        <div className="bg-[#1a1a1a]/95 backdrop-blur-sm border border-white/10 rounded-2xl p-8 shadow-[0_6px_28px_rgba(0,0,0,0.4)]">
+        <div className="mars-card--marketing rounded-2xl p-8">
           {error && (
             <div className="bg-danger/15 border border-danger/30 text-danger text-sm rounded-lg px-4 py-3 mb-4">
               {error}

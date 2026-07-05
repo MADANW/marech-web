@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LiquidMarechIconLazy } from "@/components/gfx/lazy";
 
 export function Footer() {
   return (
@@ -7,10 +8,10 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
           <div className="col-span-2 md:col-span-1">
             <div
-              className="flex items-center gap-2 text-white font-bold mb-3"
-              style={{ fontFamily: "var(--font-syne)" }}
+              className="flex items-center gap-2.5 text-white font-bold mb-3"
+              style={{ fontFamily: "var(--font-mono)" }}
             >
-              <img src="/logos/marech-icon-color.svg" className="w-5 h-5" alt="" />
+              <LiquidMarechIconLazy />
               Marech
             </div>
             <p className="text-sm leading-relaxed">

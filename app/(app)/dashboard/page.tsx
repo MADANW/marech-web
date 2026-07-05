@@ -203,9 +203,9 @@ export default function DashboardPage() {
             <XAxis dataKey="date" tick={{ fontSize: 11, fill: CHART.tick, fontFamily: "var(--font-mono)" }} axisLine={false} tickLine={false} dy={6} />
             <YAxis tick={{ fontSize: 11, fill: CHART.tick, fontFamily: "var(--font-mono)" }} axisLine={false} tickLine={false} />
             <Tooltip
-              contentStyle={{ borderRadius: "10px", border: "1px solid rgba(255,255,255,0.1)", background: "#16130f", color: "#ededee", fontSize: 12, boxShadow: "0 12px 32px rgba(0,0,0,0.6)" }}
-              labelStyle={{ color: "#9a9aa3" }}
-              itemStyle={{ color: "#ededee" }}
+              contentStyle={{ borderRadius: "10px", border: "1px solid rgba(255,255,255,0.1)", background: "var(--color-app-card)", color: "var(--color-app-text)", fontSize: 12, boxShadow: "0 12px 32px rgba(0,0,0,0.6)" }}
+              labelStyle={{ color: "var(--color-app-muted)" }}
+              itemStyle={{ color: "var(--color-app-text)" }}
               cursor={{ stroke: "rgba(255,255,255,0.12)" }}
             />
             <Area type="monotone" dataKey="total" name="Total" stroke={CHART.total} strokeWidth={2} fill="url(#fillTotal)" dot={false} activeDot={{ r: 4 }} />

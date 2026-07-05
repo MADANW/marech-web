@@ -162,7 +162,7 @@ export default function SnippetPage() {
           <select
             value={platform}
             onChange={(e) => setPlatform(e.target.value)}
-            className="text-xs border border-app-border bg-app-inset rounded-lg px-2 py-1.5 text-app-text focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none [&>option]:bg-[#141416]"
+            className="text-xs border border-app-border bg-app-inset rounded-lg px-2 py-1.5 text-app-text focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none [&>option]:bg-app-inset"
           >
             {PLATFORMS.map((p) => <option key={p}>{p}</option>)}
           </select>

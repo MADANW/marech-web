@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAuth } from "@/lib/auth";
-import { isMock } from "@/lib/api";
+import { isMock, resendVerification } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/marketing/Logo";
 import { OctagonAlertIcon, AlertTriangleIcon, GiftIcon } from "@/components/ui/icons";
@@ -23,14 +23,36 @@ function PortalShell({ children }: { children: React.ReactNode }) {
   const { user, logout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [resendState, setResendState] = useState<"idle" | "sending" | "sent">("idle");
 
   const handleLogout = () => {
     logout();
     router.push("/login");
   };
 
+  const handleResend = async () => {
+    if (!user?.email || resendState !== "idle") return;
+    setResendState("sending");
+    try {
+      await resendVerification(user.email);
+      setResendState("sent");
+    } catch {
+      setResendState("idle");
+    }
+  };
+
   const statusBanner = (() => {
     if (!user) return null;
+    // Unverified outranks everything below: protection is fully inactive.
+    if (user.emailVerified === false)
+      return (
+        <div className="border-b border-app-border bg-warning/10 text-warning px-6 py-2.5 text-[12px] flex items-center justify-between" style={{ fontFamily: "var(--font-mono)" }}>
+          <span className="flex items-center gap-2 uppercase tracking-[0.08em]"><AlertTriangleIcon className="h-4 w-4 shrink-0" /> Verify your email — protection is inactive until you click the link we sent</span>
+          <button onClick={handleResend} disabled={resendState !== "idle"} className="font-medium ml-4 hover:underline disabled:opacity-60 disabled:no-underline">
+            {resendState === "sent" ? "Sent — check your inbox" : resendState === "sending" ? "Sending…" : "Resend email"}
+          </button>
+        </div>
+      );
     if (user.status === "suspended")
       return (
         <div className="border-b border-app-border bg-danger/10 text-red-300 px-6 py-2.5 text-[12px] flex items-center justify-between" style={{ fontFamily: "var(--font-mono)" }}>

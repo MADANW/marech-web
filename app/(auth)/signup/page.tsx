@@ -45,7 +45,10 @@ export default function SignupPage() {
   const onStep2 = async (data: Step2) => {
     try {
       await signUp(step1Data!.email, step1Data!.password, data.websiteUrl, data.platform);
-      router.push("/dashboard");
+      // Account is created and logged in, but protection stays inactive
+      // until the email is verified — show the "check your email" step.
+      setStep(3);
+      setTimeout(() => router.push("/dashboard"), 4000);
     } catch (err) {
       step2.setError("root", { message: (err as Error).message });
     }

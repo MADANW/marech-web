@@ -67,13 +67,22 @@ function PortalShell({ children }: { children: React.ReactNode }) {
           <Link href="/billing" className="font-medium ml-4 hover:underline">Update payment</Link>
         </div>
       );
-    if (user.status === "trial")
+    if (user.status === "trial") {
+      // Hard expiry: the backend stops serving protection once the trial is up.
+      if (user.trialDaysLeft <= 0)
+        return (
+          <div className="border-b border-app-border bg-danger/10 text-red-300 px-6 py-2.5 text-[12px] flex items-center justify-between" style={{ fontFamily: "var(--font-mono)" }}>
+            <span className="flex items-center gap-2 uppercase tracking-[0.08em]"><OctagonAlertIcon className="h-4 w-4 shrink-0" /> Trial expired — protection is inactive until you add a payment method</span>
+            <Link href="/billing" className="font-medium ml-4 hover:underline">Add payment method</Link>
+          </div>
+        );
       return (
         <div className="border-b border-app-border bg-accent/10 text-accent px-6 py-2.5 text-[12px] flex items-center justify-between" style={{ fontFamily: "var(--font-mono)" }}>
           <span className="flex items-center gap-2 uppercase tracking-[0.08em]"><GiftIcon className="h-4 w-4 shrink-0" /> Free trial — {user.trialDaysLeft} days left</span>
           <Link href="/billing" className="font-medium ml-4 hover:underline">Add payment method</Link>
         </div>
       );
+    }
     return null;
   })();
 

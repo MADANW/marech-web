@@ -138,6 +138,10 @@ export default function DashboardPage() {
     return Math.round(logs.filter((l) => Date.parse(l.timestamp) >= hourAgo).length / 60);
   }, [logs, todayTotal]);
 
+  // A live user who has loaded the dashboard but has no traffic at all hasn't
+  // installed the snippet yet — don't claim protection is active for them.
+  const showSetup = !isMock && loaded && logs.length === 0;
+
   const blockRate = todayTotal ? ((todayBlocked / todayTotal) * 100).toFixed(1) : "0.0";
 
   const pctChange = (a: number, b: number) => (b ? ((a - b) / b) * 100 : 0);
@@ -159,24 +163,51 @@ export default function DashboardPage() {
         <div className="mars-horizon" />
         <div className="relative flex items-center justify-between gap-6">
           <div className="min-w-0">
-            <div className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-mars-rust">
-              <span className="h-1.5 w-1.5 rounded-full bg-mars-rust shadow-[0_0_8px_1px_rgba(226,86,42,0.7)]" />
-              Marech control
-            </div>
-            <h2
-              className="mt-2.5 text-2xl font-bold tracking-[-0.01em] text-app-text"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Protection active
-            </h2>
-            <p className="mt-1.5 max-w-md text-[13px] text-app-muted">
-              Your site is shielded across every page. Live telemetry refreshes every 5 seconds.
-            </p>
-            <div className="mt-5 flex flex-wrap items-center gap-x-8 gap-y-3">
-              <Telemetry label="Uptime" value="99.98%" />
-              <Telemetry label="Edge regions" value="14" />
-              <Telemetry label="Throughput" value={`${formatNumber(throughput)}/min`} />
-            </div>
+            {showSetup ? (
+              <>
+                <div className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-warning">
+                  <span className="h-1.5 w-1.5 rounded-full bg-warning shadow-[0_0_8px_1px_rgba(245,158,11,0.6)]" />
+                  Setup required
+                </div>
+                <h2
+                  className="mt-2.5 text-2xl font-bold tracking-[-0.01em] text-app-text"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  Finish setting up protection
+                </h2>
+                <p className="mt-1.5 max-w-md text-[13px] text-app-muted">
+                  We haven&apos;t seen any traffic from your site yet. Add the Marech snippet to start shielding your pages.
+                </p>
+                <Link
+                  href="/snippet"
+                  className="mt-5 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-150 hover:bg-accent-dark active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+                >
+                  <CodeIcon className="h-4 w-4" />
+                  Get your snippet
+                </Link>
+              </>
+            ) : (
+              <>
+                <div className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-mars-rust">
+                  <span className="h-1.5 w-1.5 rounded-full bg-mars-rust shadow-[0_0_8px_1px_rgba(226,86,42,0.7)]" />
+                  Marech control
+                </div>
+                <h2
+                  className="mt-2.5 text-2xl font-bold tracking-[-0.01em] text-app-text"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  Protection active
+                </h2>
+                <p className="mt-1.5 max-w-md text-[13px] text-app-muted">
+                  Your site is shielded across every page. Live telemetry refreshes every 5 seconds.
+                </p>
+                <div className="mt-5 flex flex-wrap items-center gap-x-8 gap-y-3">
+                  <Telemetry label="Uptime" value="99.98%" />
+                  <Telemetry label="Edge regions" value="14" />
+                  <Telemetry label="Throughput" value={`${formatNumber(throughput)}/min`} />
+                </div>
+              </>
+            )}
           </div>
           <MarsSetPieceLazy />
         </div>
@@ -202,19 +233,26 @@ export default function DashboardPage() {
           sub={`${blockRate}% of all traffic`}
         />
         <StatCard
-          icon={<ShieldCheckIcon className="h-[18px] w-[18px]" />}
-          accent="green"
+          icon={showSetup ? <ShieldPlusIcon className="h-[18px] w-[18px]" /> : <ShieldCheckIcon className="h-[18px] w-[18px]" />}
+          accent={showSetup ? "orange" : "green"}
           label="Protection"
           value={
-            <span className="inline-flex items-center gap-2">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-success" />
+            showSetup ? (
+              <span className="inline-flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-full bg-warning" />
+                Pending
               </span>
-              Active
-            </span>
+            ) : (
+              <span className="inline-flex items-center gap-2">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-success" />
+                </span>
+                Active
+              </span>
+            )
           }
-          sub="All pages protected"
+          sub={showSetup ? "Install snippet to activate" : "All pages protected"}
         />
       </div>
 

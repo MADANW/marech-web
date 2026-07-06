@@ -1,8 +1,9 @@
 # Marech Web
 
-Marketing site **and** customer portal for [Marech](https://github.com/MADANW/block-me) —
+Marketing site **and** customer portal for [Marech](https://github.com/MADANW/marech-BD) —
 the AI-scraper protection SaaS. Built with Next.js (App Router) + Tailwind, deployed on **Vercel**.
-It talks to the Marech backend API (hosted on **AWS**) over HTTPS.
+It talks to the Marech backend API (hosted on **AWS**) over HTTPS. **Live** at
+[www.marech.tech](https://www.marech.tech).
 
 ## What's here
 
@@ -48,12 +49,7 @@ npm run dev:demo                 # http://localhost:3001
 
 ## Deploy to Vercel
 
-> **Status (2026-07-05):** this app is already deployed at https://www.marech.tech but
-> the deployed build predates the mock-mode flip and runs in **mock mode** — signup fakes
-> an account in the browser. Going live requires the backend to be reachable over HTTPS,
-> then a **redeploy** of this app (live mode is now the code default; just make sure
-> `NEXT_PUBLIC_MOCK` is unset/`false`-y for Production). The full backend sequence
-> (DNS + TLS + redeploy) is in the backend repo's **GO-LIVE.md**.
+Live in production at https://www.marech.tech against `https://api.marech.tech`.
 
 1. Import this repo in Vercel (framework auto-detected as Next.js).
 2. Add Environment Variables:

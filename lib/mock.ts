@@ -40,6 +40,7 @@ export interface MockAccount {
   platform: string;
   plan: Plan;
   status: AccountStatus;
+  emailVerified: boolean;
   trialDaysLeft: number;
   usageThisMonth: number;
   planLimit: number;
@@ -142,6 +143,7 @@ export const MOCK_ACCOUNT: MockAccount = {
   platform: "WordPress",
   plan: "starter",
   status: "trial",
+  emailVerified: true,
   trialDaysLeft: 5,
   usageThisMonth: 45234,
   planLimit: 100000,

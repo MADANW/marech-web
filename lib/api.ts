@@ -67,6 +67,29 @@ export async function fetchMe() {
   return apiFetch<unknown>("/auth/me");
 }
 
+/** Redeem the email-verification token from the link in the signup email. Public. */
+export async function verifyEmail(token: string) {
+  const res = await fetch(`${BASE}/auth/verify`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token }),
+  });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(body.error ?? "Verification failed");
+  return body as { message: string; user: unknown };
+}
+
+/** Ask the API to send a fresh verification email. Public, rate-limited. */
+export async function resendVerification(email: string) {
+  const res = await fetch(`${BASE}/auth/resend-verification`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+  if (!res.ok) throw new Error("Could not resend verification email");
+  return res.json() as Promise<{ message: string }>;
+}
+
 export async function updateMe(data: { name?: string; websiteUrl?: string; platform?: string }) {
   return apiFetch<unknown>("/auth/me", { method: "PATCH", body: JSON.stringify(data) });
 }

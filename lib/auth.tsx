@@ -1,9 +1,7 @@
 "use client";
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { MOCK_ACCOUNT, type MockAccount } from "./mock";
-import { isMock, fetchMe, loginWithGoogle, getToken, setToken, clearToken } from "./api";
-
-const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://3.144.114.30:3000";
+import { isMock, apiBase as BASE, fetchMe, loginWithGoogle, getToken, setToken, clearToken } from "./api";
 
 interface AuthContextValue {
   user: MockAccount | null;

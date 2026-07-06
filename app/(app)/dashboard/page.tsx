@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   AreaChart,
   Area,
@@ -44,13 +44,27 @@ const QUICK_ACTIONS = [
   { href: "/logs", label: "Export logs", icon: DownloadIcon },
 ];
 
-const TOP_BOTS = [
+// Demo-mode "Top blockers" — live mode derives these from real logs instead.
+const MOCK_TOP_BOTS = [
   { name: "GPTBot", count: 34 },
   { name: "ClaudeBot", count: 21 },
   { name: "CCBot", count: 18 },
   { name: "PerplexityBot", count: 9 },
   { name: "Amazonbot", count: 7 },
 ];
+
+// The backend has no aggregate-stats endpoint yet, so live mode fetches a
+// window of recent logs and derives today's numbers client-side.
+const LIVE_LOG_LIMIT = 200;
+
+function isSameDay(iso: string, ref: Date): boolean {
+  const d = new Date(iso);
+  return (
+    d.getFullYear() === ref.getFullYear() &&
+    d.getMonth() === ref.getMonth() &&
+    d.getDate() === ref.getDate()
+  );
+}
 
 export default function DashboardPage() {
   const toast = useToast();
@@ -64,7 +78,7 @@ export default function DashboardPage() {
         setLogs(generateLogs(20, true));
         return;
       }
-      fetchLogs({ limit: 20 })
+      fetchLogs({ limit: LIVE_LOG_LIMIT })
         .then((res) => {
           setLogs(res.logs as LogEntry[]);
           setLoaded(true);
@@ -83,16 +97,53 @@ export default function DashboardPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const today = WEEK_STATS[WEEK_STATS.length - 1];
-  const yest = WEEK_STATS[WEEK_STATS.length - 2] ?? today;
-  const todayTotal = today.total;
-  const todayBlocked = today.blocked;
-  const blockRate = ((todayBlocked / todayTotal) * 100).toFixed(1);
+  const { todayTotal, todayBlocked, yestTotal, yestBlocked } = useMemo(() => {
+    if (isMock) {
+      const today = WEEK_STATS[WEEK_STATS.length - 1];
+      const yest = WEEK_STATS[WEEK_STATS.length - 2] ?? today;
+      return { todayTotal: today.total, todayBlocked: today.blocked, yestTotal: yest.total, yestBlocked: yest.blocked };
+    }
+    const now = new Date();
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+    const today = logs.filter((l) => isSameDay(l.timestamp, now));
+    const yest = logs.filter((l) => isSameDay(l.timestamp, yesterday));
+    return {
+      todayTotal: today.length,
+      todayBlocked: today.filter((l) => l.action === "block").length,
+      yestTotal: yest.length,
+      yestBlocked: yest.filter((l) => l.action === "block").length,
+    };
+  }, [logs]);
+
+  const topBots = useMemo(() => {
+    if (isMock) return MOCK_TOP_BOTS;
+    const counts = new Map<string, number>();
+    for (const l of logs) {
+      if (l.action !== "block") continue;
+      const name = l.userAgent.split("/")[0];
+      counts.set(name, (counts.get(name) ?? 0) + 1);
+    }
+    return [...counts.entries()]
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5);
+  }, [logs]);
+
+  // Requests per minute over the last hour of fetched logs (mock keeps the
+  // day-average it always showed).
+  const throughput = useMemo(() => {
+    if (isMock) return Math.round(todayTotal / 1440);
+    const hourAgo = Date.now() - 3_600_000;
+    return Math.round(logs.filter((l) => Date.parse(l.timestamp) >= hourAgo).length / 60);
+  }, [logs, todayTotal]);
+
+  const blockRate = todayTotal ? ((todayBlocked / todayTotal) * 100).toFixed(1) : "0.0";
 
   const pctChange = (a: number, b: number) => (b ? ((a - b) / b) * 100 : 0);
-  const reqDelta = pctChange(todayTotal, yest.total);
-  const blkDelta = pctChange(todayBlocked, yest.blocked);
-  const maxTop = Math.max(...TOP_BOTS.map((b) => b.count));
+  const reqDelta = pctChange(todayTotal, yestTotal);
+  const blkDelta = pctChange(todayBlocked, yestBlocked);
+  const maxTop = Math.max(1, ...topBots.map((b) => b.count));
 
   return (
     <div className="p-7 max-w-6xl mx-auto space-y-5">
@@ -124,7 +175,7 @@ export default function DashboardPage() {
             <div className="mt-5 flex flex-wrap items-center gap-x-8 gap-y-3">
               <Telemetry label="Uptime" value="99.98%" />
               <Telemetry label="Edge regions" value="14" />
-              <Telemetry label="Throughput" value={`${formatNumber(Math.round(todayTotal / 1440))}/min`} />
+              <Telemetry label="Throughput" value={`${formatNumber(throughput)}/min`} />
             </div>
           </div>
           <MarsSetPieceLazy />
@@ -138,7 +189,7 @@ export default function DashboardPage() {
           accent="blue"
           label="Requests today"
           value={formatNumber(todayTotal)}
-          trend={{ dir: reqDelta >= 0 ? "up" : "down", value: `${Math.abs(reqDelta).toFixed(1)}%`, goodUp: true }}
+          trend={yestTotal ? { dir: reqDelta >= 0 ? "up" : "down", value: `${Math.abs(reqDelta).toFixed(1)}%`, goodUp: true } : undefined}
           sub="vs. yesterday"
         />
         <StatCard
@@ -147,7 +198,7 @@ export default function DashboardPage() {
           highlight
           label="Bots blocked"
           value={formatNumber(todayBlocked)}
-          trend={{ dir: blkDelta >= 0 ? "up" : "down", value: `${Math.abs(blkDelta).toFixed(1)}%`, goodUp: true }}
+          trend={yestBlocked ? { dir: blkDelta >= 0 ? "up" : "down", value: `${Math.abs(blkDelta).toFixed(1)}%`, goodUp: true } : undefined}
           sub={`${blockRate}% of all traffic`}
         />
         <StatCard
@@ -180,6 +231,14 @@ export default function DashboardPage() {
             </span>
           </div>
         </div>
+        {!isMock ? (
+          <div className="flex h-[210px] flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed border-app-border text-center">
+            <div className="text-[13px] font-medium text-app-muted">Historical charts are coming soon</div>
+            <div className="text-xs text-app-faint">
+              Export your <Link href="/logs" className="text-accent hover:text-accent-dark">traffic logs</Link> for the full history in the meantime.
+            </div>
+          </div>
+        ) : (
         <ResponsiveContainer width="100%" height={210}>
           <AreaChart data={WEEK_STATS} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
             <defs>
@@ -212,6 +271,7 @@ export default function DashboardPage() {
             <Area type="monotone" dataKey="blocked" name="Blocked" stroke={CHART.blocked} strokeWidth={2} fill="url(#fillBlocked)" filter="url(#glowRust)" dot={false} activeDot={{ r: 4, fill: CHART.blocked }} />
           </AreaChart>
         </ResponsiveContainer>
+        )}
       </div>
 
       <div className="grid lg:grid-cols-3 gap-4">
@@ -287,7 +347,10 @@ export default function DashboardPage() {
           <div className="rounded-xl mars-card p-5">
             <h2 className="text-[13.5px] font-semibold text-app-text mb-3.5">Top blockers today</h2>
             <div className="space-y-3">
-              {TOP_BOTS.map((b) => (
+              {topBots.length === 0 && (
+                <div className="text-xs text-app-faint">No blocked bots in your recent traffic yet.</div>
+              )}
+              {topBots.map((b) => (
                 <div key={b.name}>
                   <div className="flex items-center justify-between text-xs mb-1.5">
                     <span className="text-app-muted">{b.name}</span>

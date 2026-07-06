@@ -1,6 +1,9 @@
-const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://3.144.114.30:3000";
+const BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://api.marech.tech";
 
-export const isMock = process.env.NEXT_PUBLIC_MOCK !== "false";
+// Mock mode is opt-in: only NEXT_PUBLIC_MOCK="true" (inlined at build time)
+// shows demo data. Any other value — including unset — talks to the real API,
+// so a missing or mistyped env var can never ship mock data to production.
+export const isMock = process.env.NEXT_PUBLIC_MOCK === "true";
 export const apiBase = BASE;
 
 const TOKEN_KEY = "marech_token";

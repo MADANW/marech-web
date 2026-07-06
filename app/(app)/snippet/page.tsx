@@ -73,11 +73,17 @@ const INSTRUCTIONS: Record<string, { steps: string[]; nav: string }> = {
 export default function SnippetPage() {
   const { user } = useAuth();
   const toast = useToast();
-  const snippetId = user?.snippetId ?? MOCK_ACCOUNT.snippetId;
-  const [platform, setPlatform] = useState(user?.platform ?? MOCK_ACCOUNT.platform);
+  // Demo data only ever backfills in mock mode; live mode waits for the real account.
+  const account = user ?? (isMock ? MOCK_ACCOUNT : null);
+  const [platform, setPlatform] = useState(account?.platform ?? "Custom / Other");
   const [copied, setCopied] = useState(false);
   const [detected, setDetected] = useState(false);
 
+  useEffect(() => {
+    if (account?.platform) setPlatform(account.platform);
+  }, [account?.platform]);
+
+  const snippetId = account?.snippetId ?? "";
   const snippetCode = isMock
     ? `<script src="https://cdn.marech.tech/${snippetId}.js"></script>`
     : `<script src="${snippetUrl(snippetId)}"></script>`;
@@ -94,10 +100,15 @@ export default function SnippetPage() {
     }
   };
 
+  // Demo-only flourish: pretend the snippet was found after a few seconds.
+  // Live mode has no detection endpoint yet, so it must never fake this.
   useEffect(() => {
+    if (!isMock) return;
     const t = setTimeout(() => setDetected(true), 8000);
     return () => clearTimeout(t);
   }, []);
+
+  if (!account) return null;
 
   return (
     <div className="p-7 max-w-2xl mx-auto space-y-5">

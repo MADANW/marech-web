@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAuth } from "@/lib/auth";
+import { isMock } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/marketing/Logo";
 import { OctagonAlertIcon, AlertTriangleIcon, GiftIcon } from "@/components/ui/icons";
@@ -133,6 +134,16 @@ function PortalShell({ children }: { children: React.ReactNode }) {
             </svg>
           </button>
           <div className="flex-1" />
+          {isMock && (
+            <span
+              className="mr-3 inline-flex items-center gap-1.5 rounded-full border border-warning/30 bg-warning/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-warning"
+              style={{ fontFamily: "var(--font-mono)" }}
+              title="This portal is showing demo data (NEXT_PUBLIC_MOCK=true), not your real traffic."
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-warning" />
+              Demo data
+            </span>
+          )}
           <div className="relative">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}

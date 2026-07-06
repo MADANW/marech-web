@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const isMock = process.env.NEXT_PUBLIC_MOCK !== "false";
+// Must mirror `isMock` in lib/api.ts: mock mode is opt-in via NEXT_PUBLIC_MOCK="true".
+const isMock = process.env.NEXT_PUBLIC_MOCK === "true";
 
 export function proxy(req: NextRequest) {
   if (isMock) return NextResponse.next();

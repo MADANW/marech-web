@@ -29,11 +29,12 @@ interface PolicyForm {
 }
 
 export default function PoliciesPage() {
-  const { data: apiData, mutate } = useSWR(
+  const { data: apiData, error, isLoading, mutate } = useSWR(
     isMock ? null : "policies",
     fetchPolicies
   );
-  const [policies, setPolicies] = useState<Policy[]>(MOCK_POLICIES);
+  // Demo policies only seed mock mode; live mode starts empty and fills from the API.
+  const [policies, setPolicies] = useState<Policy[]>(isMock ? MOCK_POLICIES : []);
   const [modalOpen, setModalOpen] = useState(false);
   const [editPolicy, setEditPolicy] = useState<Policy | null>(null);
   const [selectedBotTypes, setSelectedBotTypes] = useState<BotType[]>([]);
@@ -153,7 +154,21 @@ export default function PoliciesPage() {
         }
       />
 
-      {policies.length === 0 && (
+      {!isMock && error && (
+        <Card padding="lg" className="text-center">
+          <h2 className="font-semibold text-app-text mb-1">Couldn&apos;t load policies</h2>
+          <p className="text-app-muted text-sm mb-4">The API didn&apos;t respond. Your policies are safe — try again.</p>
+          <Button variant="secondary" size="sm" className="!rounded-lg" onClick={() => mutate()}>
+            Retry
+          </Button>
+        </Card>
+      )}
+
+      {!isMock && isLoading && !error && (
+        <Card padding="lg" className="text-center text-sm text-app-muted">Loading policies…</Card>
+      )}
+
+      {policies.length === 0 && !(!isMock && (isLoading || error)) && (
         <Card padding="lg" className="text-center">
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-accent/12 text-accent">
             <ShieldPlusIcon className="h-6 w-6" />

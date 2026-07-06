@@ -1,13 +1,25 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/Button";
+import { PlanCta } from "./PlanCta";
+import type { Plan } from "@/lib/mock";
 
 export const metadata = {
   title: "Pricing — Marech",
   description: "Simple, transparent pricing. Start free, upgrade when you're ready.",
 };
 
-const PLANS = [
+const PLANS: {
+  id: Plan;
+  name: string;
+  price: string;
+  period: string;
+  limit: string;
+  sites: string;
+  cta: string;
+  href: string;
+  highlight: boolean;
+  features: string[];
+}[] = [
   {
+    id: "free",
     name: "Free",
     price: "$0",
     period: "/month",
@@ -19,6 +31,7 @@ const PLANS = [
     features: ["Basic dashboard", "Email support (48hr)"],
   },
   {
+    id: "starter",
     name: "Starter",
     price: "$25",
     period: "/month",
@@ -30,6 +43,7 @@ const PLANS = [
     features: ["Full dashboard", "Policy management", "CSV export", "Email support (24hr)"],
   },
   {
+    id: "pro",
     name: "Pro",
     price: "$50",
     period: "/month",
@@ -41,6 +55,7 @@ const PLANS = [
     features: ["Everything in Starter", "Advanced analytics", "Real-time alerts", "API access", "Email + Chat support"],
   },
   {
+    id: "enterprise",
     name: "Enterprise",
     price: "$125",
     period: "/month",
@@ -105,11 +120,7 @@ export default function PricingPage() {
                 ))}
               </ul>
 
-              <Link href={plan.href} className="block">
-                <Button variant={plan.highlight ? "accent" : "secondary"} size="md" className="w-full">
-                  {plan.cta}
-                </Button>
-              </Link>
+              <PlanCta planId={plan.id} cta={plan.cta} href={plan.href} highlight={plan.highlight} />
             </div>
           ))}
         </div>

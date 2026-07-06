@@ -1,13 +1,14 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { GoogleButton } from "@/components/auth/GoogleButton";
 import { Logo } from "@/components/marketing/Logo";
 import { useAuth } from "@/lib/auth";
+import { isMock, startCheckout } from "@/lib/api";
 
 const PLATFORMS = ["Wix", "Squarespace", "Shopify", "WordPress", "Webflow", "Custom / Other"];
 const INDUSTRIES = ["Blog", "E-commerce", "SaaS", "Portfolio", "Other"];
@@ -24,11 +25,16 @@ interface Step2 {
   industry: string;
 }
 
-export default function SignupPage() {
+function SignupForm() {
   const [step, setStep] = useState(1);
   const [step1Data, setStep1Data] = useState<Step1 | null>(null);
   const router = useRouter();
   const { signUp } = useAuth();
+
+  // A paid plan chosen on /pricing before signing up: resume its checkout the
+  // moment the account exists, instead of dropping the user on the dashboard.
+  const planParam = useSearchParams().get("plan");
+  const resumePlan = planParam === "starter" || planParam === "pro" ? planParam : null;
 
   const step1 = useForm<Step1>();
   const step2 = useForm<Step2>({ defaultValues: { platform: PLATFORMS[0], industry: INDUSTRIES[0] } });
@@ -45,6 +51,18 @@ export default function SignupPage() {
   const onStep2 = async (data: Step2) => {
     try {
       await signUp(step1Data!.email, step1Data!.password, data.websiteUrl, data.platform);
+      // Came from a paid plan on /pricing: send them straight to Stripe
+      // Checkout now that they're signed in. (Demo mode can't reach Stripe.)
+      if (resumePlan && !isMock) {
+        try {
+          const { url } = await startCheckout(resumePlan);
+          window.location.href = url;
+          return;
+        } catch {
+          // Checkout couldn't start — fall through to the normal flow below
+          // so the account isn't left in limbo. They can retry from Billing.
+        }
+      }
       // Account is created and logged in, but protection stays inactive
       // until the email is verified — show the "check your email" step.
       setStep(3);
@@ -200,5 +218,14 @@ export default function SignupPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function SignupPage() {
+  // useSearchParams requires a Suspense boundary so the rest of the route can prerender.
+  return (
+    <Suspense fallback={null}>
+      <SignupForm />
+    </Suspense>
   );
 }

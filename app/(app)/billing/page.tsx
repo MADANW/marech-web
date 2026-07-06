@@ -102,11 +102,15 @@ export default function BillingPage() {
             </span>
             <div>
               <h2 className="font-semibold text-app-text mb-1">Payment method</h2>
-              <div className="flex items-center gap-3">
-                <div className="bg-white/[0.08] px-2.5 py-1 rounded text-xs font-mono font-semibold text-app-text">VISA</div>
-                <div className="text-sm text-app-text">•••• 1234</div>
-                <div className="text-sm text-app-faint">Expires 12/25</div>
-              </div>
+              {isMock ? (
+                <div className="flex items-center gap-3">
+                  <div className="bg-white/[0.08] px-2.5 py-1 rounded text-xs font-mono font-semibold text-app-text">VISA</div>
+                  <div className="text-sm text-app-text">•••• 1234</div>
+                  <div className="text-sm text-app-faint">Expires 12/25</div>
+                </div>
+              ) : (
+                <div className="text-sm text-app-muted">Cards are managed securely in the Stripe billing portal.</div>
+              )}
             </div>
           </div>
           <Button variant="secondary" size="sm" className="!rounded-lg" onClick={goToPortal} disabled={portalBusy}>
@@ -120,6 +124,14 @@ export default function BillingPage() {
         <div className="px-5 py-4 border-b border-app-border">
           <h2 className="font-semibold text-app-text">Billing history</h2>
         </div>
+        {!isMock ? (
+          <div className="px-5 py-8 text-center">
+            <p className="text-sm text-app-muted mb-4">Invoices and receipts live in the Stripe billing portal.</p>
+            <Button variant="secondary" size="sm" className="!rounded-lg" onClick={goToPortal} disabled={portalBusy}>
+              {portalBusy ? "Opening…" : "View invoices"}
+            </Button>
+          </div>
+        ) : (
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-app-border bg-app-inset text-left">
@@ -148,6 +160,7 @@ export default function BillingPage() {
             ))}
           </tbody>
         </table>
+        )}
       </Card>
 
       {/* Cancel */}

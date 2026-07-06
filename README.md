@@ -16,12 +16,15 @@ API calls live in `lib/api.ts`. Route gating is in `proxy.ts` (this fork of Next
 
 ## Mock vs. live
 
-The UI runs against **mock data by default** so it's previewable with no backend.
-Set `NEXT_PUBLIC_MOCK=false` to connect to the real API.
+The UI talks to the **real API by default**. Mock (demo) mode is opt-in: set
+`NEXT_PUBLIC_MOCK=true` to run the portal against generated demo data with no backend
+(a "Demo data" pill shows in the portal header so it can't be mistaken for live).
+Any other value — including unset or a typo — means live mode, so a misconfigured
+deploy can never silently ship demo data.
 
 | Env var | Purpose |
 |---|---|
-| `NEXT_PUBLIC_MOCK` | `false` = use the real backend; anything else = mock data |
+| `NEXT_PUBLIC_MOCK` | `true` = demo/mock data; anything else (incl. unset) = real backend |
 | `NEXT_PUBLIC_API_URL` | Backend base URL, e.g. `https://api.marech.tech` |
 | `NEXT_PUBLIC_CDN_URL` | Optional snippet host; defaults to `NEXT_PUBLIC_API_URL` |
 | `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | Google OAuth Web client id (same id the backend verifies) |
@@ -34,26 +37,36 @@ See [`.env.example`](.env.example).
 npm install
 cp .env.example .env.local      # edit values
 
-# Run against mock data:
+# Run against mock/demo data (no backend needed):
+#   set NEXT_PUBLIC_MOCK=true in .env.local
 npm run dev                      # http://localhost:3000
 
 # Run against a local backend (API on :3000), web on :3001:
-#   set NEXT_PUBLIC_MOCK=false and NEXT_PUBLIC_API_URL=http://localhost:3000
+#   leave NEXT_PUBLIC_MOCK unset and set NEXT_PUBLIC_API_URL=http://localhost:3000
 npm run dev:demo                 # http://localhost:3001
 ```
 
 ## Deploy to Vercel
 
 > **Status (2026-07-05):** this app is already deployed at https://www.marech.tech but
-> runs in **mock mode** — signup fakes an account in the browser. Flipping to live mode
-> requires the backend to be reachable over HTTPS first. The full sequence (backend DNS +
-> TLS + redeploy, then the Vercel env flip below) is in the backend repo's **GO-LIVE.md**.
+> the deployed build predates the mock-mode flip and runs in **mock mode** — signup fakes
+> an account in the browser. Going live requires the backend to be reachable over HTTPS,
+> then a **redeploy** of this app (live mode is now the code default; just make sure
+> `NEXT_PUBLIC_MOCK` is unset/`false`-y for Production). The full backend sequence
+> (DNS + TLS + redeploy) is in the backend repo's **GO-LIVE.md**.
 
 1. Import this repo in Vercel (framework auto-detected as Next.js).
-2. Add Environment Variables (Production + Preview):
-   - `NEXT_PUBLIC_MOCK=false`
-   - `NEXT_PUBLIC_API_URL=https://api.marech.tech`
-   - `NEXT_PUBLIC_GOOGLE_CLIENT_ID=<your-google-web-client-id>`
+2. Add Environment Variables:
+   - **Production**: `NEXT_PUBLIC_API_URL=https://api.marech.tech` and
+     `NEXT_PUBLIC_GOOGLE_CLIENT_ID=<your-google-web-client-id>`. Do **not** set
+     `NEXT_PUBLIC_MOCK` — live mode is the default.
+   - **Preview** (optional): `NEXT_PUBLIC_MOCK=true` if you want preview deploys to run
+     against demo data with no backend.
+
+   > `NEXT_PUBLIC_*` values are **inlined at build time** — changing them in the
+   > dashboard does nothing to an existing deployment. After adding or editing one,
+   > redeploy, and double-check the variable is enabled for the environment
+   > (Production/Preview) you're testing.
 3. Deploy. Add your custom domain(s) (e.g. `marech.tech`, `app.marech.tech`).
 4. In the **backend**, add your Vercel domains to `CORS_ORIGINS` so the browser
    can call the API. See the backend repo's `DEPLOY.md` and `INTEGRATION.md`.

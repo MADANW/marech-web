@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 
-const SNIPPET_PLACEHOLDER = `<script src="https://cdn.marech.tech/marech.js" data-key="YOUR_KEY"></script>`;
+const SNIPPET_PLACEHOLDER = `<script src="https://cdn.marech.tech/YOUR_SNIPPET_ID.js"></script>`;
 
 const AI_PROMPTS = [
   {
@@ -59,7 +59,7 @@ const STEPS = [
   },
   {
     title: "Upload and deploy",
-    body: "Save your files and redeploy your site. Marech starts blocking AI scrapers immediately.",
+    body: "Save your files and redeploy your site. Marech immediately starts monitoring traffic in your dashboard.",
   },
 ];
 
@@ -77,8 +77,20 @@ export default function HtmlPage() {
             Marech for Any HTML Site
           </h1>
           <p className="text-white/60 text-lg">
-            Running a custom-built or static HTML site? Marech works anywhere you can add a script tag.
+            Running a custom-built or static HTML site? Paste one script tag to monitor AI-scraper
+            traffic — and because you control your own hosting, you can turn on real edge blocking too.
           </p>
+        </div>
+
+        {/* Honesty callout: the script monitors; enforcement blocks. */}
+        <div className="mars-card--marketing rounded-xl p-5 text-sm text-white/60 border-l-2 border-mars-ember/50">
+          <span className="font-semibold text-white">Monitoring vs. blocking:</span> the pasted
+          snippet reports traffic and overlays JS-running bots, but non-JS scrapers never run it.
+          To actually block them, add a server-side integration in front of your site — an{" "}
+          <span className="text-white/80">nginx proxy</span>,{" "}
+          <span className="text-white/80">Cloudflare Worker</span>, or{" "}
+          <span className="text-white/80">Vercel middleware</span> that checks each request with a
+          Marech API key. See the <Link href="/docs" className="text-accent hover:underline">integration guides</Link>.
         </div>
 
         {/* Steps */}

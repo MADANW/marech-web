@@ -145,6 +145,34 @@ export async function deletePolicy(id: number | string) {
   return apiFetch<unknown>(`/v1/policies/${id}`, { method: "DELETE" });
 }
 
+/* ----------------------------- API keys ----------------------------- */
+// Keys authenticate the server-side enforcement integrations (nginx proxy,
+// Cloudflare Worker, WordPress plugin) that call POST /v1/enforce. The raw
+// key is returned by the backend only once, at creation.
+
+export interface ApiKey {
+  id: number;
+  name: string;
+  siteUrl: string | null;
+  createdAt: string;
+  revoked: boolean;
+}
+
+export async function listKeys() {
+  return apiFetch<{ keys: ApiKey[] }>("/v1/keys");
+}
+
+export async function createKey(name: string, siteUrl?: string) {
+  return apiFetch<{ id: number; key: string; name: string; message: string }>("/v1/keys", {
+    method: "POST",
+    body: JSON.stringify({ name, ...(siteUrl ? { siteUrl } : {}) }),
+  });
+}
+
+export async function revokeKey(id: number) {
+  return apiFetch<{ message: string }>(`/v1/keys/${id}`, { method: "DELETE" });
+}
+
 /* ----------------------------- billing (Stripe) ----------------------------- */
 
 /** Start Stripe Checkout for a plan; returns a URL to redirect the user to. */

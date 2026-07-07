@@ -113,8 +113,8 @@ export default function SnippetPage() {
   return (
     <div className="p-7 max-w-2xl mx-auto space-y-5">
       <PageHeader
-        title="Your protection code"
-        subtitle="Copy this snippet and paste it into your website's <head> section"
+        title="Your monitoring snippet"
+        subtitle="Paste this into your site's <head> to see traffic in your dashboard"
       />
 
       {detected && (
@@ -123,11 +123,24 @@ export default function SnippetPage() {
             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
           </svg>
           <div>
-            <div className="font-semibold text-success text-sm">Installation detected</div>
-            <div className="text-success/80 text-xs">Protection is now active on your site.</div>
+            <div className="font-semibold text-success text-sm">Snippet detected</div>
+            <div className="text-success/80 text-xs">Monitoring is active — traffic will appear in your dashboard.</div>
           </div>
         </div>
       )}
+
+      {/* Honest framing: the snippet monitors; blocking is server-side. */}
+      <div className="bg-warning/10 border border-warning/25 rounded-xl px-5 py-4 text-[13px] text-app-muted">
+        <div className="font-semibold text-app-text mb-1">This snippet monitors — it doesn&apos;t block scrapers on its own</div>
+        <p>
+          It runs in a visitor&apos;s browser <em>after</em> your page loads, so it reports traffic
+          and can overlay JS-running bots — but non-JS scrapers (curl, python-requests, GPTBot…)
+          never run it. To actually <span className="text-app-text">block</span> them, set up a
+          server-side integration (Cloudflare Worker, WordPress plugin, or nginx proxy) with an{" "}
+          <a href="/keys" className="text-accent hover:underline">API key</a> and a{" "}
+          <a href="/policies" className="text-accent hover:underline">block policy</a>.
+        </p>
+      </div>
 
       {/* Code block */}
       <Card padding="none" className="overflow-hidden">

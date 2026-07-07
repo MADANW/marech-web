@@ -15,7 +15,7 @@ export function Footer() {
               Marech
             </div>
             <p className="text-sm leading-relaxed">
-              Stop AI scrapers from stealing your content. 30-second setup, zero maintenance.
+              Stop AI scrapers from stealing your content. Monitor in seconds; block them at the edge.
             </p>
           </div>
 

@@ -47,6 +47,16 @@ export function PlatformPage({ name, headline, subheadline, steps }: PlatformPag
           </div>
         </div>
 
+        {/* Honesty callout: the snippet monitors; real blocking is server-side. */}
+        <div className="mars-card--marketing rounded-xl p-5 mb-14 text-sm text-white/60 border-l-2 border-mars-ember/50">
+          <span className="font-semibold text-white">Monitoring vs. blocking:</span> the snippet
+          above reports traffic to your dashboard and overlays JS-running bots — but non-JS
+          scrapers (curl, GPTBot…) never run it. Whether you can fully <span className="text-white/80">block</span> them
+          depends on your platform: WordPress, custom, Vercel/Netlify and Cloudflare-fronted sites
+          can, via a server-side integration; fully hosted builders (Wix, Squarespace) can only
+          monitor. See the <Link href="/docs" className="text-accent hover:underline">integration guides</Link>.
+        </div>
+
         {/* Video placeholder */}
         <div className="mars-card--marketing rounded-2xl aspect-video flex items-center justify-center mb-14">
           <div className="text-center">

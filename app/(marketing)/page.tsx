@@ -10,7 +10,7 @@ import { CheckIcon, ActivityIcon, ZapIcon } from "@/components/ui/icons";
 
 export const metadata = {
   title: "Marech — Stop AI from Stealing Your Content",
-  description: "Block ChatGPT, Claude, and other AI scrapers in 30 seconds. No code required.",
+  description: "See AI scrapers hitting your site in minutes, then block ChatGPT, Claude, GPTBot and more at the edge with a drop-in integration.",
 };
 
 const PAD = "px-6 sm:px-10 lg:px-16";
@@ -34,8 +34,9 @@ export default function LandingPage() {
               <span className="text-mars-ember">strike.</span>
             </h1>
             <p className="text-lg text-white/60 max-w-md mb-8 leading-relaxed">
-              Block ChatGPT, Claude, and every AI scraper in under 2 minutes.
-              One snippet. Zero maintenance. Full visibility.
+              Drop in one snippet to see every AI scraper hitting your site.
+              Add the edge integration to block them for real — GPTBot, ChatGPT,
+              Claude, and more.
             </p>
             <div className="flex flex-wrap gap-3 mb-8">
               <Link href="/signup">
@@ -131,7 +132,7 @@ export default function LandingPage() {
           >
             Built to be invisible.
             <br />
-            Impossible to bypass.
+            Enforced at the edge.
           </h2>
         </FadeIn>
 
@@ -153,9 +154,10 @@ export default function LandingPage() {
             <div className="mars-card--marketing rounded-2xl p-6 h-full min-h-[300px] flex flex-col justify-between">
               <div>
                 <span className="text-eyebrow text-white/25">02</span>
-                <h3 className="text-xl font-semibold text-white mt-2 mb-2">Instant block</h3>
+                <h3 className="text-xl font-semibold text-white mt-2 mb-2">Real blocking</h3>
                 <p className="text-sm text-white/50 leading-relaxed">
-                  Bots hit a 403 before they read a single character of your content.
+                  With the edge integration (Cloudflare Worker, WordPress plugin, or
+                  proxy), bots hit a 403 before they read a single character.
                 </p>
               </div>
               <div className="mt-6 space-y-2">
@@ -173,9 +175,10 @@ export default function LandingPage() {
             <div className="mars-card--marketing rounded-2xl p-6 h-full min-h-[260px] flex flex-col justify-between">
               <div>
                 <span className="text-eyebrow text-white/25">03</span>
-                <h3 className="text-xl font-semibold text-white mt-2 mb-2">30-second setup</h3>
+                <h3 className="text-xl font-semibold text-white mt-2 mb-2">30-second monitoring</h3>
                 <p className="text-sm text-white/50 leading-relaxed">
-                  Copy one line of JavaScript. Paste into your site header. Done.
+                  Copy one line of JavaScript, paste it in your header, and watch
+                  the traffic roll in. Blocking is a second step.
                 </p>
               </div>
               <div
@@ -330,13 +333,13 @@ const STATS: { value: number; suffix: string; label: string; decimals?: number }
 const FEATURES = [
   {
     icon: <CheckIcon className="w-5 h-5" />,
-    title: "30-Second Setup",
-    body: "Copy one line of JavaScript, paste into your site header. Works on Wix, Shopify, WordPress, Squarespace — anywhere.",
+    title: "Monitoring in 30 Seconds",
+    body: "Copy one line of JavaScript into your site header — works anywhere — and see the AI scrapers hitting you in your dashboard.",
   },
   {
     icon: <ActivityIcon className="w-5 h-5" />,
-    title: "Real-Time Blocking",
-    body: "See every bot blocked as it hits. Live dashboard shows confidence score, IP, path, and bot type.",
+    title: "Real Edge Blocking",
+    body: "Add the Cloudflare Worker, WordPress plugin, or proxy and scrapers get a 403 before your content loads — even non-JS bots the script can't stop.",
   },
   {
     icon: <ZapIcon className="w-5 h-5" />,

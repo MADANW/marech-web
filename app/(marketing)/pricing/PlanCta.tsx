@@ -17,12 +17,10 @@ import type { Plan } from "@/lib/mock";
 export function PlanCta({
   planId,
   cta,
-  href,
   highlight,
 }: {
   planId: Plan;
   cta: string;
-  href: string;
   highlight: boolean;
 }) {
   const { user } = useAuth();
@@ -30,15 +28,6 @@ export function PlanCta({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const variant = highlight ? "accent" : "secondary";
-
-  // Enterprise is a sales conversation — keep the mailto link as-is.
-  if (planId === "enterprise") {
-    return (
-      <a href={href} className="block">
-        <Button variant={variant} size="md" className="w-full">{cta}</Button>
-      </a>
-    );
-  }
 
   // Free plan: nothing to pay for. Existing users land on their dashboard;
   // everyone else signs up.
@@ -50,7 +39,7 @@ export function PlanCta({
     );
   }
 
-  // Paid, self-serve plans (Starter / Pro).
+  // Paid, self-serve plans (Starter / Pro / Enterprise).
   const subscribe = async () => {
     // Not signed in yet: carry the chosen plan through signup so checkout can
     // resume the moment the account exists — no bounce back to pricing.

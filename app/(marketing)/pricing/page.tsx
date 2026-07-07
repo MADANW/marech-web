@@ -14,7 +14,6 @@ const PLANS: {
   limit: string;
   sites: string;
   cta: string;
-  href: string;
   highlight: boolean;
   features: string[];
 }[] = [
@@ -26,7 +25,6 @@ const PLANS: {
     limit: "1,000 requests/mo",
     sites: "1 website",
     cta: "Start Free",
-    href: "/signup",
     highlight: false,
     features: ["Basic dashboard", "Email support (48hr)"],
   },
@@ -38,7 +36,6 @@ const PLANS: {
     limit: "100K requests/mo",
     sites: "3 websites",
     cta: "Start Free Trial",
-    href: "/signup",
     highlight: true,
     features: ["Full dashboard", "Policy management", "CSV export", "Email support (24hr)"],
   },
@@ -50,7 +47,6 @@ const PLANS: {
     limit: "1M requests/mo",
     sites: "10 websites",
     cta: "Start Free Trial",
-    href: "/signup",
     highlight: false,
     features: ["Everything in Starter", "Advanced analytics", "Real-time alerts", "API access", "Email + Chat support"],
   },
@@ -61,8 +57,7 @@ const PLANS: {
     period: "/month",
     limit: "Unlimited requests",
     sites: "Unlimited websites",
-    cta: "Contact Sales",
-    href: "mailto:hello@marech.tech",
+    cta: "Start Free Trial",
     highlight: false,
     features: ["Everything in Pro", "Custom integration", "SLA guarantee", "Priority support", "Dedicated account manager"],
   },
@@ -120,7 +115,7 @@ export default function PricingPage() {
                 ))}
               </ul>
 
-              <PlanCta planId={plan.id} cta={plan.cta} href={plan.href} highlight={plan.highlight} />
+              <PlanCta planId={plan.id} cta={plan.cta} highlight={plan.highlight} />
             </div>
           ))}
         </div>

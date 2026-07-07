@@ -34,7 +34,8 @@ function SignupForm() {
   // A paid plan chosen on /pricing before signing up: resume its checkout the
   // moment the account exists, instead of dropping the user on the dashboard.
   const planParam = useSearchParams().get("plan");
-  const resumePlan = planParam === "starter" || planParam === "pro" ? planParam : null;
+  const resumePlan =
+    planParam === "starter" || planParam === "pro" || planParam === "enterprise" ? planParam : null;
 
   const step1 = useForm<Step1>();
   const step2 = useForm<Step2>({ defaultValues: { platform: PLATFORMS[0], industry: INDUSTRIES[0] } });

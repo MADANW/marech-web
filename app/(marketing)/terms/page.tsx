@@ -26,6 +26,13 @@ export default function TermsPage() {
         </p>
       </div>
 
+      <div className="mars-card--marketing rounded-xl p-5 mb-10 text-sm text-white/60 border-l-2 border-mars-ember/50">
+        <span className="font-semibold text-white">Template — not legal advice.</span> These terms are a
+        starting point drafted for {COMPANY} and have <span className="text-white/80">not</span> been
+        reviewed by an attorney. Have qualified counsel confirm the entity, governing law, liability caps,
+        refund terms, and consumer-law requirements for your markets before relying on them.
+      </div>
+
       <div className="mars-card--marketing rounded-2xl p-8 sm:p-10 prose prose-invert prose-sm max-w-none space-y-10 text-white/70 leading-relaxed">
 
         <Section title="1. Acceptance of Terms">
@@ -40,8 +47,15 @@ export default function TermsPage() {
           <p>
             {COMPANY} provides a bot detection and blocking service that allows website
             owners to identify and restrict access from AI web scrapers, crawlers, and
-            automated agents. The Service includes a JavaScript snippet, a management
-            dashboard, analytics, and related tooling.
+            automated agents. The Service includes a JavaScript monitoring snippet, optional
+            server-side enforcement integrations (Cloudflare Worker, WordPress plugin, Vercel
+            middleware, or nginx proxy), a management dashboard, analytics, and related tooling.
+          </p>
+          <p>
+            Detection is heuristic and enforcement is best-effort: the enforcement integrations
+            are designed to <strong className="text-white">fail open</strong> (allow traffic) if the
+            Service is unavailable, so we do not guarantee that every bot is blocked or that
+            legitimate traffic is never affected. See Sections 10&ndash;11.
           </p>
         </Section>
 
@@ -109,6 +123,13 @@ export default function TermsPage() {
             Your use of the Service is also governed by our Privacy Policy, which is
             incorporated into these Terms by reference. By using the Service you
             consent to the data practices described therein.
+          </p>
+          <p>
+            Where {COMPANY} processes personal data of your website&rsquo;s visitors on your
+            behalf, it does so as your <strong className="text-white">processor</strong>. Business
+            customers may request a Data Processing Agreement (DPA) at {CONTACT_EMAIL}. You are
+            responsible for providing lawful notice to, and obtaining any required consent from,
+            your own visitors.
           </p>
         </Section>
 

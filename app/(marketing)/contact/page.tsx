@@ -8,9 +8,9 @@ export const metadata = {
 const PAD = "px-6 sm:px-10 lg:px-16";
 
 const CHANNELS = [
-  { label: "Support", body: "Setup help, billing, and account questions.", email: "support@marech.tech" },
-  { label: "Sales", body: "Enterprise plans, volume pricing, and custom integrations.", email: "sales@marech.tech" },
-  { label: "Security", body: "Report a vulnerability or a security concern.", email: "security@marech.tech" },
+  { label: "Support", body: "Setup help, billing, and account questions.", email: "mohamed@muhsinai.com" },
+  { label: "Sales", body: "Enterprise plans, volume pricing, and custom integrations.", email: "mohamed@muhsinai.com" },
+  { label: "Security", body: "Report a vulnerability or a security concern.", email: "mohamed@muhsinai.com" },
 ];
 
 export default function ContactPage() {

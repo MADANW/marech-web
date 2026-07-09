@@ -3,10 +3,10 @@ export const metadata = {
   description: "Marech Terms of Service",
 };
 
-const LAST_UPDATED = "June 21, 2026";
-const EFFECTIVE_DATE = "June 21, 2026";
+const LAST_UPDATED = "July 9, 2026";
+const EFFECTIVE_DATE = "July 9, 2026";
 const COMPANY = "Marech";
-const CONTACT_EMAIL = "legal@marech.tech";
+const CONTACT_EMAIL = "mohamed@muhsinai.com";
 
 export default function TermsPage() {
   return (
@@ -55,11 +55,21 @@ export default function TermsPage() {
             Detection is heuristic and enforcement is best-effort: the enforcement integrations
             are designed to <strong className="text-white">fail open</strong> (allow traffic) if the
             Service is unavailable, so we do not guarantee that every bot is blocked or that
-            legitimate traffic is never affected. See Sections 10&ndash;11.
+            legitimate traffic is never affected. See Sections 8&ndash;9.
           </p>
         </Section>
 
-        <Section title="3. Eligibility">
+        <Section title="3. Definitions">
+          <ul>
+            <li><strong className="text-white">&ldquo;Snippet&rdquo;</strong> — the JavaScript code you embed on your website for monitoring.</li>
+            <li><strong className="text-white">&ldquo;Enforcement Integration&rdquo;</strong> — any server-side or edge component (reverse proxy, Cloudflare Worker, WordPress plugin, or middleware) that calls the Service to block traffic before your content is served.</li>
+            <li><strong className="text-white">&ldquo;API Key&rdquo;</strong> — a credential (prefixed <code className="text-white/80">bm_</code>) that authenticates an Enforcement Integration to the Service on your behalf.</li>
+            <li><strong className="text-white">&ldquo;Policy&rdquo;</strong> — the rules you configure in the dashboard (by bot type, path, or IP range) that determine whether traffic is allowed, blocked, or logged.</li>
+            <li><strong className="text-white">&ldquo;Visitor&rdquo;</strong> — any person or automated client that requests content from your website.</li>
+          </ul>
+        </Section>
+
+        <Section title="4. Eligibility">
           <p>
             You must be at least 18 years old and have the legal authority to enter
             into these Terms on behalf of yourself or the organization you represent.
@@ -67,7 +77,7 @@ export default function TermsPage() {
           </p>
         </Section>
 
-        <Section title="4. Account Registration">
+        <Section title="5. Account Registration">
           <p>
             You must provide accurate and complete information when creating an account.
             You are responsible for maintaining the confidentiality of your credentials
@@ -76,7 +86,7 @@ export default function TermsPage() {
           </p>
         </Section>
 
-        <Section title="5. Acceptable Use">
+        <Section title="6. Acceptable Use">
           <p>You agree not to use the Service to:</p>
           <ul>
             <li>Block legitimate human users or accessibility tools</li>
@@ -88,12 +98,47 @@ export default function TermsPage() {
           </ul>
         </Section>
 
-        <Section title="6. Subscription and Billing">
+        <Section title="7. Bot Detection Accuracy; No Guarantee">
+          <p>
+            Bot detection is based on heuristics (known scraper signatures, header analysis, IP
+            reputation) and the Policies you configure. Heuristic detection can produce{" "}
+            <strong className="text-white">false positives</strong> (blocking a legitimate Visitor)
+            and <strong className="text-white">false negatives</strong> (allowing an automated
+            client through). We do not warrant that the Service will detect or block all bots, or
+            that it will never affect legitimate traffic.
+          </p>
+          <p>
+            You are responsible for reviewing your traffic logs and configuring Policies
+            appropriately for your website, including any legal obligations you have to admit
+            specific automated agents (e.g. accessibility tools or search engine crawlers you rely
+            on for discoverability). Enforcement Integrations fail open — if the Service is
+            unreachable or slow, traffic is allowed through rather than blocked, so protection may
+            lapse during an outage on our end.
+          </p>
+        </Section>
+
+        <Section title="8. API Keys and Integrations">
+          <p>
+            You are responsible for safeguarding your API Keys and for revoking any key you believe
+            has been compromised. You are responsible for how you configure and deploy Enforcement
+            Integrations on your own infrastructure or on third-party platforms (e.g. Cloudflare,
+            WordPress, Vercel, Shopify), including keeping them updated. {COMPANY} is not responsible
+            for the availability, security, or configuration of third-party platforms outside our
+            control.
+          </p>
+        </Section>
+
+        <Section title="9. Subscription and Billing">
           <p>
             The Service is offered on a subscription basis. Fees are billed in advance
-            on a monthly or annual cycle as selected at checkout. All fees are
-            non-refundable except as required by law or as described in our refund
-            policy. We reserve the right to change pricing with 30 days&rsquo; notice.
+            on a monthly or annual cycle as selected at checkout. We reserve the right to change
+            pricing with 30 days&rsquo; notice.
+          </p>
+          <p>
+            Fees are generally non-refundable. However, if you are not satisfied within the first{" "}
+            <strong className="text-white">30 days after your first payment</strong>, contact us at{" "}
+            {CONTACT_EMAIL} for a full refund of that payment. Refunds outside this window are
+            granted at our discretion or as required by law.
           </p>
           <p>
             Failure to pay may result in suspension or termination of your account.
@@ -101,7 +146,7 @@ export default function TermsPage() {
           </p>
         </Section>
 
-        <Section title="7. Free Trial">
+        <Section title="10. Free Trial">
           <p>
             We may offer a free trial period. No charge is applied during the trial.
             At the end of the trial, your account will be charged the applicable
@@ -109,7 +154,15 @@ export default function TermsPage() {
           </p>
         </Section>
 
-        <Section title="8. Intellectual Property">
+        <Section title="11. Beta and Experimental Features">
+          <p>
+            From time to time we may offer features labeled beta, preview, or experimental. These
+            are provided &ldquo;as is,&rdquo; may change or be discontinued at any time, and are
+            excluded from any uptime or accuracy expectations that otherwise apply to the Service.
+          </p>
+        </Section>
+
+        <Section title="12. Intellectual Property">
           <p>
             {COMPANY} retains all rights, title, and interest in the Service,
             including all software, algorithms, and brand assets. These Terms do not
@@ -118,7 +171,7 @@ export default function TermsPage() {
           </p>
         </Section>
 
-        <Section title="9. Data and Privacy">
+        <Section title="13. Data and Privacy">
           <p>
             Your use of the Service is also governed by our Privacy Policy, which is
             incorporated into these Terms by reference. By using the Service you
@@ -126,42 +179,45 @@ export default function TermsPage() {
           </p>
           <p>
             Where {COMPANY} processes personal data of your website&rsquo;s visitors on your
-            behalf, it does so as your <strong className="text-white">processor</strong>. Business
-            customers may request a Data Processing Agreement (DPA) at {CONTACT_EMAIL}. You are
+            behalf, it does so as your <strong className="text-white">processor</strong> under the{" "}
+            <a href="/dpa" className="text-accent hover:underline">Data Processing Agreement</a>,
+            which is incorporated into these Terms by reference for paid/trial Customers. You are
             responsible for providing lawful notice to, and obtaining any required consent from,
             your own visitors.
           </p>
         </Section>
 
-        <Section title="10. Disclaimer of Warranties">
+        <Section title="14. Disclaimer of Warranties">
           <p>
             THE SERVICE IS PROVIDED &ldquo;AS IS&rdquo; WITHOUT WARRANTY OF ANY KIND.
             {COMPANY} EXPRESSLY DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED,
             INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
             AND NON-INFRINGEMENT. WE DO NOT WARRANT THAT THE SERVICE WILL BE
-            UNINTERRUPTED, ERROR-FREE, OR THAT ALL AI BOTS WILL BE BLOCKED.
+            UNINTERRUPTED, ERROR-FREE, OR THAT ALL BOTS WILL BE BLOCKED (SEE SECTION 7).
           </p>
         </Section>
 
-        <Section title="11. Limitation of Liability">
+        <Section title="15. Limitation of Liability">
           <p>
             TO THE MAXIMUM EXTENT PERMITTED BY LAW, {COMPANY} SHALL NOT BE LIABLE
             FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE
             DAMAGES, OR LOSS OF PROFITS OR REVENUES, WHETHER INCURRED DIRECTLY OR
-            INDIRECTLY. OUR TOTAL LIABILITY SHALL NOT EXCEED THE FEES PAID BY YOU
+            INDIRECTLY, INCLUDING DAMAGES ARISING FROM BLOCKED LEGITIMATE TRAFFIC OR
+            UNBLOCKED BOT TRAFFIC. OUR TOTAL LIABILITY SHALL NOT EXCEED THE FEES PAID BY YOU
             IN THE 12 MONTHS PRECEDING THE CLAIM.
           </p>
         </Section>
 
-        <Section title="12. Indemnification">
+        <Section title="16. Indemnification">
           <p>
             You agree to indemnify and hold harmless {COMPANY} and its officers,
             directors, employees, and agents from any claims, damages, or expenses
-            arising from your use of the Service or violation of these Terms.
+            arising from your use of the Service, your Policy configuration, or your
+            violation of these Terms.
           </p>
         </Section>
 
-        <Section title="13. Termination">
+        <Section title="17. Termination">
           <p>
             Either party may terminate this agreement at any time. You may cancel
             your subscription through your dashboard. We may suspend or terminate
@@ -170,7 +226,7 @@ export default function TermsPage() {
           </p>
         </Section>
 
-        <Section title="14. Governing Law">
+        <Section title="18. Governing Law">
           <p>
             These Terms are governed by the laws of the State of Delaware, United
             States, without regard to conflict of law principles. Any disputes shall
@@ -178,7 +234,47 @@ export default function TermsPage() {
           </p>
         </Section>
 
-        <Section title="15. Changes to Terms">
+        <Section title="19. Force Majeure">
+          <p>
+            Neither party is liable for delay or failure to perform resulting from causes
+            outside its reasonable control, including acts of God, natural disaster, war,
+            terrorism, labor disputes, internet or utility failures, or governmental action.
+          </p>
+        </Section>
+
+        <Section title="20. Export Compliance">
+          <p>
+            You may not use the Service in violation of U.S. export control or sanctions laws,
+            or if you are located in, or ordinarily resident in, a country subject to a U.S.
+            government embargo, or are on any U.S. government restricted-party list.
+          </p>
+        </Section>
+
+        <Section title="21. Assignment">
+          <p>
+            You may not assign or transfer these Terms without our prior written consent. We may
+            assign these Terms in connection with a merger, acquisition, or sale of assets.
+          </p>
+        </Section>
+
+        <Section title="22. Severability">
+          <p>
+            If any provision of these Terms is found unenforceable, the remaining provisions
+            remain in full force and effect, and the unenforceable provision will be modified to
+            the minimum extent necessary to make it enforceable.
+          </p>
+        </Section>
+
+        <Section title="23. Entire Agreement; Notices">
+          <p>
+            These Terms, together with the Privacy Policy and (where applicable) the Data
+            Processing Agreement, constitute the entire agreement between you and {COMPANY}
+            regarding the Service. Notices to you may be sent to the email on your account; notices
+            to us should be sent to {CONTACT_EMAIL}.
+          </p>
+        </Section>
+
+        <Section title="24. Changes to Terms">
           <p>
             We may update these Terms at any time. Material changes will be communicated
             via email or an in-app notice at least 14 days before taking effect.
@@ -186,7 +282,7 @@ export default function TermsPage() {
           </p>
         </Section>
 
-        <Section title="16. Contact">
+        <Section title="25. Contact">
           <p>
             Questions about these Terms? Contact us at{" "}
             <a href={`mailto:${CONTACT_EMAIL}`} className="text-accent hover:underline">

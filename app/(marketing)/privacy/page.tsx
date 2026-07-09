@@ -6,7 +6,7 @@ export const metadata = {
 const LAST_UPDATED = "June 21, 2026";
 const EFFECTIVE_DATE = "June 21, 2026";
 const COMPANY = "Marech";
-const CONTACT_EMAIL = "privacy@marech.tech";
+const CONTACT_EMAIL = "mohamed@muhsinai.com";
 
 export default function PrivacyPage() {
   return (
@@ -117,8 +117,11 @@ export default function PrivacyPage() {
           </p>
           <p>
             Business customers who need a <strong className="text-white">Data Processing Agreement (DPA)</strong>{" "}
-            (including EU Standard Contractual Clauses and the subprocessor list below) can request one at{" "}
-            <a href={`mailto:${CONTACT_EMAIL}`} className="text-accent hover:underline">{CONTACT_EMAIL}</a>.
+            (including EU Standard Contractual Clauses and the subprocessor list below) can read the{" "}
+            <a href="/dpa" className="text-accent hover:underline">Data Processing Agreement</a> — it&rsquo;s
+            incorporated into these Terms for paid/trial Customers automatically. Email{" "}
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-accent hover:underline">{CONTACT_EMAIL}</a>{" "}
+            for a countersigned copy.
           </p>
         </Section>
 
@@ -128,10 +131,11 @@ export default function PrivacyPage() {
             put you under that provider&rsquo;s policies — they process data on our behalf under contract:
           </p>
           <ul>
-            <li><strong className="text-white">Amazon Web Services (AWS)</strong> — cloud hosting & database (United States)</li>
+            <li><strong className="text-white">Amazon Web Services (AWS)</strong> — cloud hosting & database for the API (United States)</li>
+            <li><strong className="text-white">Vercel</strong> — hosting for this website and the customer dashboard (United States)</li>
             <li><strong className="text-white">Stripe</strong> — payment processing (we never store raw card numbers)</li>
             <li><strong className="text-white">Google</strong> — &ldquo;Sign in with Google&rdquo; authentication (only if you use it)</li>
-            <li><strong className="text-white">Email delivery provider</strong> — transactional email (verification, receipts, alerts)</li>
+            <li><strong className="text-white">Resend</strong> — transactional email delivery (verification, receipts, alerts)</li>
           </ul>
           <p>We also disclose data when:</p>
           <ul>

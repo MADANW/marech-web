@@ -223,9 +223,10 @@ export default function TermsPage() {
 
         <Section title="18. Governing Law">
           <p>
-            These Terms are governed by the laws of the State of Delaware, United
+            These Terms are governed by the laws of the State of Minnesota, United
             States, without regard to conflict of law principles. Any disputes shall
-            be resolved exclusively in the state or federal courts located in Delaware.
+            be resolved exclusively in the state or federal courts located in
+            Hennepin County, Minnesota.
           </p>
         </Section>
 

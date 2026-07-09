@@ -242,7 +242,7 @@ export default function PrivacyPage() {
             </a>
           </p>
           <p className="text-white/40 text-sm mt-2">
-            Marech · Privacy Team · Delaware, USA
+            Marech · Minneapolis, MN, USA
           </p>
         </Section>
 

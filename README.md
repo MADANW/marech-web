@@ -7,9 +7,12 @@ It talks to the Marech backend API (hosted on **AWS**) over HTTPS. **Live** at
 
 ## What's here
 
-- **Marketing** (`app/(marketing)`) — landing, pricing, platform pages, login.
+- **Marketing** (`app/(marketing)`) — landing, pricing, platform pages, how-it-works,
+  docs, contact, login, and legal (privacy, terms, DPA).
 - **Auth** (`app/(auth)`) — multi-step signup, plus **Google sign-in**.
-- **Customer portal** (`app/(app)`) — dashboard, traffic logs, policies, snippet, account, billing.
+- **Customer portal** (`app/(app)`) — dashboard, traffic logs, policies, snippet,
+  **API keys** (the `bm_` keys the server-side enforcement integrations authenticate
+  with; raw key shown once at creation), account, billing.
 
 Auth state lives in `lib/auth.tsx` (`AuthProvider`, hoisted in `app/layout.tsx`).
 API calls live in `lib/api.ts`. Route gating is in `proxy.ts` (this fork of Next uses

@@ -5,12 +5,13 @@ import { AnalyticsMockup } from "@/components/marketing/AnalyticsMockup";
 import { AnimatedTerminal } from "@/components/marketing/AnimatedTerminal";
 import { OrbitingPlatforms } from "@/components/marketing/OrbitingPlatforms";
 import { FadeIn } from "@/components/ui/FadeIn";
-import { NumberTicker } from "@/components/ui/number-ticker";
+import { Globe } from "@/components/ui/globe";
+// import { NumberTicker } from "@/components/ui/number-ticker"; // shelved with the stats strip below
 import { CheckIcon, ActivityIcon, ZapIcon } from "@/components/ui/icons";
 
 export const metadata = {
   title: "Marech — Stop AI from Stealing Your Content",
-  description: "Block ChatGPT, Claude, and other AI scrapers in 30 seconds. No code required.",
+  description: "See AI scrapers hitting your site in minutes, then block ChatGPT, Claude, GPTBot and more at the edge with a drop-in integration.",
 };
 
 const PAD = "px-6 sm:px-10 lg:px-16";
@@ -34,8 +35,9 @@ export default function LandingPage() {
               <span className="text-mars-ember">strike.</span>
             </h1>
             <p className="text-lg text-white/60 max-w-md mb-8 leading-relaxed">
-              Block ChatGPT, Claude, and every AI scraper in under 2 minutes.
-              One snippet. Zero maintenance. Full visibility.
+              Drop in one snippet to see every AI scraper hitting your site.
+              Add the edge integration to block them for real — GPTBot, ChatGPT,
+              Claude, and more.
             </p>
             <div className="flex flex-wrap gap-3 mb-8">
               <Link href="/signup">
@@ -60,7 +62,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Telemetry strip — mono numerals over hairlines ── */}
+      {/* ── Telemetry strip — SHELVED: numbers weren't real product metrics.
+          Restore once there are real ones to show, reusing NumberTicker + STATS below. ──
       <section className={`${PAD} pb-20`}>
         <FadeIn>
           <div className="max-w-3xl grid grid-cols-1 sm:grid-cols-3 border-y border-app-border divide-y sm:divide-y-0 sm:divide-x divide-app-border">
@@ -79,6 +82,7 @@ export default function LandingPage() {
           </div>
         </FadeIn>
       </section>
+      */}
 
       {/* ── Why Marech — orbit left, feature cards right ── */}
       <section className={`${PAD} py-20`}>
@@ -131,7 +135,7 @@ export default function LandingPage() {
           >
             Built to be invisible.
             <br />
-            Impossible to bypass.
+            Enforced at the edge.
           </h2>
         </FadeIn>
 
@@ -153,9 +157,10 @@ export default function LandingPage() {
             <div className="mars-card--marketing rounded-2xl p-6 h-full min-h-[300px] flex flex-col justify-between">
               <div>
                 <span className="text-eyebrow text-white/25">02</span>
-                <h3 className="text-xl font-semibold text-white mt-2 mb-2">Instant block</h3>
+                <h3 className="text-xl font-semibold text-white mt-2 mb-2">Real blocking</h3>
                 <p className="text-sm text-white/50 leading-relaxed">
-                  Bots hit a 403 before they read a single character of your content.
+                  With the edge integration (Cloudflare Worker, WordPress plugin, or
+                  proxy), bots hit a 403 before they read a single character.
                 </p>
               </div>
               <div className="mt-6 space-y-2">
@@ -173,9 +178,10 @@ export default function LandingPage() {
             <div className="mars-card--marketing rounded-2xl p-6 h-full min-h-[260px] flex flex-col justify-between">
               <div>
                 <span className="text-eyebrow text-white/25">03</span>
-                <h3 className="text-xl font-semibold text-white mt-2 mb-2">30-second setup</h3>
+                <h3 className="text-xl font-semibold text-white mt-2 mb-2">30-second monitoring</h3>
                 <p className="text-sm text-white/50 leading-relaxed">
-                  Copy one line of JavaScript. Paste into your site header. Done.
+                  Copy one line of JavaScript, paste it in your header, and watch
+                  the traffic roll in. Blocking is a second step.
                 </p>
               </div>
               <div
@@ -198,7 +204,7 @@ export default function LandingPage() {
                 </p>
               </div>
               <div className="flex flex-wrap gap-2 mt-4">
-                {["Auto-updates", "No code changes", "24/7 monitoring", "99.9% uptime"].map((tag) => (
+                {["Auto-updates", "No code changes", "24/7 monitoring", "Fail-open by design"].map((tag) => (
                   <span key={tag} className="text-xs border border-app-border rounded-full px-3 py-1 text-white/50">
                     {tag}
                   </span>
@@ -209,24 +215,36 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Testimonials — static editorial 3-up ── */}
+      {/* ── Global coverage — interactive globe over datacenter markers ── */}
       <section className={`${PAD} py-20 border-t border-app-border-faint`}>
         <FadeIn className="mb-12">
-          <span className="text-eyebrow text-mars-ember block mb-3">Field reports</span>
+          <span className="text-eyebrow text-mars-ember block mb-3">Global coverage</span>
           <h2
             className="text-4xl sm:text-5xl font-bold text-white tracking-[-0.02em]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Creators fighting back.
+            Protected, wherever
+            <br />
+            they come from.
           </h2>
+          <p className="text-white/50 mt-4 max-w-md leading-relaxed">
+            Scrapers don&apos;t browse from home — they spin up in cloud
+            datacenters around the world. Marech watches the regions they
+            launch from and flags them on sight.
+          </p>
         </FadeIn>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {TESTIMONIALS.map((t, i) => (
-            <FadeIn key={t.name} delay={0.05 + i * 0.08}>
-              <TestimonialCard {...t} />
-            </FadeIn>
-          ))}
-        </div>
+        <FadeIn delay={0.1}>
+          <div className="relative mx-auto flex size-full max-w-lg items-center justify-center overflow-hidden rounded-2xl border border-app-border-faint bg-white/[0.02] px-10 pt-8 pb-40 md:pb-60">
+            <span
+              className="pointer-events-none bg-gradient-to-b from-white to-white/5 bg-clip-text text-center text-7xl sm:text-8xl leading-none font-semibold whitespace-pre-wrap text-transparent"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Guarded
+            </span>
+            <Globe className="top-28" />
+            <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(226,86,42,0.18),rgba(255,255,255,0))]" />
+          </div>
+        </FadeIn>
       </section>
 
       {/* ── Pricing preview — split ── */}
@@ -321,22 +339,23 @@ export default function LandingPage() {
   );
 }
 
-const STATS: { value: number; suffix: string; label: string; decimals?: number }[] = [
-  { value: 10, suffix: "M+", label: "Bots blocked per day" },
-  { value: 2, suffix: "min", label: "Average setup time" },
-  { value: 99.9, suffix: "%", label: "Uptime", decimals: 1 },
-];
+// Shelved with the telemetry strip above — these weren't real product metrics.
+// const STATS: { value: number; suffix: string; label: string; decimals?: number }[] = [
+//   { value: 10, suffix: "M+", label: "Bots blocked per day" },
+//   { value: 2, suffix: "min", label: "Average setup time" },
+//   { value: 99.9, suffix: "%", label: "Uptime", decimals: 1 },
+// ];
 
 const FEATURES = [
   {
     icon: <CheckIcon className="w-5 h-5" />,
-    title: "30-Second Setup",
-    body: "Copy one line of JavaScript, paste into your site header. Works on Wix, Shopify, WordPress, Squarespace — anywhere.",
+    title: "Monitoring in 30 Seconds",
+    body: "Copy one line of JavaScript into your site header — works anywhere — and see the AI scrapers hitting you in your dashboard.",
   },
   {
     icon: <ActivityIcon className="w-5 h-5" />,
-    title: "Real-Time Blocking",
-    body: "See every bot blocked as it hits. Live dashboard shows confidence score, IP, path, and bot type.",
+    title: "Real Edge Blocking",
+    body: "Add the Cloudflare Worker, WordPress plugin, or proxy and scrapers get a 403 before your content loads — even non-JS bots the script can't stop.",
   },
   {
     icon: <ZapIcon className="w-5 h-5" />,
@@ -345,25 +364,12 @@ const FEATURES = [
   },
 ];
 
+/* Shelved: the testimonials section was replaced by the Global-coverage globe.
+   The people/quotes below were FABRICATED and must never be restored as-is —
+   the card layout is kept only as a template for real customer quotes someday.
+
 const TESTIMONIALS = [
-  {
-    name: "Sarah Chen",
-    title: "Food Blogger · sarahcooks.com",
-    quote:
-      "I was livid when I found my recipes being fed to AI chatbots. Marech stopped it in seconds. Incredibly satisfying to watch every scraper get blocked.",
-  },
-  {
-    name: "Mike Torres",
-    title: "Shopify Store Owner · gearup.io",
-    quote:
-      "Competitors were using AI to scrape my product descriptions and undercut my prices. Marech caught 2,000+ scrapes in week one. Game changer.",
-  },
-  {
-    name: "Lisa Park",
-    title: "SaaS Founder · docsapp.dev",
-    quote:
-      "My documentation was training competing AI models. The policy controls let me block exactly who I want. The API on Pro is a bonus I didn't expect.",
-  },
+  { name: "…", title: "…", quote: "…" },
 ];
 
 function TestimonialCard({ name, title, quote }: { name: string; title: string; quote: string }) {
@@ -387,3 +393,4 @@ function TestimonialCard({ name, title, quote }: { name: string; title: string; 
     </div>
   );
 }
+*/

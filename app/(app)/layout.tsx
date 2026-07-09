@@ -13,6 +13,7 @@ const NAV_ITEMS = [
   { href: "/logs", label: "Traffic Logs", icon: ListIcon },
   { href: "/policies", label: "Policies", icon: ShieldIcon },
   { href: "/snippet", label: "Get Snippet", icon: CodeIcon },
+  { href: "/keys", label: "API Keys", icon: KeyIcon },
   { href: "/account", label: "Account", icon: UserIcon },
   { href: "/billing", label: "Billing", icon: CreditCardIcon },
 ];
@@ -228,6 +229,9 @@ function CodeIcon({ className }: { className?: string }) {
 }
 function UserIcon({ className }: { className?: string }) {
   return <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>;
+}
+function KeyIcon({ className }: { className?: string }) {
+  return <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" /></svg>;
 }
 function CreditCardIcon({ className }: { className?: string }) {
   return <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><rect x="1" y="4" width="22" height="16" rx="2" ry="2" /><line x1="1" y1="10" x2="23" y2="10" /></svg>;

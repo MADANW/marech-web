@@ -16,7 +16,10 @@ export default function HowItWorksPage() {
           <span className="text-eyebrow text-mars-ember block mb-3">Under the hood</span>
           <h1 className="text-5xl font-bold text-white tracking-[-0.02em] mb-4" style={{ fontFamily: "var(--font-display)" }}>How Marech Works</h1>
           <p className="text-white/60 text-lg max-w-2xl mx-auto">
-            Every request to your website goes through Marech's detection engine. Here's what happens in milliseconds.
+            Marech works in two modes. Paste a one-line <strong className="text-white/80">snippet</strong> to
+            monitor traffic anywhere, and add an <strong className="text-white/80">edge integration</strong>{" "}
+            (Cloudflare Worker, WordPress plugin, or proxy) to actually block scrapers before your
+            content is served. Here's the flow for the blocking path.
           </p>
         </div>
 
@@ -88,9 +91,9 @@ export default function HowItWorksPage() {
 }
 
 const FLOW = [
-  { label: "Visitor arrives at your website", body: "Your Marech snippet loads invisibly on page load.", color: "bg-white/10 text-white" },
+  { label: "Request hits the edge", body: "The Cloudflare Worker, WordPress plugin, or proxy sees the request before your origin serves any HTML.", color: "bg-white/10 text-white" },
   { label: "Is it an AI bot?", body: "Marech checks user agent, headers, IP reputation, and behavior patterns in real time.", color: "bg-accent/20 text-accent" },
-  { label: "Decision: Block or Allow", body: "Based on your policies, the bot is blocked (403) or allowed through.", color: "bg-warning/20 text-warning" },
+  { label: "Decision: Block or Allow", body: "Based on your policies, the bot gets a 403 and never sees your content — or is allowed through. (If Marech is unreachable, it fails open and serves the page.)", color: "bg-warning/20 text-warning" },
   { label: "Logged in your dashboard", body: "Every decision is recorded — bot type, IP, path, confidence score, and action taken.", color: "bg-success/20 text-success" },
 ];
 

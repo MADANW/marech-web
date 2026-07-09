@@ -15,7 +15,7 @@ export function Footer() {
               Marech
             </div>
             <p className="text-sm leading-relaxed">
-              Stop AI scrapers from stealing your content. 30-second setup, zero maintenance.
+              Stop AI scrapers from stealing your content. Monitor in seconds; block them at the edge.
             </p>
           </div>
 
@@ -44,6 +44,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
               <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
+              <li><Link href="/dpa" className="hover:text-white transition-colors">Data Processing Agreement</Link></li>
               <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
             </ul>
           </div>

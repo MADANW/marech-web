@@ -6,7 +6,7 @@ export const metadata = {
 const LAST_UPDATED = "June 21, 2026";
 const EFFECTIVE_DATE = "June 21, 2026";
 const COMPANY = "Marech";
-const CONTACT_EMAIL = "privacy@marech.tech";
+const CONTACT_EMAIL = "mohamed@muhsinai.com";
 
 export default function PrivacyPage() {
   return (
@@ -45,19 +45,26 @@ export default function PrivacyPage() {
               raw card numbers).
             </p>
           </Subsection>
-          <Subsection title="Website Traffic Data">
+          <Subsection title="Website Traffic Data (your visitors)">
             <p>
-              Our JavaScript snippet collects HTTP request metadata from visitors
-              to your website: IP address, User-Agent string, requested URL path,
-              timestamp, and headers used to classify bot traffic. This data is
-              processed on our servers to detect AI scrapers.
+              To detect and block AI scrapers, we process HTTP request metadata from
+              visitors to your website: IP address, User-Agent string, requested URL
+              path, timestamp, and headers used to classify bot traffic. This data
+              reaches us either from our JavaScript snippet (monitoring) or from a
+              server-side integration you install — our Cloudflare Worker, WordPress
+              plugin, Vercel middleware, or nginx proxy (blocking). We act as a{" "}
+              <strong className="text-white">data processor</strong> for this visitor
+              data, on your behalf and under your instructions (see &ldquo;Your Role
+              vs. Ours&rdquo; below).
             </p>
           </Subsection>
-          <Subsection title="Usage and Analytics">
+          <Subsection title="Service Logs">
             <p>
-              We collect information about how you interact with the dashboard:
-              pages visited, features used, and session duration. This helps us
-              improve the Service.
+              Our servers keep standard operational logs of requests to the Service
+              (timestamps, IP address, and the endpoint called) for security,
+              debugging, and abuse prevention. We do not currently run
+              product-analytics tracking of how you use the dashboard; if we add a
+              privacy-focused analytics tool later, we will update this policy first.
             </p>
           </Subsection>
           <Subsection title="Communications">
@@ -85,44 +92,73 @@ export default function PrivacyPage() {
 
         <Section title="4. Data Retention">
           <p>
-            Bot traffic logs are retained for <strong className="text-white">90 days</strong> by
-            default. Aggregated analytics (totals, trends) are retained indefinitely.
-            Account data is retained until you delete your account, after which it is
-            purged within 30 days.
+            We retain your account data and website traffic logs for{" "}
+            <strong className="text-white">as long as you have an active account with us</strong>.
+            There is no separate fixed expiry for traffic logs — they are kept for the lifetime of
+            the account that generated them. If you delete your account, your account data and
+            traffic logs are deleted at that time (subject to any copies retained briefly in
+            backups, and any records we must keep to comply with law, e.g. billing records).
           </p>
         </Section>
 
-        <Section title="5. Sharing and Disclosure">
-          <p>We share data only in these circumstances:</p>
-          <ul>
-            <li>
-              <strong className="text-white">Service providers</strong> — payment processors (Stripe),
-              cloud infrastructure (AWS), and email delivery who are bound by
-              confidentiality agreements
-            </li>
-            <li>
-              <strong className="text-white">Legal requirements</strong> — when required by law,
-              court order, or government request
-            </li>
-            <li>
-              <strong className="text-white">Business transfer</strong> — in the event of a merger
-              or acquisition, subject to the same privacy commitments
-            </li>
-          </ul>
+        <Section title="5. Your Role vs. Ours (Controller / Processor)">
+          <p>
+            For <strong className="text-white">account data</strong> (your name, email, billing), {COMPANY}
+            is the data <strong className="text-white">controller</strong>. For{" "}
+            <strong className="text-white">website traffic data</strong> about your visitors, {COMPANY} is
+            a data <strong className="text-white">processor</strong> acting on your instructions — you are
+            the controller for that data and are responsible for having a lawful basis and appropriate
+            notices for the visitors of your own site.
+          </p>
+          <p>
+            Business customers who need a <strong className="text-white">Data Processing Agreement (DPA)</strong>{" "}
+            (including EU Standard Contractual Clauses and the subprocessor list below) can read the{" "}
+            <a href="/dpa" className="text-accent hover:underline">Data Processing Agreement</a> — it&rsquo;s
+            incorporated into these Terms for paid/trial Customers automatically. Email{" "}
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-accent hover:underline">{CONTACT_EMAIL}</a>{" "}
+            for a countersigned copy.
+          </p>
         </Section>
 
-        <Section title="6. Cookies and Tracking">
+        <Section title="6. Subprocessors & Disclosure">
           <p>
-            We use essential cookies for authentication and session management.
-            We use analytics cookies (e.g. Plausible or similar privacy-first tools)
-            to understand dashboard usage. We do not use third-party advertising cookies.
+            We use a small set of vetted subprocessors to run the Service. Hosting on a provider does not
+            put you under that provider&rsquo;s policies — they process data on our behalf under contract:
+          </p>
+          <ul>
+            <li><strong className="text-white">Amazon Web Services (AWS)</strong> — cloud hosting & database for the API (United States)</li>
+            <li><strong className="text-white">Vercel</strong> — hosting for this website and the customer dashboard (United States)</li>
+            <li><strong className="text-white">Stripe</strong> — payment processing (we never store raw card numbers)</li>
+            <li><strong className="text-white">Google</strong> — &ldquo;Sign in with Google&rdquo; authentication (only if you use it)</li>
+            <li><strong className="text-white">Resend</strong> — transactional email delivery (verification, receipts, alerts)</li>
+          </ul>
+          <p>We also disclose data when:</p>
+          <ul>
+            <li>
+              <strong className="text-white">Legally required</strong> — by law, court order, or government request
+            </li>
+            <li>
+              <strong className="text-white">Business transfer</strong> — in a merger or acquisition, subject to the same privacy commitments
+            </li>
+          </ul>
+          <p className="text-white/40 text-sm">
+            Keep this list current — adding a subprocessor generally requires notifying customers under your DPA.
+          </p>
+        </Section>
+
+        <Section title="7. Cookies and Tracking">
+          <p>
+            We use an essential cookie for authentication and session management.
+            We do not currently use analytics cookies, and we do not use third-party
+            advertising cookies. If we introduce a privacy-focused analytics tool in
+            the future, we will update this policy before doing so.
           </p>
           <p>
             You can disable cookies in your browser, but this may break authentication.
           </p>
         </Section>
 
-        <Section title="7. Security">
+        <Section title="8. Security">
           <p>
             Data is encrypted in transit (TLS 1.2+) and at rest (AES-256). We
             enforce access controls and conduct regular security reviews. No method
@@ -131,7 +167,7 @@ export default function PrivacyPage() {
           </p>
         </Section>
 
-        <Section title="8. Your Rights">
+        <Section title="9. Your Rights">
           <p>Depending on your location, you may have the right to:</p>
           <ul>
             <li>Access the personal data we hold about you</li>
@@ -150,7 +186,7 @@ export default function PrivacyPage() {
           </p>
         </Section>
 
-        <Section title="9. Children's Privacy">
+        <Section title="10. Children's Privacy">
           <p>
             The Service is not directed at children under 13. We do not knowingly
             collect data from children. If you believe we have collected data from
@@ -158,7 +194,7 @@ export default function PrivacyPage() {
           </p>
         </Section>
 
-        <Section title="10. International Transfers">
+        <Section title="11. International Transfers">
           <p>
             We operate primarily in the United States. If you are located outside
             the US, your data may be transferred to and processed in the US.
@@ -167,7 +203,7 @@ export default function PrivacyPage() {
           </p>
         </Section>
 
-        <Section title="11. GDPR (EEA Users)">
+        <Section title="12. GDPR (EEA Users)">
           <p>
             If you are in the European Economic Area, our lawful bases for processing
             are: (a) contract performance for operating the Service; (b) legitimate
@@ -177,7 +213,7 @@ export default function PrivacyPage() {
           </p>
         </Section>
 
-        <Section title="12. CCPA (California Residents)">
+        <Section title="13. CCPA (California Residents)">
           <p>
             California residents may request disclosure of personal information
             collected, sold, or disclosed, and may opt out of the &ldquo;sale&rdquo; of
@@ -190,7 +226,7 @@ export default function PrivacyPage() {
           </p>
         </Section>
 
-        <Section title="13. Changes to This Policy">
+        <Section title="14. Changes to This Policy">
           <p>
             We may update this policy. Material changes will be notified via email
             or an in-app banner at least 14 days before they take effect. Continued
@@ -198,7 +234,7 @@ export default function PrivacyPage() {
           </p>
         </Section>
 
-        <Section title="14. Contact Us">
+        <Section title="15. Contact Us">
           <p>
             Privacy questions or requests:{" "}
             <a href={`mailto:${CONTACT_EMAIL}`} className="text-accent hover:underline">
@@ -206,7 +242,7 @@ export default function PrivacyPage() {
             </a>
           </p>
           <p className="text-white/40 text-sm mt-2">
-            Marech · Privacy Team · Delaware, USA
+            Marech · Minneapolis, MN, USA
           </p>
         </Section>
 

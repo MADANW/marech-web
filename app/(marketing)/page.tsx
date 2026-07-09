@@ -5,7 +5,7 @@ import { AnalyticsMockup } from "@/components/marketing/AnalyticsMockup";
 import { AnimatedTerminal } from "@/components/marketing/AnimatedTerminal";
 import { OrbitingPlatforms } from "@/components/marketing/OrbitingPlatforms";
 import { FadeIn } from "@/components/ui/FadeIn";
-import { NumberTicker } from "@/components/ui/number-ticker";
+// import { NumberTicker } from "@/components/ui/number-ticker"; // shelved with the stats strip below
 import { CheckIcon, ActivityIcon, ZapIcon } from "@/components/ui/icons";
 
 export const metadata = {
@@ -61,7 +61,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Telemetry strip — mono numerals over hairlines ── */}
+      {/* ── Telemetry strip — SHELVED: numbers weren't real product metrics.
+          Restore once there are real ones to show, reusing NumberTicker + STATS below. ──
       <section className={`${PAD} pb-20`}>
         <FadeIn>
           <div className="max-w-3xl grid grid-cols-1 sm:grid-cols-3 border-y border-app-border divide-y sm:divide-y-0 sm:divide-x divide-app-border">
@@ -80,6 +81,7 @@ export default function LandingPage() {
           </div>
         </FadeIn>
       </section>
+      */}
 
       {/* ── Why Marech — orbit left, feature cards right ── */}
       <section className={`${PAD} py-20`}>
@@ -324,11 +326,12 @@ export default function LandingPage() {
   );
 }
 
-const STATS: { value: number; suffix: string; label: string; decimals?: number }[] = [
-  { value: 10, suffix: "M+", label: "Bots blocked per day" },
-  { value: 2, suffix: "min", label: "Average setup time" },
-  { value: 99.9, suffix: "%", label: "Uptime", decimals: 1 },
-];
+// Shelved with the telemetry strip above — these weren't real product metrics.
+// const STATS: { value: number; suffix: string; label: string; decimals?: number }[] = [
+//   { value: 10, suffix: "M+", label: "Bots blocked per day" },
+//   { value: 2, suffix: "min", label: "Average setup time" },
+//   { value: 99.9, suffix: "%", label: "Uptime", decimals: 1 },
+// ];
 
 const FEATURES = [
   {

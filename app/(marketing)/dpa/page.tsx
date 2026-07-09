@@ -24,15 +24,6 @@ export default function DpaPage() {
         </p>
       </div>
 
-      <div className="mars-card--marketing rounded-xl p-5 mb-10 text-sm text-white/60 border-l-2 border-mars-ember/50">
-        <span className="font-semibold text-white">Template — not legal advice.</span> This DPA is a
-        starting point drafted for {COMPANY} and has <span className="text-white/80">not</span> been
-        reviewed by an attorney. It is written for the role {COMPANY} actually has here — as the{" "}
-        <strong className="text-white/80">processor</strong> handling your website visitors&rsquo; data on
-        your behalf, not the more common &ldquo;customer signing a vendor&rsquo;s DPA&rdquo; direction. Have
-        qualified counsel review it — and the Standard Contractual Clauses it incorporates by
-        reference — before relying on it for a regulated deployment.
-      </div>
 
       <div className="space-y-10 text-white/70 leading-relaxed">
 

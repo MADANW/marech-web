@@ -26,13 +26,6 @@ export default function TermsPage() {
         </p>
       </div>
 
-      <div className="mars-card--marketing rounded-xl p-5 mb-10 text-sm text-white/60 border-l-2 border-mars-ember/50">
-        <span className="font-semibold text-white">Template — not legal advice.</span> These terms are a
-        starting point drafted for {COMPANY} and have <span className="text-white/80">not</span> been
-        reviewed by an attorney. Have qualified counsel confirm the entity, governing law, liability caps,
-        refund terms, and consumer-law requirements for your markets before relying on them.
-      </div>
-
       <div className="mars-card--marketing rounded-2xl p-8 sm:p-10 prose prose-invert prose-sm max-w-none space-y-10 text-white/70 leading-relaxed">
 
         <Section title="1. Acceptance of Terms">

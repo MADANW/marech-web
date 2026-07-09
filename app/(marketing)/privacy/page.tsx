@@ -26,15 +26,6 @@ export default function PrivacyPage() {
         </p>
       </div>
 
-      <div className="mars-card--marketing rounded-xl p-5 mb-10 text-sm text-white/60 border-l-2 border-mars-ember/50">
-        <span className="font-semibold text-white">Template — not legal advice.</span> This policy is a
-        starting point drafted for {COMPANY} and has <span className="text-white/80">not</span> been
-        reviewed by an attorney. Before publishing, have qualified counsel confirm the entity name and
-        jurisdiction, the subprocessor list, retention periods, and your GDPR/CCPA and DPA obligations —
-        especially because {COMPANY} processes third parties&rsquo; personal data (your visitors&rsquo;
-        IP addresses and user-agents) on behalf of its customers.
-      </div>
-
       <div className="space-y-10 text-white/70 leading-relaxed">
 
         <Section title="1. Overview">

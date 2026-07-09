@@ -5,6 +5,7 @@ import { AnalyticsMockup } from "@/components/marketing/AnalyticsMockup";
 import { AnimatedTerminal } from "@/components/marketing/AnimatedTerminal";
 import { OrbitingPlatforms } from "@/components/marketing/OrbitingPlatforms";
 import { FadeIn } from "@/components/ui/FadeIn";
+import { Globe } from "@/components/ui/globe";
 // import { NumberTicker } from "@/components/ui/number-ticker"; // shelved with the stats strip below
 import { CheckIcon, ActivityIcon, ZapIcon } from "@/components/ui/icons";
 
@@ -203,7 +204,7 @@ export default function LandingPage() {
                 </p>
               </div>
               <div className="flex flex-wrap gap-2 mt-4">
-                {["Auto-updates", "No code changes", "24/7 monitoring", "99.9% uptime"].map((tag) => (
+                {["Auto-updates", "No code changes", "24/7 monitoring", "Fail-open by design"].map((tag) => (
                   <span key={tag} className="text-xs border border-app-border rounded-full px-3 py-1 text-white/50">
                     {tag}
                   </span>
@@ -214,24 +215,36 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Testimonials — static editorial 3-up ── */}
+      {/* ── Global coverage — interactive globe over datacenter markers ── */}
       <section className={`${PAD} py-20 border-t border-app-border-faint`}>
         <FadeIn className="mb-12">
-          <span className="text-eyebrow text-mars-ember block mb-3">Field reports</span>
+          <span className="text-eyebrow text-mars-ember block mb-3">Global coverage</span>
           <h2
             className="text-4xl sm:text-5xl font-bold text-white tracking-[-0.02em]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Creators fighting back.
+            Protected, wherever
+            <br />
+            they come from.
           </h2>
+          <p className="text-white/50 mt-4 max-w-md leading-relaxed">
+            Scrapers don&apos;t browse from home — they spin up in cloud
+            datacenters around the world. Marech watches the regions they
+            launch from and flags them on sight.
+          </p>
         </FadeIn>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {TESTIMONIALS.map((t, i) => (
-            <FadeIn key={t.name} delay={0.05 + i * 0.08}>
-              <TestimonialCard {...t} />
-            </FadeIn>
-          ))}
-        </div>
+        <FadeIn delay={0.1}>
+          <div className="relative mx-auto flex size-full max-w-lg items-center justify-center overflow-hidden rounded-2xl border border-app-border-faint bg-white/[0.02] px-10 pt-8 pb-40 md:pb-60">
+            <span
+              className="pointer-events-none bg-gradient-to-b from-white to-white/5 bg-clip-text text-center text-7xl sm:text-8xl leading-none font-semibold whitespace-pre-wrap text-transparent"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              Guarded
+            </span>
+            <Globe className="top-28" />
+            <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(226,86,42,0.18),rgba(255,255,255,0))]" />
+          </div>
+        </FadeIn>
       </section>
 
       {/* ── Pricing preview — split ── */}
@@ -351,25 +364,12 @@ const FEATURES = [
   },
 ];
 
+/* Shelved: the testimonials section was replaced by the Global-coverage globe.
+   The people/quotes below were FABRICATED and must never be restored as-is —
+   the card layout is kept only as a template for real customer quotes someday.
+
 const TESTIMONIALS = [
-  {
-    name: "Sarah Chen",
-    title: "Food Blogger · sarahcooks.com",
-    quote:
-      "I was livid when I found my recipes being fed to AI chatbots. Marech stopped it in seconds. Incredibly satisfying to watch every scraper get blocked.",
-  },
-  {
-    name: "Mike Torres",
-    title: "Shopify Store Owner · gearup.io",
-    quote:
-      "Competitors were using AI to scrape my product descriptions and undercut my prices. Marech caught 2,000+ scrapes in week one. Game changer.",
-  },
-  {
-    name: "Lisa Park",
-    title: "SaaS Founder · docsapp.dev",
-    quote:
-      "My documentation was training competing AI models. The policy controls let me block exactly who I want. The API on Pro is a bonus I didn't expect.",
-  },
+  { name: "…", title: "…", quote: "…" },
 ];
 
 function TestimonialCard({ name, title, quote }: { name: string; title: string; quote: string }) {
@@ -393,3 +393,4 @@ function TestimonialCard({ name, title, quote }: { name: string; title: string; 
     </div>
   );
 }
+*/

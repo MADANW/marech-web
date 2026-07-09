@@ -58,11 +58,13 @@ export default function PrivacyPage() {
               vs. Ours&rdquo; below).
             </p>
           </Subsection>
-          <Subsection title="Usage and Analytics">
+          <Subsection title="Service Logs">
             <p>
-              We collect information about how you interact with the dashboard:
-              pages visited, features used, and session duration. This helps us
-              improve the Service.
+              Our servers keep standard operational logs of requests to the Service
+              (timestamps, IP address, and the endpoint called) for security,
+              debugging, and abuse prevention. We do not currently run
+              product-analytics tracking of how you use the dashboard; if we add a
+              privacy-focused analytics tool later, we will update this policy first.
             </p>
           </Subsection>
           <Subsection title="Communications">
@@ -146,9 +148,10 @@ export default function PrivacyPage() {
 
         <Section title="7. Cookies and Tracking">
           <p>
-            We use essential cookies for authentication and session management.
-            We use analytics cookies (e.g. Plausible or similar privacy-first tools)
-            to understand dashboard usage. We do not use third-party advertising cookies.
+            We use an essential cookie for authentication and session management.
+            We do not currently use analytics cookies, and we do not use third-party
+            advertising cookies. If we introduce a privacy-focused analytics tool in
+            the future, we will update this policy before doing so.
           </p>
           <p>
             You can disable cookies in your browser, but this may break authentication.

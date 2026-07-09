@@ -221,8 +221,10 @@ export default function TermsPage() {
           <p>
             Either party may terminate this agreement at any time. You may cancel
             your subscription through your dashboard. We may suspend or terminate
-            your account if you violate these Terms. Upon termination, your access
-            to the Service will cease and data may be deleted after a retention period.
+            your account if you violate these Terms. We hold your account data and
+            traffic logs for as long as your account is active; upon termination or
+            deletion of your account, your access to the Service will cease and that
+            data is deleted at that time, as described in the Privacy Policy.
           </p>
         </Section>
 

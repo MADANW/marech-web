@@ -70,7 +70,10 @@ export default function DpaPage() {
             <p>Detection and blocking of automated bot / AI-scraper traffic on Customer&rsquo;s website.</p>
           </Subsection>
           <Subsection title="Duration">
-            <p>For the term of the Terms of Service, and until deletion per Section 9 below.</p>
+            <p>
+              For as long as Customer maintains an active account with {COMPANY} (i.e. the term of
+              the Terms of Service), and until deletion per Section 9 below.
+            </p>
           </Subsection>
           <Subsection title="Nature and purpose">
             <p>
@@ -159,10 +162,12 @@ export default function DpaPage() {
 
         <Section title="9. Deletion or Return of Data">
           <p>
-            Upon termination of the underlying subscription, {COMPANY} deletes Customer&rsquo;s account
-            data and associated visitor traffic logs as part of account deletion, unless applicable law
-            requires retention of specific records. Customer may request deletion at any time via the
-            dashboard or by emailing{" "}
+            {COMPANY} holds Customer&rsquo;s account data and visitor traffic logs for as long as
+            Customer maintains an active account — there is no separate fixed retention period for
+            traffic logs. Upon termination of the underlying subscription or deletion of Customer&rsquo;s
+            account, {COMPANY} deletes that data at that time, unless applicable law requires retention
+            of specific records (e.g. billing records). Customer may request deletion at any time via
+            the dashboard or by emailing{" "}
             <a href={`mailto:${CONTACT_EMAIL}`} className="text-accent hover:underline">{CONTACT_EMAIL}</a>.
           </p>
         </Section>

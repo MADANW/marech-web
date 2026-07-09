@@ -99,10 +99,12 @@ export default function PrivacyPage() {
 
         <Section title="4. Data Retention">
           <p>
-            Bot traffic logs are retained for <strong className="text-white">90 days</strong> by
-            default. Aggregated analytics (totals, trends) are retained indefinitely.
-            Account data is retained until you delete your account, after which it is
-            purged within 30 days.
+            We retain your account data and website traffic logs for{" "}
+            <strong className="text-white">as long as you have an active account with us</strong>.
+            There is no separate fixed expiry for traffic logs — they are kept for the lifetime of
+            the account that generated them. If you delete your account, your account data and
+            traffic logs are deleted at that time (subject to any copies retained briefly in
+            backups, and any records we must keep to comply with law, e.g. billing records).
           </p>
         </Section>
 

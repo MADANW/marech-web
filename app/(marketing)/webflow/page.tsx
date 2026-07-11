@@ -1,7 +1,7 @@
 import { PlatformPage } from "@/components/marketing/PlatformPage";
 
 export const metadata = {
-  title: "Marech for Webflow — Protect Your Webflow Site from AI Scrapers",
+  title: "Marech for Webflow — Monitor & Block AI Scrapers",
 };
 
 export default function WebflowPage() {
@@ -9,7 +9,7 @@ export default function WebflowPage() {
     <PlatformPage
       name="Webflow"
       headline="Marech for Webflow Sites"
-      subheadline="Block AI scrapers from stealing your Webflow content — one embed, all pages protected."
+      subheadline="One embed monitors AI-scraper traffic across every page — and if you front Webflow with Cloudflare, you can block scrapers at the edge too."
       steps={[
         {
           title: "Copy your Marech snippet",
@@ -29,9 +29,29 @@ export default function WebflowPage() {
         },
         {
           title: "Save and Publish",
-          body: "Click Save Changes, then Publish your site. Marech is now active on all pages.",
+          body: "Click Save Changes, then Publish your site. Monitoring is now active on all pages and traffic will appear in your dashboard.",
         },
       ]}
+      blocking={{
+        canBlock: true,
+        summary:
+          "On Webflow's own hosting the snippet can only monitor. To actually block non-JS scrapers, front your Webflow site with Cloudflare and run the BlockMe Worker at the edge — it checks each request before it reaches Webflow.",
+        docsHref: "https://github.com/MADANW/marech-BD/tree/main/integrations/cloudflare",
+        steps: [
+          {
+            title: "Route your domain through Cloudflare",
+            body: "Add your custom domain to Cloudflare and set the Webflow DNS records to Proxied (orange cloud) so requests pass through Cloudflare's edge first.",
+          },
+          {
+            title: "Create an API key and a block policy",
+            body: "In the Marech dashboard, create an API key (shown once — copy it) and add a block policy (e.g. bot types scraper and ai_tool).",
+          },
+          {
+            title: "Deploy the BlockMe Cloudflare Worker",
+            body: "Follow the Cloudflare integration guide to deploy the Worker with your API key and API URL, routed to your domain. Scrapers get a 403 before reaching Webflow; it fails open on any outage.",
+          },
+        ],
+      }}
     />
   );
 }

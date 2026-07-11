@@ -6,14 +6,59 @@ interface Step {
   body: string;
 }
 
+interface BlockingInfo {
+  /**
+   * Whether real server-side blocking of non-JS scrapers (curl, GPTBot…) is
+   * possible on this platform. Hosted builders that own the whole request path
+   * (Wix, Squarespace) can only ever monitor.
+   */
+  canBlock: boolean;
+  /** One or two sentences on the blocking story for this specific platform. */
+  summary: string;
+  /** Optional enforcement setup steps, shown when {@link canBlock} is true. */
+  steps?: Step[];
+  /** Where to read the full integration guide (defaults to /docs). */
+  docsHref?: string;
+}
+
 interface PlatformPageProps {
   name: string;
   headline: string;
   subheadline: string;
+  /** Steps to install the monitoring snippet (advisory mode). */
   steps: Step[];
+  /** How — or whether — this platform can do real server-side blocking. */
+  blocking: BlockingInfo;
 }
 
-export function PlatformPage({ name, headline, subheadline, steps }: PlatformPageProps) {
+function StepList({ steps, tone = "accent" }: { steps: Step[]; tone?: "accent" | "ember" }) {
+  return (
+    <div className="space-y-3">
+      {steps.map((step, i) => (
+        <div key={i} className="mars-card--marketing flex gap-4 rounded-xl p-5">
+          <div
+            className={`w-8 h-8 rounded-full font-bold flex items-center justify-center shrink-0 text-sm ${
+              tone === "ember"
+                ? "bg-mars-ember/15 border border-mars-ember/30 text-mars-ember"
+                : "bg-accent/20 border border-accent/30 text-accent"
+            }`}
+            style={{ fontFamily: "var(--font-mono)" }}
+          >
+            {i + 1}
+          </div>
+          <div>
+            <div className="font-semibold text-white mb-1">{step.title}</div>
+            <div className="text-sm text-white/60">{step.body}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function PlatformPage({ name, headline, subheadline, steps, blocking }: PlatformPageProps) {
+  const docsHref = blocking.docsHref ?? "/docs";
+
   return (
     <div className="py-24 px-4 sm:px-6">
       <div className="max-w-3xl mx-auto">
@@ -26,36 +71,43 @@ export function PlatformPage({ name, headline, subheadline, steps }: PlatformPag
           <p className="text-white/60 text-lg">{subheadline}</p>
         </div>
 
-        {/* Steps */}
-        <div className="mb-14">
-          <h2 className="text-xl font-bold text-white tracking-[-0.02em] mb-6" style={{ fontFamily: "var(--font-display)" }}>Step-by-step instructions</h2>
-          <div className="space-y-3">
-            {steps.map((step, i) => (
-              <div key={i} className="mars-card--marketing flex gap-4 rounded-xl p-5">
-                <div
-                  className="w-8 h-8 rounded-full bg-accent/20 border border-accent/30 text-mars-ember font-bold flex items-center justify-center shrink-0 text-sm"
-                  style={{ fontFamily: "var(--font-mono)" }}
-                >
-                  {i + 1}
-                </div>
-                <div>
-                  <div className="font-semibold text-white mb-1">{step.title}</div>
-                  <div className="text-sm text-white/60">{step.body}</div>
-                </div>
-              </div>
-            ))}
-          </div>
+        {/* Step 1 — install the monitoring snippet */}
+        <div className="mb-8">
+          <h2 className="text-xl font-bold text-white tracking-[-0.02em] mb-2" style={{ fontFamily: "var(--font-display)" }}>
+            1 · Install the monitoring snippet
+          </h2>
+          <p className="text-sm text-white/50 mb-6">
+            One line of JavaScript that reports scraper traffic to your dashboard. Takes a minute — works on {name}.
+          </p>
+          <StepList steps={steps} />
         </div>
 
         {/* Honesty callout: the snippet monitors; real blocking is server-side. */}
-        <div className="mars-card--marketing rounded-xl p-5 mb-14 text-sm text-white/60 border-l-2 border-mars-ember/50">
+        <div className="mars-card--marketing rounded-xl p-5 mb-8 text-sm text-white/60 border-l-2 border-mars-ember/50">
           <span className="font-semibold text-white">Monitoring vs. blocking:</span> the snippet
-          above reports traffic to your dashboard and overlays JS-running bots — but non-JS
-          scrapers (curl, GPTBot…) never run it. Whether you can fully <span className="text-white/80">block</span> them
-          depends on your platform: WordPress, custom, Vercel/Netlify and Cloudflare-fronted sites
-          can, via a server-side integration; fully hosted builders (Wix, Squarespace) can only
-          monitor. See the <Link href="/docs" className="text-accent hover:underline">integration guides</Link>.
+          above reports traffic and overlays JS-running bots — but non-JS scrapers (curl, GPTBot…)
+          download your HTML directly and never run it, so it can&apos;t block those. {blocking.summary}{" "}
+          {blocking.canBlock ? (
+            <>Full details in the <Link href={docsHref} className="text-accent hover:underline">integration guides</Link>.</>
+          ) : (
+            <>See how the two modes differ in the <Link href={docsHref} className="text-accent hover:underline">docs</Link>.</>
+          )}
         </div>
+
+        {/* Step 2 — turn on real blocking (only where the platform allows it) */}
+        {blocking.canBlock && blocking.steps && blocking.steps.length > 0 && (
+          <div className="mb-14">
+            <h2 className="text-xl font-bold text-white tracking-[-0.02em] mb-2" style={{ fontFamily: "var(--font-display)" }}>
+              2 · Turn on real blocking <span className="text-mars-ember text-base align-middle">(optional)</span>
+            </h2>
+            <p className="text-sm text-white/50 mb-6">
+              Stops non-JS scrapers before your content is served. Needs a Marech{" "}
+              <Link href="/keys" className="text-accent hover:underline">API key</Link> and a{" "}
+              <Link href="/policies" className="text-accent hover:underline">block policy</Link>.
+            </p>
+            <StepList steps={blocking.steps} tone="ember" />
+          </div>
+        )}
 
         {/* Video placeholder */}
         <div className="mars-card--marketing rounded-2xl aspect-video flex items-center justify-center mb-14">

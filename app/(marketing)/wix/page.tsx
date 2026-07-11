@@ -1,7 +1,7 @@
 import { PlatformPage } from "@/components/marketing/PlatformPage";
 
 export const metadata = {
-  title: "Marech for Wix — Protect Your Wix Site from AI Scrapers",
+  title: "Marech for Wix — Monitor AI Scrapers on Your Wix Site",
 };
 
 export default function WixPage() {
@@ -9,7 +9,7 @@ export default function WixPage() {
     <PlatformPage
       name="Wix"
       headline="Marech for Wix Users"
-      subheadline="Protect your Wix site from AI scrapers in 30 seconds — no developer needed."
+      subheadline="Add one line of code and see the AI scrapers hitting your Wix site in your dashboard — no developer needed."
       steps={[
         {
           title: "Copy your Marech snippet",
@@ -29,13 +29,18 @@ export default function WixPage() {
         },
         {
           title: "Choose 'Head' and 'All pages'",
-          body: "Set the code location to Head and apply it to All Pages so every page is protected.",
+          body: "Set the code location to Head and apply it to All Pages so every page is monitored.",
         },
         {
           title: "Paste your Marech snippet and Save",
-          body: "Paste the code you copied in step 1, give it a name like 'Marech', and click Apply.",
+          body: "Paste the code you copied in step 1, give it a name like 'Marech', and click Apply. Traffic will start showing up in your dashboard.",
         },
       ]}
+      blocking={{
+        canBlock: false,
+        summary:
+          "Wix owns the entire request path — server, domain, and TLS — so you can't put an edge proxy or worker in front of it. On Wix, Marech monitors traffic and overlays JS-running bots, but non-JS scrapers can't be blocked. That's a platform limitation, stated honestly.",
+      }}
     />
   );
 }

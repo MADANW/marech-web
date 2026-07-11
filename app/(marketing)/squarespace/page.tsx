@@ -1,7 +1,7 @@
 import { PlatformPage } from "@/components/marketing/PlatformPage";
 
 export const metadata = {
-  title: "Marech for Squarespace — Protect Your Site from AI Scrapers",
+  title: "Marech for Squarespace — Monitor AI Scrapers on Your Site",
 };
 
 export default function SquarespacePage() {
@@ -9,7 +9,7 @@ export default function SquarespacePage() {
     <PlatformPage
       name="Squarespace"
       headline="Marech for Squarespace"
-      subheadline="Protect your Squarespace site from AI content scrapers without touching any code."
+      subheadline="See exactly which AI scrapers are hitting your Squarespace site — monitoring in minutes, no code required."
       steps={[
         {
           title: "Copy your Marech snippet",
@@ -29,9 +29,14 @@ export default function SquarespacePage() {
         },
         {
           title: "Click Save",
-          body: "Click the Save button. Your protection is now live across your entire Squarespace site.",
+          body: "Click Save. Monitoring is now live across your entire Squarespace site — scraper traffic will appear in your dashboard.",
         },
       ]}
+      blocking={{
+        canBlock: false,
+        summary:
+          "Squarespace hosts everything — server, domain, and TLS — so there's no way to insert an edge proxy or worker in front of it. On Squarespace, Marech monitors traffic and overlays JS-running bots, but non-JS scrapers can't be blocked. That's a platform limitation, stated honestly.",
+      }}
     />
   );
 }

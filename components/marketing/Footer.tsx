@@ -33,10 +33,11 @@ export function Footer() {
           <div>
             <h3 className="text-white/80 text-sm font-semibold mb-3">Platforms</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link href="/wix" className="hover:text-white transition-colors">Wix</Link></li>
-              <li><Link href="/shopify" className="hover:text-white transition-colors">Shopify</Link></li>
-              <li><Link href="/squarespace" className="hover:text-white transition-colors">Squarespace</Link></li>
               <li><Link href="/wordpress" className="hover:text-white transition-colors">WordPress</Link></li>
+              <li><Link href="/shopify" className="hover:text-white transition-colors">Shopify</Link></li>
+              <li><Link href="/nextjs" className="hover:text-white transition-colors">Next.js &amp; React</Link></li>
+              <li><Link href="/webflow" className="hover:text-white transition-colors">Webflow</Link></li>
+              <li><Link href="/docs" className="text-white/70 hover:text-white transition-colors">All platforms →</Link></li>
             </ul>
           </div>
 

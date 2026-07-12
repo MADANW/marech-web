@@ -1,7 +1,23 @@
-"use client";
 import Link from "next/link";
-import { useState } from "react";
-import { Button } from "@/components/ui/Button";
+import { CopyableCode } from "@/components/marketing/CopyableCode";
+import {
+  DocHero,
+  TableOfContents,
+  DocSection,
+  NumberedSteps,
+  Callout,
+  Checklist,
+  FeatureGrid,
+  FaqList,
+  NextSteps,
+  DocCTA,
+} from "@/components/marketing/DocsKit";
+
+export const metadata = {
+  title: "Marech for Custom & HTML Sites — Monitor & Block AI Scrapers",
+  description:
+    "Add one script tag to monitor AI-scraper traffic on any static or custom-built HTML site — and, because you control your own hosting, turn on real edge blocking too.",
+};
 
 const SNIPPET_PLACEHOLDER = `<script src="https://cdn.marech.tech/YOUR_SNIPPET_ID.js"></script>`;
 
@@ -63,179 +79,250 @@ const STEPS = [
   },
 ];
 
+const BLOCKING_STEPS = [
+  {
+    title: "Create an API key and a block policy",
+    body: "In the Marech dashboard, create an API key (shown once — copy it) and add a block policy (e.g. bot types scraper and ai_tool).",
+  },
+  {
+    title: "Pick the integration that matches your hosting",
+    body: "nginx reverse proxy for a VPS/EC2/Docker origin, a Cloudflare Worker for a Cloudflare-fronted site, or Vercel/Next.js middleware for a site on Vercel. All three call the same enforcement endpoint.",
+  },
+  {
+    title: "Configure it with your API URL and key",
+    body: "Set BLOCKME_API_URL (https://api.marech.tech) and your bm_ key, then deploy it in front of your site. Each request is checked before your origin serves any HTML; scrapers get a 403 and it fails open on any outage.",
+  },
+];
+
+const WHY = [
+  {
+    title: "Training data harvesting",
+    body: "AI companies scrape raw HTML pages to build training datasets. Your prose, your research, your creative work — fed into models without permission or compensation.",
+  },
+  {
+    title: "Prompt injection via scraped content",
+    body: 'Attackers embed hidden instructions in page text (e.g. "Ignore previous instructions…") that get lifted by AI scrapers and injected into AI pipelines downstream. Marech stops the scraper before it reads anything.',
+  },
+  {
+    title: "Content duplication by AI agents",
+    body: "Autonomous AI agents crawl HTML sites to summarize, rewrite, and republish your content — stripping traffic and SEO value. Marech fingerprints and blocks known agent user-agents in real time.",
+  },
+  {
+    title: "Competitor intelligence bots",
+    body: "Businesses deploy AI crawlers to harvest pricing, copy, and product data from competitor HTML sites. Marech detects non-human request patterns and returns a 403 before any data is read.",
+  },
+];
+
 export default function HtmlPage() {
   return (
     <div className="py-24 px-4 sm:px-6">
-      <div className="max-w-3xl mx-auto space-y-16">
+      <div className="max-w-3xl mx-auto">
+        <DocHero
+          eyebrow="Custom & HTML guide · Self-hosted"
+          title="Marech for Any HTML Site"
+          lede="Running a custom-built or static HTML site? Paste one script tag to monitor AI-scraper traffic — and because you control your own hosting, you can turn on real edge blocking too."
+          meta={[
+            { label: "Platform", value: "Custom / self-hosted" },
+            { label: "Setup", value: "~5 minutes" },
+            { label: "Blocking", value: "Supported", tone: "ember" },
+          ]}
+        />
 
-        {/* Header */}
-        <div className="text-center">
-          <span className="text-eyebrow text-mars-ember block mb-3">
-            HTML Guide
-          </span>
-          <h1 className="text-5xl font-bold text-white tracking-[-0.02em] mb-4" style={{ fontFamily: "var(--font-display)" }}>
-            Marech for Any HTML Site
-          </h1>
-          <p className="text-white/60 text-lg">
-            Running a custom-built or static HTML site? Paste one script tag to monitor AI-scraper
-            traffic — and because you control your own hosting, you can turn on real edge blocking too.
-          </p>
-        </div>
+        <TableOfContents
+          items={[
+            { href: "#overview", label: "Overview" },
+            { href: "#before", label: "Before you begin" },
+            { href: "#monitor", label: "Install the monitoring snippet" },
+            { href: "#blocking", label: "Turn on blocking" },
+            { href: "#ai", label: "Let AI add it for you" },
+            { href: "#why", label: "Why it matters for HTML sites" },
+            { href: "#faq", label: "Troubleshooting & FAQ" },
+          ]}
+        />
 
-        {/* Honesty callout: the script monitors; enforcement blocks. */}
-        <div className="mars-card--marketing rounded-xl p-5 text-sm text-white/60 border-l-2 border-mars-ember/50">
-          <span className="font-semibold text-white">Monitoring vs. blocking:</span> the pasted
-          snippet reports traffic and overlays JS-running bots, but non-JS scrapers never run it.
-          To actually block them, add a server-side integration in front of your site — an{" "}
-          <span className="text-white/80">nginx proxy</span>,{" "}
-          <span className="text-white/80">Cloudflare Worker</span>, or{" "}
-          <span className="text-white/80">Vercel middleware</span> that checks each request with a
-          Marech API key. See the <Link href="/docs" className="text-accent hover:underline">integration guides</Link>.
-        </div>
-
-        {/* Steps */}
-        <section>
-          <h2 className="text-xl font-bold text-white tracking-[-0.02em] mb-6" style={{ fontFamily: "var(--font-display)" }}>
-            Step-by-step instructions
-          </h2>
-          <div className="space-y-3">
-            {STEPS.map((step, i) => (
-              <div key={i} className="mars-card--marketing flex gap-4 rounded-xl p-5">
-                <div
-                  className="w-8 h-8 rounded-full bg-accent/20 border border-accent/30 text-accent font-bold flex items-center justify-center shrink-0 text-sm"
-                  style={{ fontFamily: "var(--font-mono)" }}
-                >
-                  {i + 1}
-                </div>
-                <div>
-                  <div className="font-semibold text-white mb-1">{step.title}</div>
-                  <div className="text-sm text-white/60">{step.body}</div>
-                </div>
-              </div>
-            ))}
+        {/* Overview */}
+        <DocSection
+          id="overview"
+          title="How Marech protects a custom HTML site"
+          lede="A custom or static HTML site is the most flexible case: you own the hosting, so you can run both modes — monitor everywhere with the snippet, and block scrapers at your own edge."
+        >
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="mars-card--marketing rounded-2xl p-6">
+              <span className="text-eyebrow text-white/25 block mb-3">Mode 1</span>
+              <h3 className="font-semibold text-white mb-2">Monitoring — the snippet</h3>
+              <p className="text-sm text-white/55 leading-relaxed">
+                One <code>&lt;script&gt;</code> tag in your <code>&lt;head&gt;</code>. Reports
+                scraper traffic to your dashboard and overlays JS-running bots.
+              </p>
+            </div>
+            <div className="mars-card--marketing rounded-2xl p-6">
+              <span className="text-eyebrow text-white/25 block mb-3">Mode 2</span>
+              <h3 className="font-semibold text-white mb-2">Blocking — the edge check</h3>
+              <p className="text-sm text-white/55 leading-relaxed">
+                An nginx proxy, Cloudflare Worker, or Vercel middleware checks each request{" "}
+                <em>before</em> your origin serves HTML, returning a 403 to scrapers.
+              </p>
+            </div>
           </div>
-        </section>
+        </DocSection>
 
-        {/* AI Prompting section */}
-        <section>
-          <div className="mb-6">
-            <span className="text-eyebrow text-mars-ember block mb-2">
-              Not a developer?
-            </span>
-            <h2 className="text-xl font-bold text-white tracking-[-0.02em]" style={{ fontFamily: "var(--font-display)" }}>
-              Let AI add it for you
-            </h2>
-            <p className="text-white/50 text-sm mt-2">
-              Copy a prompt below and paste it into ChatGPT, Claude, or any AI assistant. It will walk you through adding Marech to your exact setup.
+        {/* Before you begin */}
+        <DocSection
+          id="before"
+          title="Before you begin"
+          lede="Monitoring needs only the first two. Blocking adds the last two."
+        >
+          <div className="mars-card--marketing rounded-xl p-6">
+            <Checklist
+              items={[
+                <>
+                  A Marech account —{" "}
+                  <Link href="/signup" className="text-accent hover:underline">start a free trial</Link>.
+                </>,
+                <>Access to your site&apos;s HTML files or shared layout/template.</>,
+                <>For blocking: control of your hosting (a VPS, Cloudflare, or Vercel in front of your origin).</>,
+                <>
+                  For blocking: a Marech{" "}
+                  <Link href="/keys" className="text-accent hover:underline">API key</Link> and a{" "}
+                  <Link href="/policies" className="text-accent hover:underline">block policy</Link>.
+                </>,
+              ]}
+            />
+          </div>
+        </DocSection>
+
+        {/* Monitoring */}
+        <DocSection
+          id="monitor"
+          step={1}
+          title="Install the monitoring snippet"
+          lede="Paste one line of JavaScript into the <head> of your pages — or once into a shared layout to cover the whole site."
+        >
+          <div className="mars-card--marketing rounded-lg px-4 py-3 text-xs text-white/50 font-mono mb-5">
+            Paste inside &lt;head&gt;…&lt;/head&gt;
+          </div>
+          <NumberedSteps steps={STEPS} />
+          <div className="mt-5">
+            <Callout tone="tip" title="Verify monitoring is live">
+              Deploy your change, open the site in a normal browser, and check the{" "}
+              <Link href="/dashboard" className="text-accent hover:underline">dashboard</Link> — your
+              visit should appear in the traffic feed within seconds. If it doesn&apos;t, view the
+              page source and confirm the <code>&lt;script&gt;</code> tag is present inside{" "}
+              <code>&lt;head&gt;</code>.
+            </Callout>
+          </div>
+        </DocSection>
+
+        {/* Monitoring vs blocking */}
+        <div className="mb-14">
+          <Callout tone="info" title="Monitoring vs. blocking — the honest version">
+            The pasted snippet reports traffic and overlays JS-running bots, but non-JS scrapers
+            never run it. To actually block them, add a server-side integration in front of your
+            site — an <span className="text-white/80">nginx proxy</span>,{" "}
+            <span className="text-white/80">Cloudflare Worker</span>, or{" "}
+            <span className="text-white/80">Vercel middleware</span> that checks each request with a
+            Marech API key.
+          </Callout>
+        </div>
+
+        {/* Blocking */}
+        <DocSection
+          id="blocking"
+          step={2}
+          title="Turn on real blocking (optional)"
+          lede={
+            <>
+              Because you control your own hosting, you can run the enforcement check at your edge.
+              All three integrations call the same endpoint and fail open. Needs a Marech{" "}
+              <Link href="/keys" className="text-accent hover:underline">API key</Link> and a{" "}
+              <Link href="/policies" className="text-accent hover:underline">block policy</Link>.
+            </>
+          }
+        >
+          <NumberedSteps steps={BLOCKING_STEPS} tone="ember" />
+          <div className="mt-5 space-y-3">
+            <p className="text-sm text-white/55">
+              <span className="font-semibold text-white">Verify it&apos;s blocking.</span> With the
+              integration live, a fake scraper user-agent should get a 403 while a real browser loads
+              the page:
+            </p>
+            <CopyableCode code={'curl -A "GPTBot/1.0" -I https://yoursite.com/'} label="verify blocking" />
+            <p className="text-sm text-white/45">
+              The exact source for each integration (nginx config, Cloudflare Worker, Vercel
+              middleware) lives in the{" "}
+              <a
+                href="https://github.com/MADANW/marech-BD/tree/main/integrations"
+                className="text-accent hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                marech-BD integrations directory
+              </a>
+              , with setup instructions for each.
             </p>
           </div>
+        </DocSection>
+
+        {/* AI prompting */}
+        <DocSection
+          id="ai"
+          title="Not a developer? Let AI add it for you"
+          lede="Copy a prompt below and paste it into ChatGPT, Claude, or any AI assistant. It will walk you through adding Marech to your exact setup."
+        >
           <div className="space-y-4">
             {AI_PROMPTS.map((p) => (
-              <PromptCard key={p.label} label={p.label} prompt={p.prompt} />
+              <CopyableCode key={p.label} code={p.prompt} label={p.label} language="prompt" />
             ))}
           </div>
-        </section>
+        </DocSection>
 
-        {/* Prompt injection defense section */}
-        <section>
-          <div className="mb-6">
-            <span className="text-eyebrow text-mars-ember block mb-2">
-              Why it matters for HTML sites
-            </span>
-            <h2 className="text-xl font-bold text-white tracking-[-0.02em]" style={{ fontFamily: "var(--font-display)" }}>
-              HTML sites are high-value AI targets
-            </h2>
-          </div>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {[
-              {
-                title: "Training data harvesting",
-                body: "AI companies scrape raw HTML pages to build training datasets. Your prose, your research, your creative work — fed into models without permission or compensation.",
-              },
-              {
-                title: "Prompt injection via scraped content",
-                body: "Attackers embed hidden instructions in page text (e.g. \"Ignore previous instructions…\") that get lifted by AI scrapers and injected into AI pipelines downstream. Marech stops the scraper before it reads anything.",
-              },
-              {
-                title: "Content duplication by AI agents",
-                body: "Autonomous AI agents crawl HTML sites to summarize, rewrite, and republish your content — stripping traffic and SEO value. Marech fingerprints and blocks known agent user-agents in real time.",
-              },
-              {
-                title: "Competitor intelligence bots",
-                body: "Businesses deploy AI crawlers to harvest pricing, copy, and product data from competitor HTML sites. Marech detects non-human request patterns and returns a 403 before any data is read.",
-              },
-            ].map((card) => (
-              <div key={card.title} className="mars-card--marketing rounded-xl p-5">
-                <div className="font-semibold text-white mb-2">{card.title}</div>
-                <p className="text-sm text-white/55 leading-relaxed">{card.body}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Video placeholder */}
-        <div className="mars-card--marketing rounded-2xl aspect-video flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-16 h-16 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-3">
-              <svg className="w-8 h-8 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <p className="text-white/40 text-sm">30-second video tutorial coming soon</p>
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="mars-card--marketing rounded-2xl p-10 text-center">
-          <h2 className="text-2xl font-bold text-white tracking-[-0.02em] mb-3" style={{ fontFamily: "var(--font-display)" }}>
-            Ready to protect your HTML site?
-          </h2>
-          <p className="text-white/60 mb-6">Free 7-day trial. No credit card required.</p>
-          <Link href="/signup">
-            <Button variant="accent" size="lg">Get Started Free</Button>
-          </Link>
-        </div>
-
-      </div>
-    </div>
-  );
-}
-
-function PromptCard({ label, prompt }: { label: string; prompt: string }) {
-  const [copied, setCopied] = useState(false);
-
-  function copy() {
-    navigator.clipboard.writeText(prompt);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }
-
-  return (
-    <div className="mars-card--marketing rounded-xl overflow-hidden">
-      <div className="flex items-center justify-between px-5 py-3 border-b border-white/10">
-        <span className="text-sm font-semibold text-white">{label}</span>
-        <button
-          onClick={copy}
-          className="text-xs font-medium text-accent hover:text-white transition-colors flex items-center gap-1.5"
+        {/* Why it matters */}
+        <DocSection
+          id="why"
+          title="Why it matters for HTML sites"
+          lede="Static and custom HTML sites are high-value AI targets — your content is right there in the markup."
         >
-          {copied ? (
-            <>
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-              Copied!
-            </>
-          ) : (
-            <>
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-              </svg>
-              Copy prompt
-            </>
-          )}
-        </button>
+          <FeatureGrid items={WHY} />
+        </DocSection>
+
+        {/* FAQ */}
+        <DocSection id="faq" title="Troubleshooting & FAQ">
+          <FaqList
+            items={[
+              {
+                q: "Which blocking integration should I use?",
+                a: "Match it to your hosting: nginx reverse proxy if you run your own server (VPS/EC2/Docker), a Cloudflare Worker if your domain is fronted by Cloudflare, or Vercel/Next.js middleware if you deploy on Vercel. They're interchangeable clients of the same enforcement endpoint.",
+              },
+              {
+                q: "Do I need both the snippet and the edge integration?",
+                a: "The edge integration is what actually blocks non-JS scrapers. The snippet adds in-browser monitoring and a block overlay for JS-running bots. Running both gives you the fullest picture, but blocking works with just the integration.",
+              },
+              {
+                q: "Will blocking ever take my site down?",
+                a: "No. Every integration fails open — if the Marech API is unreachable or slow, your pages are served normally. Protection can never make your site unavailable.",
+              },
+            ]}
+          />
+        </DocSection>
+
+        {/* Next steps */}
+        <DocSection title="Next steps">
+          <NextSteps
+            items={[
+              { href: "/how-it-works", title: "How detection works", body: "The signals Marech uses to tell scrapers from real visitors." },
+              { href: "/docs", title: "All platform guides", body: "Compare setup and blocking support across every platform." },
+              { href: "/keys", title: "Create an API key", body: "The bm_ key your edge integration authenticates with." },
+              { href: "/pricing", title: "Plans & pricing", body: "Free 7-day trial, then pick the plan that fits your traffic." },
+            ]}
+          />
+        </DocSection>
+
+        <DocCTA
+          title="Ready to protect your HTML site?"
+          body="Free 7-day trial. No credit card required."
+          cta="Get Started Free"
+        />
       </div>
-      <pre className="px-5 py-4 text-xs text-white/55 leading-relaxed whitespace-pre-wrap font-mono">{prompt}</pre>
     </div>
   );
 }

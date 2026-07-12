@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/lib/auth";
 import { ToastProvider } from "@/components/ui/Toast";
+import { CookieConsent } from "@/components/marketing/CookieConsent";
 
 const syne = Syne({
   variable: "--font-syne",
@@ -43,7 +44,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <AuthProvider>
-          <ToastProvider>{children}</ToastProvider>
+          <ToastProvider>
+            {children}
+            <CookieConsent />
+          </ToastProvider>
         </AuthProvider>
       </body>
     </html>

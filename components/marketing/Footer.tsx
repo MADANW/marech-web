@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LiquidMarechIconLazy } from "@/components/gfx/lazy";
+import { CookieSettingsLink } from "@/components/marketing/CookieSettingsLink";
 
 export function Footer() {
   return (
@@ -45,6 +46,7 @@ export function Footer() {
               <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
               <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
               <li><Link href="/dpa" className="hover:text-white transition-colors">Data Processing Agreement</Link></li>
+              <li><CookieSettingsLink /></li>
               <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
             </ul>
           </div>

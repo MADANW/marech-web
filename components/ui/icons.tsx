@@ -202,6 +202,15 @@ export function ShieldPlusIcon(p: IconProps) {
   );
 }
 
+export function CookieIcon(p: IconProps) {
+  return (
+    <svg {...base(p)}>
+      <path d="M12 3a9 9 0 108.5 6.1 3 3 0 01-3.6-3.6A9 9 0 0012 3z" />
+      <path d="M9 9.5h.01M15 10.5h.01M9.5 15h.01M14 14.5h.01M12 12.5h.01" />
+    </svg>
+  );
+}
+
 export function LockIcon(p: IconProps) {
   return (
     <svg {...base(p)}>

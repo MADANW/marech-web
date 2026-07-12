@@ -9,7 +9,7 @@ export default function ShopifyPage() {
     <PlatformPage
       name="Shopify"
       headline="Marech for Shopify Stores"
-      subheadline="Stop competitors from using AI to scrape your product descriptions and prices."
+      subheadline="See which AI bots are scraping your product descriptions and prices — and block them for real if your store runs on a custom domain."
       steps={[
         {
           title: "Copy your Marech snippet",
@@ -32,10 +32,34 @@ export default function ShopifyPage() {
           body: "Find the closing </head> tag and paste your Marech snippet just before it.",
         },
         {
-          title: "Save and publish",
-          body: "Click Save. Your entire store is now protected — product pages, collections, and all.",
+          title: "Save",
+          body: "Click Save. Monitoring is now active across your storefront — product pages, collections, and all — and traffic starts appearing in your dashboard.",
         },
       ]}
+      blocking={{
+        canBlock: true,
+        summary:
+          "Shopify is fully hosted, so the snippet alone can only monitor. If your store uses a custom domain (not *.myshopify.com), you can get real blocking by routing that domain through Cloudflare and running the BlockMe Worker at the edge.",
+        docsHref: "https://github.com/MADANW/marech-BD/tree/main/integrations/shopify",
+        steps: [
+          {
+            title: "Route your custom domain through Cloudflare",
+            body: "Add your store's custom domain to Cloudflare and set the DNS records that point at Shopify to Proxied (orange cloud). This only works on a custom domain — not a *.myshopify.com address.",
+          },
+          {
+            title: "Create an API key and a block policy",
+            body: "In the Marech dashboard, create an API key (shown once — copy it) and add a block policy (e.g. bot types scraper and ai_tool).",
+          },
+          {
+            title: "Deploy the BlockMe Cloudflare Worker",
+            body: "Follow the Shopify integration guide to deploy the Worker with your API key and API URL, routed to your store domain. It checks each request before it reaches Shopify and returns a 403 to scrapers (failing open on any outage).",
+          },
+          {
+            title: "Optional: add robots.txt.liquid",
+            body: "Add the provided robots.txt.liquid template to also ask well-behaved AI crawlers (GPTBot, ClaudeBot…) not to crawl. It won't stop a determined scraper, but the major crawlers honor it.",
+          },
+        ],
+      }}
     />
   );
 }

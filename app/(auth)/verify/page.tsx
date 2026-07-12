@@ -77,7 +77,8 @@ function VerifyContent() {
               </div>
               <h1 className="text-xl font-semibold text-white mb-2">Email verified</h1>
               <p className="text-white/50 text-sm mb-6">
-                Your account is active — protection is now live on your site.
+                Your account is active. Next, add your monitoring snippet to start seeing scraper
+                traffic — the dashboard walks you through it.
               </p>
               <Link href="/dashboard">
                 <Button variant="accent" size="md" className="w-full">Go to dashboard →</Button>
